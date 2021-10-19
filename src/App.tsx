@@ -1,26 +1,65 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Redirect,
+  RouteProps,
+} from "react-router-dom";
+import useAuth, { AuthProvider } from "./contexts/auth";
 
-function App() {
+import "./App.css";
+import { NotificationProvider } from "./contexts/notification";
+import LoginPage from "./pages/LoginPage";
+import HomePage from "./pages/HomePage";
+import RegisterPage from "./pages/RegisterPage";
+import InvitationPage from "./pages/InvitationPage";
+
+function ContextWrapper() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AuthProvider>
+      <NotificationProvider>
+        <App />
+      </NotificationProvider>
+    </AuthProvider>
   );
 }
 
-export default App;
+function PublicRoutes() {
+  return (
+    <Switch>
+      <Route exact path="/login">
+        <LoginPage />
+      </Route>
+      <Route exact path="/register">
+        <RegisterPage />
+      </Route>
+      <Route exact path="/">
+        <Redirect to="/login" />
+      </Route>
+    </Switch>
+  );
+}
+
+function ProtectedRoute({ ...rest }: RouteProps) {
+  const { isAuthenticated } = useAuth();
+  return isAuthenticated() ? <Route {...rest} /> : <Redirect to="/login" />;
+}
+
+function App() {
+  return (
+    <Router>
+      <Switch>
+        <ProtectedRoute exact path="/home">
+          <HomePage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/invitations">
+          <InvitationPage />
+        </ProtectedRoute>
+
+        <PublicRoutes />
+      </Switch>
+    </Router>
+  );
+}
+
+export default ContextWrapper;

@@ -1,0 +1,14 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.errorSpan {
+  color: #bf1650;
+}
+
+.errorSpan::before {
+  display: inline;
+  content: "⚠ ";
+}
