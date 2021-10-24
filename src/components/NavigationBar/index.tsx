@@ -14,6 +14,8 @@ import DrawerHeader from "../Common/DrawerHeader";
 import RouteItem from "../Common/RouteItem";
 import { drawerWidth } from "../sharedStyles/drawerConfig";
 
+import useApartment from "../../contexts/apartment";
+
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create("width", {
@@ -59,6 +61,8 @@ function NavigationBar({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
+  const { apartment } = useApartment() as { apartment: Apartment | "" };
+
   function handleDrawerClose() {
     setOpen(false);
   }
@@ -78,15 +82,19 @@ function NavigationBar({
           <PersonAddAlt1Icon />
         </RouteItem>
       </List>
-      <Divider />
-      <List>
-        <RouteItem text="Tasks" path="/tasks">
-          <TaskIcon />
-        </RouteItem>
-        <RouteItem text="Requests" path="/requests">
-          <AssignmentIcon />
-        </RouteItem>
-      </List>
+      {apartment !== "" && (
+        <>
+          <Divider />
+          <List>
+            <RouteItem text="Tasks" path="/tasks">
+              <TaskIcon />
+            </RouteItem>
+            <RouteItem text="Requests" path="/requests">
+              <AssignmentIcon />
+            </RouteItem>
+          </List>
+        </>
+      )}
     </Drawer>
   );
 }
