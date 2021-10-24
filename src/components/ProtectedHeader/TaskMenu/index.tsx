@@ -5,18 +5,15 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 
-import useApartment from "../../../contexts/apartment";
 import { iconSx } from "./style";
+import TaskDialog from "./TaskDialog";
 
 function TaskMenu() {
-  const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
-
-  const apartmentContext = useApartment();
-  const apartment = apartmentContext.apartment as Apartment;
-  const { leaveApartmentMutation } = apartmentContext;
-
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+
+  const [openTaskDialog, setOpenTaskDialog] = useState(false);
+
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
   }
@@ -25,11 +22,8 @@ function TaskMenu() {
     setAnchorEl(null);
   }
 
-  function handleLeave() {
-    const decision = window.confirm(`Leave apartment ${apartment.name} ?`);
-    if (decision) {
-      leaveApartmentMutation.mutate();
-    }
+  function handleOpenTaskDialog() {
+    setOpenTaskDialog(true);
   }
 
   return (
@@ -54,10 +48,11 @@ function TaskMenu() {
         open={open}
         onClose={handleClose}
       >
-        <MenuItem onClick={() => setOpenInvitationDialog(true)} disableRipple>
+        <MenuItem onClick={handleOpenTaskDialog}>
           <AddIcon sx={iconSx} /> Create
         </MenuItem>
       </Menu>
+      <TaskDialog open={openTaskDialog} setOpen={setOpenTaskDialog} />
     </div>
   );
 }
