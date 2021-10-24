@@ -14,7 +14,6 @@ function ChannelToastProvider({
   const { authState } = useAuth() as { authState: UserWithToken };
 
   useEffect(() => {
-    console.log(process.env.REACT_APP_PUSHER_KEY);
     const pusher = new Pusher(String(process.env.REACT_APP_PUSHER_KEY), {
       cluster: "eu",
     });

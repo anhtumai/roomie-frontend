@@ -25,7 +25,6 @@ function LoginForm() {
   const { setNotification } = useNotification();
   const { control, handleSubmit, reset } = useForm();
   async function onSubmit(data: Credential) {
-    console.log(data);
     try {
       const userWithToken = await authService.login(data);
       setAuthState(userWithToken);
