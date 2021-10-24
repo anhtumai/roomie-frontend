@@ -1,29 +1,27 @@
-import { useQuery } from "react-query";
-import useAuth from "../contexts/auth";
-import meService from "../services/me";
 import { ApartmentProvider } from "../contexts/apartment";
+import useInvitations, { InvitationsProvider } from "../contexts/invitations";
+
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
+import Invitations from "../components/Invitations";
 
 function MainContent() {
-  const { authState } = useAuth() as { authState: UserWithToken };
-  const { isLoading, error, data } = useQuery("invitations", () =>
-    meService.getInvitations(authState.token),
-  );
+  const { isLoading, error, invitationCollection } = useInvitations();
   if (isLoading) return <div>Loading...</div>;
 
-  if (error || data === undefined) return <div>An error has occurred</div>;
+  if (error || invitationCollection === undefined)
+    return <div>An error has occurred</div>;
 
-  console.log(data);
-  const message = `Invitations here: ${data.sent}, ${data.received}`;
-  return <div>{message}</div>;
+  return <Invitations invitationCollection={invitationCollection} />;
 }
 
 function InvitationPage() {
   return (
     <ApartmentProvider>
-      <ProtectedPageLayout>
-        <MainContent />
-      </ProtectedPageLayout>
+      <InvitationsProvider>
+        <ProtectedPageLayout>
+          <MainContent />
+        </ProtectedPageLayout>
+      </InvitationsProvider>
     </ApartmentProvider>
   );
 }

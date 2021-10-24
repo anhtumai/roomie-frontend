@@ -12,6 +12,7 @@ declare global {
     token: string;
     username: string;
     name: string;
+    id: number;
     expiresAt: number;
   };
 
@@ -82,6 +83,13 @@ declare global {
   type InvitationCollection = {
     sent: Invitation[];
     received: Invitation[];
+  };
+
+  type ChannelInvitationMessage = {
+    state: "CREATED" | "CANCELED" | "ACCEPTED" | "REJECTED";
+    invitor: string;
+    invitee: string;
+    apartment: string;
   };
 }
 

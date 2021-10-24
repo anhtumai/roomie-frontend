@@ -5,6 +5,7 @@ import { Toolbar, Typography, IconButton } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 
+import NotificationBadge from "../NotificationBadge";
 import AccountMenu from "./AccountMenu";
 import ApartmentMenu from "./ApartmentMenu";
 
@@ -65,6 +66,7 @@ function ProtectedHeader({
           Roomie
         </Typography>
         {hasApartment && <ApartmentMenu />}
+        <NotificationBadge />
         <AccountMenu />
       </Toolbar>
     </AppBar>

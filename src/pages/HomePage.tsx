@@ -1,6 +1,7 @@
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
 import ApartmentForm from "../components/ApartmentForm";
 import useApartment, { ApartmentProvider } from "../contexts/apartment";
+import { InvitationsProvider } from "../contexts/invitations";
 
 function MainContent() {
   const { isLoading, error, apartment } = useApartment();
@@ -19,9 +20,11 @@ function MainContent() {
 function HomePage() {
   return (
     <ApartmentProvider>
-      <ProtectedPageLayout>
-        <MainContent />
-      </ProtectedPageLayout>
+      <InvitationsProvider>
+        <ProtectedPageLayout>
+          <MainContent />
+        </ProtectedPageLayout>
+      </InvitationsProvider>
     </ApartmentProvider>
   );
 }

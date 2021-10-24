@@ -16,6 +16,12 @@ async function getApartment(token: string): Promise<Apartment | ""> {
   return response.data;
 }
 
+async function deleteApartment(token: string) {
+  const config = constructConfig(token);
+  const response = await axios.delete(`${baseUrl}/apartment`, config);
+  return response.data;
+}
+
 async function getInvitations(token: string): Promise<InvitationCollection> {
   const config = constructConfig(token);
   const response = await axios.get(`${baseUrl}/invitations`, config);
@@ -25,6 +31,7 @@ async function getInvitations(token: string): Promise<InvitationCollection> {
 const meService = {
   getProfile,
   getApartment,
+  deleteApartment,
   getInvitations,
 };
 

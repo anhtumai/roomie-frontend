@@ -9,6 +9,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 
 import InviteDialog from "./InviteDialog";
+
 import useApartment from "../../../contexts/apartment";
 import useAuth from "../../../contexts/auth";
 import { iconSx } from "./style";
@@ -16,19 +17,29 @@ import { iconSx } from "./style";
 function ApartmentMenu() {
   const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
 
-  const { apartment } = useApartment() as { apartment: Apartment };
+  const apartmentContext = useApartment();
+  const apartment = apartmentContext.apartment as Apartment;
+  const { leaveApartmentMutation } = apartmentContext;
   const { authState } = useAuth() as { authState: UserWithToken };
 
   const isAdmin = authState.username === apartment.admin.username;
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
-  };
-  const handleClose = () => {
+  }
+
+  function handleClose() {
     setAnchorEl(null);
-  };
+  }
+
+  function handleLeave() {
+    const decision = window.confirm(`Leave apartment ${apartment.name} ?`);
+    if (decision) {
+      leaveApartmentMutation.mutate();
+    }
+  }
 
   return (
     <div>
@@ -61,7 +72,7 @@ function ApartmentMenu() {
           </MenuItem>
         )}
         <Divider sx={{ my: 0.5 }} />
-        <MenuItem onClick={handleClose} disableRipple>
+        <MenuItem onClick={handleLeave} disableRipple>
           <ExitToAppIcon sx={iconSx} /> Leave
         </MenuItem>
         {isAdmin && (

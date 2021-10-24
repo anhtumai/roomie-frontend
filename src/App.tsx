@@ -6,13 +6,16 @@ import {
   RouteProps,
 } from "react-router-dom";
 import useAuth, { AuthProvider } from "./contexts/auth";
+import ChannelToastProvider from "./components/ChannelToastProvider";
 
-import "./App.css";
 import { NotificationProvider } from "./contexts/notification";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import InvitationPage from "./pages/InvitationPage";
+
+import "./App.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function ContextWrapper() {
   return (
@@ -42,7 +45,13 @@ function PublicRoutes() {
 
 function ProtectedRoute({ ...rest }: RouteProps) {
   const { isAuthenticated } = useAuth();
-  return isAuthenticated() ? <Route {...rest} /> : <Redirect to="/login" />;
+  return isAuthenticated() ? (
+    <ChannelToastProvider>
+      <Route {...rest} />
+    </ChannelToastProvider>
+  ) : (
+    <Redirect to="/login" />
+  );
 }
 
 function App() {

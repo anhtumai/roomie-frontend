@@ -8,6 +8,7 @@ import {
   TextField,
   Button,
 } from "@mui/material";
+import { useQueryClient } from "react-query";
 import { createBrowserHistory } from "history";
 
 import useAuth from "../../../contexts/auth";
@@ -22,6 +23,7 @@ function InviteDialog({
   setOpen: (x: boolean) => void;
 }) {
   const history = createBrowserHistory();
+  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
   const { setNotification } = useNotification();
   const [inviteeUsername, setInviteeUsername] = useState("");
@@ -45,7 +47,7 @@ function InviteDialog({
     try {
       await invitationService.create(authState.token, inviteeUsername);
       if (history.location.pathname === "/invitations") {
-        console.log("Update the state of main content");
+        queryClient.invalidateQueries("invitations");
       }
       setNotification(`Send invitation to ${inviteeUsername}`, "success");
     } catch (err) {
