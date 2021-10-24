@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -21,13 +21,13 @@ function TaskDialog({
   const { control, handleSubmit, reset } = useForm();
 
   function handleClose() {
-    //reset({ name: "", frequency: "", difficulty: "", start: "", end: "" });
+    reset({ name: "", frequency: "", difficulty: "", start: "", end: "" });
     setOpen(false);
   }
 
   async function onSubmit(data: any) {
     console.log(data);
-    //reset({ name: "", frequency: "", difficulty: "", start: "", end: "" });
+    reset({ name: "", frequency: "", difficulty: "", start: "", end: "" });
     setOpen(false);
   }
 

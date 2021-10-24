@@ -14,7 +14,7 @@ function TaskMenu() {
 
   const [openTaskDialog, setOpenTaskDialog] = useState(false);
 
-  function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleClick(event: React.MouseEvent<HTMLElement>) {
     setAnchorEl(event.currentTarget);
   }
 
@@ -33,6 +33,7 @@ function TaskMenu() {
         aria-controls="basic-menu"
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
+        disableElevation
         onClick={handleClick}
         sx={{
           color: "white",
