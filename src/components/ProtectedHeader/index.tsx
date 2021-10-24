@@ -8,6 +8,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import NotificationBadge from "../NotificationBadge";
 import AccountMenu from "./AccountMenu";
 import ApartmentMenu from "./ApartmentMenu";
+import TaskMenu from "./TaskMenu";
 
 import { drawerWidth } from "../sharedStyles/drawerConfig";
 
@@ -65,7 +66,12 @@ function ProtectedHeader({
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
           Roomie
         </Typography>
-        {hasApartment && <ApartmentMenu />}
+        {hasApartment && (
+          <>
+            <TaskMenu />
+            <ApartmentMenu />
+          </>
+        )}
         <NotificationBadge />
         <AccountMenu />
       </Toolbar>

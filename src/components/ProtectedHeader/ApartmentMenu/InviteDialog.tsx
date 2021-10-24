@@ -40,7 +40,6 @@ function InviteDialog({
 
   async function handleInvite(event: React.SyntheticEvent) {
     event.preventDefault();
-    console.log(authState.token, inviteeUsername);
     setInviteeUsername("");
     setOpen(false);
 
