@@ -72,7 +72,7 @@ function LoginForm() {
         <AddIcon />
       </Avatar>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="auth-form">
         <Typography variant="h2" component="h2" sx={h2Sx}>
           Sign up
         </Typography>

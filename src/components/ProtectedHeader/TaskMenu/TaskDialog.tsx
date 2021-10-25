@@ -68,7 +68,7 @@ function TaskDialog({
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <form onSubmit={handleSubmit(onSubmit)} className="form task-form">
         <DialogTitle>New task</DialogTitle>
         <DialogContent>
           <label>Name</label>
