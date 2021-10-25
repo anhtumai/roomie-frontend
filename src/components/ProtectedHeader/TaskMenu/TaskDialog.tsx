@@ -47,6 +47,7 @@ function TaskDialog({
   function resetAllFields() {
     reset({
       name: "",
+      describe: "",
       frequency: "",
       difficulty: "",
       startDate: "",
