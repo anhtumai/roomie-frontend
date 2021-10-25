@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogTitle,
@@ -8,8 +7,33 @@ import {
   TextField,
   Button,
   Typography,
+  Select,
+  MenuItem,
+  OutlinedInput,
 } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
+
+import "./style.css";
+
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+
+interface IFormInput {
+  name: string;
+  description: string;
+  frequency: number;
+  difficulty: number;
+  start: string;
+  end: string;
+}
 
 function TaskDialog({
   open,
@@ -18,112 +42,81 @@ function TaskDialog({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
-  const { control, handleSubmit, reset } = useForm();
+  const { register, handleSubmit, reset } = useForm();
+
+  function resetAllFields() {
+    reset({
+      name: "",
+      frequency: "",
+      difficulty: "",
+      startDate: "",
+      endDate: "",
+    });
+  }
 
   function handleClose() {
-    reset({ name: "", frequency: "", difficulty: "", start: "", end: "" });
+    resetAllFields();
     setOpen(false);
   }
 
-  async function onSubmit(data: any) {
+  async function onSubmit(data: IFormInput) {
     console.log(data);
-    reset({ name: "", frequency: "", difficulty: "", start: "", end: "" });
+    resetAllFields();
     setOpen(false);
   }
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} className="form">
         <DialogTitle>New task</DialogTitle>
         <DialogContent>
-          <Controller
-            name="name"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                label="Name"
-                data-testid="name"
-                InputLabelProps={{ shrink: true, required: true }}
-                variant="filled"
-                fullWidth
-                required
-                value={value}
-                onChange={onChange}
-              />
-            )}
+          <label>Name</label>
+          <input
+            {...register("name", {
+              required: true,
+              maxLength: 50,
+            })}
           />
-          <Controller
-            name="frequency"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                label="Frequency"
-                data-testid="frequency"
-                type="number"
-                InputLabelProps={{ shrink: true, required: true }}
-                variant="filled"
-                fullWidth
-                required
-                value={value}
-                onChange={onChange}
-              />
-            )}
+          <label>Description</label>
+          <textarea
+            rows={10}
+            cols={30}
+            {...register("description", {
+              required: true,
+              maxLength: 500,
+            })}
+          ></textarea>
+          <label>Difficulty</label>
+          <input
+            type="number"
+            min="1"
+            max="10"
+            {...register("difficulty", {
+              required: true,
+            })}
           />
-          <Controller
-            name="difficulty"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                label="Difficulty"
-                data-testid="difficulty"
-                type="number"
-                InputLabelProps={{ shrink: true, required: true }}
-                variant="filled"
-                fullWidth
-                required
-                value={value}
-                onChange={onChange}
-              />
-            )}
+          <label>Frequency</label>
+          <input
+            type="number"
+            min="1"
+            max="10"
+            {...register("frequency", {
+              required: true,
+            })}
           />
-          <Controller
-            name="start"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                label="Start Date"
-                data-testid="start-date"
-                type="date"
-                InputLabelProps={{ shrink: true, required: true }}
-                variant="filled"
-                fullWidth
-                required
-                value={value}
-                onChange={onChange}
-              />
-            )}
+          <label>start</label>
+          <input
+            type="date"
+            {...register("startDate", {
+              required: true,
+            })}
           />
-          <Controller
-            name="end"
-            control={control}
-            defaultValue=""
-            render={({ field: { onChange, value } }) => (
-              <TextField
-                label="End Date"
-                data-testid="end-date"
-                type="date"
-                InputLabelProps={{ shrink: true, required: true }}
-                variant="filled"
-                fullWidth
-                required
-                value={value}
-                onChange={onChange}
-              />
-            )}
+          <label>end</label>
+          <input
+            type="date"
+            {...register("endDate", {
+              required: true,
+            })}
           />
         </DialogContent>
         <DialogActions>
