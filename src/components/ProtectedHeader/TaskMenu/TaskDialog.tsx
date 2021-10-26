@@ -10,21 +10,17 @@ import {
   Select,
   MenuItem,
   OutlinedInput,
+  Checkbox,
+  ListItemText,
+  FormControl,
 } from "@mui/material";
+import { Theme, useTheme } from "@mui/material/styles";
+import { SelectChangeEvent } from "@mui/material/Select";
+import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import useApartment from "../../../contexts/apartment";
 
 import "./style.css";
-
-const ITEM_HEIGHT = 48;
-const ITEM_PADDING_TOP = 8;
-const MenuProps = {
-  PaperProps: {
-    style: {
-      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-      width: 250,
-    },
-  },
-};
 
 interface IFormInput {
   name: string;
@@ -35,6 +31,20 @@ interface IFormInput {
   end: string;
 }
 
+function getStyles(
+  text: string,
+  selectedTexts: readonly string[],
+  theme: Theme,
+) {
+  console.log(text, selectedTexts);
+  return {
+    fontWeight:
+      selectedTexts.indexOf(text) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
+
 function TaskDialog({
   open,
   setOpen,
@@ -42,7 +52,12 @@ function TaskDialog({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
+  const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
+  const { apartment } = useApartment() as { apartment: Apartment };
+  const { members } = apartment;
+
+  const [selectedUsernames, setSelectedUsernames] = useState<string[]>([]);
 
   function resetAllFields() {
     reset({
@@ -66,9 +81,22 @@ function TaskDialog({
     setOpen(false);
   }
 
+  function handleSelectChange(
+    event: SelectChangeEvent<typeof selectedUsernames>,
+  ) {
+    console.log("This is", event.target.value, selectedUsernames);
+    const {
+      target: { value },
+    } = event;
+    setSelectedUsernames(
+      // On autofill we get a the stringified value.
+      typeof value === "string" ? value.split(",") : value,
+    );
+  }
+
   return (
     <Dialog open={open} onClose={handleClose}>
-      <form onSubmit={handleSubmit(onSubmit)} className="form task-form">
+      <form onSubmit={handleSubmit(onSubmit)} className="task-form">
         <DialogTitle>New task</DialogTitle>
         <DialogContent>
           <label>Name</label>
@@ -105,20 +133,41 @@ function TaskDialog({
               required: true,
             })}
           />
-          <label>start</label>
+          <label>Start Date</label>
           <input
             type="date"
             {...register("startDate", {
               required: true,
             })}
           />
-          <label>end</label>
+          <label>End Date</label>
           <input
             type="date"
             {...register("endDate", {
               required: true,
             })}
           />
+          <FormControl sx={{ width: "100%" }}>
+            <label>Assigners</label>
+            <Select
+              labelId="assigner-label"
+              multiple
+              value={selectedUsernames}
+              onChange={handleSelectChange}
+              input={<OutlinedInput label="Name" />}
+              className="task-form-select"
+            >
+              {members.map(({ username }) => (
+                <MenuItem
+                  key={username}
+                  value={username}
+                  style={getStyles(username, selectedUsernames, theme)}
+                >
+                  {username}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
