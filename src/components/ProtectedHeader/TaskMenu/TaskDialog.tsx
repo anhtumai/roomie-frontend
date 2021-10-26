@@ -36,7 +36,6 @@ function getStyles(
   selectedTexts: readonly string[],
   theme: Theme,
 ) {
-  console.log(text, selectedTexts);
   return {
     fontWeight:
       selectedTexts.indexOf(text) === -1
@@ -68,6 +67,7 @@ function TaskDialog({
       startDate: "",
       endDate: "",
     });
+    setSelectedUsernames([]);
   }
 
   function handleClose() {
@@ -76,7 +76,7 @@ function TaskDialog({
   }
 
   async function onSubmit(data: IFormInput) {
-    console.log(data);
+    console.log(data, selectedUsernames);
     resetAllFields();
     setOpen(false);
   }
@@ -156,6 +156,7 @@ function TaskDialog({
               onChange={handleSelectChange}
               input={<OutlinedInput label="Name" />}
               className="task-form-select"
+              required
             >
               {members.map(({ username }) => (
                 <MenuItem
