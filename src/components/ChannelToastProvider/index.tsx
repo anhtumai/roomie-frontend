@@ -1,6 +1,6 @@
 import Pusher from "pusher-js";
 import { ReactNode, useEffect } from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import { useQueryClient } from "react-query";
 
 import useAuth from "../../contexts/auth";
@@ -40,12 +40,7 @@ function ChannelToastProvider({
     });
   }, []);
 
-  return (
-    <div>
-      {children}
-      <ToastContainer />
-    </div>
-  );
+  return <>{children}</>;
 }
 
 export default ChannelToastProvider;

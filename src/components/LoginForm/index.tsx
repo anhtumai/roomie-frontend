@@ -5,6 +5,8 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Controller, useForm } from "react-hook-form";
 import { Redirect } from "react-router";
 
+import { toast } from "react-toastify";
+
 import {
   boxSx,
   avatarSx,
@@ -15,14 +17,12 @@ import {
 import "../sharedStyles/authFormStyles.scss";
 
 import useAuth from "../../contexts/auth";
-import useNotification from "../../contexts/notification";
 
 import authService from "../../services/auth";
 
 function LoginForm() {
   const [redirectOnSuccess, setRedirectOnSuccess] = useState(false);
   const { setAuthState } = useAuth();
-  const { setNotification } = useNotification();
   const { control, handleSubmit, reset } = useForm();
   async function onSubmit(data: Credential) {
     try {
@@ -31,7 +31,9 @@ function LoginForm() {
 
       setTimeout(() => {
         setRedirectOnSuccess(true);
-        setNotification("Login successful", "success");
+        toast.success("Login successfully", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       }, 0);
     } catch (err) {
       console.log(err);
@@ -39,7 +41,9 @@ function LoginForm() {
         (err as any).response?.status === 401
           ? "Invalid credential"
           : "Fail to login";
-      setNotification(errMessage, "error");
+      toast.error(errMessage, {
+        position: toast.POSITION.TOP_CENTER,
+      });
       reset({ username: "", password: "" });
     }
   }

@@ -5,10 +5,12 @@ import {
   Redirect,
   RouteProps,
 } from "react-router-dom";
+
+import { ToastContainer } from "react-toastify";
+
 import useAuth, { AuthProvider } from "./contexts/auth";
 import ChannelToastProvider from "./components/ChannelToastProvider";
 
-import { NotificationProvider } from "./contexts/notification";
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
@@ -20,9 +22,7 @@ import "react-toastify/dist/ReactToastify.css";
 function ContextWrapper() {
   return (
     <AuthProvider>
-      <NotificationProvider>
-        <App />
-      </NotificationProvider>
+      <App />
     </AuthProvider>
   );
 }
@@ -67,6 +67,7 @@ function App() {
 
         <PublicRoutes />
       </Switch>
+      <ToastContainer />
     </Router>
   );
 }

@@ -6,10 +6,11 @@ import {
   UseMutationResult,
 } from "react-query";
 
+import { toast } from "react-toastify";
+
 import useAuth from "../contexts/auth";
 import invitationService from "../services/invitation";
 import meService from "../services/me";
-import useNotification from "./notification";
 
 type UseInvitationCollectionMutationResult = UseMutationResult<
   never | undefined,
@@ -39,7 +40,6 @@ export function InvitationsProvider({
 }): JSX.Element {
   const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { setNotification } = useNotification();
   const { isLoading, error, data } = useQuery("invitations", () =>
     meService.getInvitations(authState.token),
   );
@@ -74,7 +74,9 @@ export function InvitationsProvider({
             context.previousCollection,
           );
         }
-        setNotification("Fail to cancel invitation", "error");
+        toast.error("Fail to cancel invitation", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       },
 
       onSettled: () => {
@@ -114,7 +116,9 @@ export function InvitationsProvider({
             context.previousCollection,
           );
         }
-        setNotification("Fail to reject invitation", "error");
+        toast.error("Fail to reject invitation", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       },
 
       onSettled: () => {

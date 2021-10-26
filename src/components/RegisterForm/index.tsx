@@ -4,6 +4,7 @@ import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
 
 import accountService from "../../services/account";
 
@@ -16,11 +17,9 @@ import {
 
 import "../sharedStyles/authFormStyles.scss";
 import useAuth from "../../contexts/auth";
-import useNotification from "../../contexts/notification";
 
 function LoginForm() {
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { setNotification } = useNotification();
   const history = useHistory();
 
   const validationSchema = Yup.object().shape({
@@ -52,11 +51,15 @@ function LoginForm() {
         name,
         password,
       });
-      setNotification(`Create new account: ${name}`, "success");
+      toast.success(`Create new account: ${name}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
       history.push("/login");
     } catch (err) {
       console.log(err);
-      setNotification("Fail to create new account", "error");
+      toast.error("Fail to create new account", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
 

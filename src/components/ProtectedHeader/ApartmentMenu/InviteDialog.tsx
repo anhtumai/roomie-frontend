@@ -10,9 +10,9 @@ import {
 } from "@mui/material";
 import { useQueryClient } from "react-query";
 import { createBrowserHistory } from "history";
+import { toast } from "react-toastify";
 
 import useAuth from "../../../contexts/auth";
-import useNotification from "../../../contexts/notification";
 import invitationService from "../../../services/invitation";
 
 function InviteDialog({
@@ -25,7 +25,6 @@ function InviteDialog({
   const history = createBrowserHistory();
   const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { setNotification } = useNotification();
   const [inviteeUsername, setInviteeUsername] = useState("");
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -48,11 +47,15 @@ function InviteDialog({
       if (history.location.pathname === "/invitations") {
         queryClient.invalidateQueries("invitations");
       }
-      setNotification(`Send invitation to ${inviteeUsername}`, "success");
+      toast.success(`Send invitation to ${inviteeUsername}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     } catch (err) {
       console.log(err);
       console.log((err as any).response);
-      setNotification("Fail to send invitation", "error");
+      toast.error("Fail to send invitation", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
 

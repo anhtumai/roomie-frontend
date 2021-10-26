@@ -5,10 +5,10 @@ import {
   useMutation,
   UseMutationResult,
 } from "react-query";
+import { toast } from "react-toastify";
 
 import useAuth from "../contexts/auth";
 import meService from "../services/me";
-import useNotification from "./notification";
 
 interface ApartmentContextType {
   isLoading: boolean;
@@ -35,7 +35,6 @@ export function ApartmentProvider({
 }): JSX.Element {
   const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { setNotification } = useNotification();
   const { isLoading, error, data } = useQuery("apartment", () =>
     meService.getApartment(authState.token),
   );
@@ -62,7 +61,9 @@ export function ApartmentProvider({
             context.previousApartment,
           );
         }
-        setNotification("Fail to leave apartment", "error");
+        toast.error("Fail to leave apartment", {
+          position: toast.POSITION.TOP_CENTER,
+        });
       },
       onSettled: () => {
         queryClient.invalidateQueries("apartment");

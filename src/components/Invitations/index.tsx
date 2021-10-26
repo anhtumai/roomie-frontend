@@ -1,9 +1,9 @@
 import { Box } from "@mui/material";
-import { useQueryClient } from "react-query";
 import { useHistory } from "react-router";
+import { toast } from "react-toastify";
+
 import useAuth from "../../contexts/auth";
 import useInvitations from "../../contexts/invitations";
-import useNotification from "../../contexts/notification";
 
 import invitationService from "../../services/invitation";
 
@@ -12,11 +12,9 @@ function Invitations({
 }: {
   invitationCollection: InvitationCollection;
 }) {
-  const queryClient = useQueryClient();
   const history = useHistory();
   const { sent, received } = invitationCollection;
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { setNotification } = useNotification();
   const { cancelInvitationMutation, rejectInvitationMutation } =
     useInvitations();
 
@@ -31,10 +29,14 @@ function Invitations({
       const newApartmentName = invitationCollection.received.find(
         (invitation) => invitation.id === invitationId,
       )?.apartment.name;
-      setNotification(`Now you are member of ${newApartmentName}`, "success");
+      toast.success(`Now you are member of ${newApartmentName}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     } catch (err) {
       console.log(err);
-      setNotification("Fail to accept invitation", "error");
+      toast.error("Fail to accept invitation", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
 

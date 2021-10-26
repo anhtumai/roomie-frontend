@@ -3,11 +3,11 @@ import { Paper, Typography, TextField, Button } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 
 import apartmentService from "../../services/apartment";
 import { paperSx, headerSx, buttonSx, noteSx } from "./style";
 import useAuth from "../../contexts/auth";
-import useNotification from "../../contexts/notification";
 
 function ApartmentForm() {
   const validationSchema = Yup.object().shape({
@@ -24,19 +24,22 @@ function ApartmentForm() {
   } = useForm(formOptions);
 
   const { authState } = useAuth();
-  const { setNotification } = useNotification();
 
   async function onSubmit({ name }: { name: string }) {
     try {
       await apartmentService.create((authState as UserWithToken).token, name);
-      setNotification(`Create new apartment: ${name}`, "success");
+      toast.success(`Create new apartment: ${name}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
 
       setTimeout(() => {
         window.location.reload();
       }, 3000);
     } catch (err) {
       console.log(err);
-      setNotification("Fail to create an apartment", "error");
+      toast.error("Fail to create an apartment", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
 

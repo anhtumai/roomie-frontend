@@ -22,15 +22,6 @@ import useApartment from "../../../contexts/apartment";
 
 import "./style.css";
 
-interface IFormInput {
-  name: string;
-  description: string;
-  frequency: number;
-  difficulty: number;
-  start: string;
-  end: string;
-}
-
 function getStyles(
   text: string,
   selectedTexts: readonly string[],
@@ -75,10 +66,14 @@ function TaskDialog({
     setOpen(false);
   }
 
-  async function onSubmit(data: IFormInput) {
-    console.log(data, selectedUsernames);
-    resetAllFields();
-    setOpen(false);
+  async function onSubmit(data: Omit<Task, "id" | "creator_id">) {
+    try {
+    } catch (err) {
+      console.log(err);
+    } finally {
+      resetAllFields();
+      setOpen(false);
+    }
   }
 
   function handleSelectChange(
