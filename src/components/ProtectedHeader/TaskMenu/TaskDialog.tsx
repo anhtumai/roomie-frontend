@@ -17,10 +17,23 @@ import {
 import { Theme, useTheme } from "@mui/material/styles";
 import { SelectChangeEvent } from "@mui/material/Select";
 import { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import useAuth from "../../../contexts/auth";
 import useApartment from "../../../contexts/apartment";
+import taskService from "../../../services/task";
 
 import "./style.css";
+
+interface IFormInput {
+  name: string;
+  description: string;
+  difficulty: string;
+  frequency: string;
+  startDate: string;
+  endDate: string;
+}
 
 function getStyles(
   text: string,
@@ -42,8 +55,10 @@ function TaskDialog({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
+  const queryClient = useQueryClient();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
+  const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
   const { members } = apartment;
 
@@ -66,10 +81,28 @@ function TaskDialog({
     setOpen(false);
   }
 
-  async function onSubmit(data: Omit<Task, "id" | "creator_id">) {
+  async function onSubmit(data: IFormInput) {
     try {
+      console.log(data);
+      await taskService.create(
+        authState.token,
+        {
+          ...data,
+          difficulty: Number(data.difficulty),
+          frequency: Number(data.frequency),
+          start: data.startDate,
+          end: data.endDate,
+        },
+        selectedUsernames,
+      );
+      toast.success(`Create new task ${data.name}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
     } catch (err) {
       console.log(err);
+      toast.error("Fail to create new task", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     } finally {
       resetAllFields();
       setOpen(false);
