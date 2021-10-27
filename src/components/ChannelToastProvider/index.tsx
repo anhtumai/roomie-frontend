@@ -38,6 +38,15 @@ function ChannelToastProvider({
         queryClient.invalidateQueries("invitations");
       }
     });
+
+    channel.bind("apartment", (data: ChannelApartmentMessage) => {
+      console.log(data);
+      const { state } = data;
+      if (state === "LEFT") {
+        toast.info(`User ${data.leaver} left the apartment`);
+        queryClient.invalidateQueries("apartment");
+      }
+    });
   }, []);
 
   return <>{children}</>;

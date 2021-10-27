@@ -91,6 +91,11 @@ declare global {
     invitee: string;
     apartment: string;
   };
+
+  type ChannelApartmentMessage = {
+    state: "LEFT";
+    leaver: string;
+  };
 }
 
 export {};
