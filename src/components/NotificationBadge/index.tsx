@@ -35,10 +35,11 @@ function NotificationBadge() {
   }
 
   const title = "Task Request";
+  const taskRequestNum = apartment.task_requests.length;
   return (
     <Tooltip title={title} placement="bottom-start">
       <IconButton>
-        <Badge badgeContent={0}>
+        <Badge badgeContent={taskRequestNum}>
           <AssignmentTwoToneIcon />
         </Badge>
       </IconButton>

@@ -56,7 +56,7 @@ function ChannelToastProvider({
 
     channel.bind(pusherConstant.TASK_EVENT, (data: ChannelTaskMessage) => {
       const { state } = data;
-      if (state === "CREATED") {
+      if (state === pusherConstant.CREATED_STATE) {
         toast.info(`User ${data.creator} assign task ${data.task} to you`);
         queryClient.invalidateQueries("apartment");
       }

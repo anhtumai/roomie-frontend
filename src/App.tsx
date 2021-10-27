@@ -18,6 +18,7 @@ import InvitationPage from "./pages/InvitationPage";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
+import TaskRequestPage from "./pages/TaskRequestPage";
 
 function ContextWrapper() {
   return (
@@ -64,7 +65,9 @@ function App() {
         <ProtectedRoute exact path="/invitations">
           <InvitationPage />
         </ProtectedRoute>
-
+        <ProtectedRoute exact path="/task_requests">
+          <TaskRequestPage />
+        </ProtectedRoute>
         <PublicRoutes />
       </Switch>
       <ToastContainer />
