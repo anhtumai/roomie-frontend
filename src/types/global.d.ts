@@ -96,6 +96,12 @@ declare global {
     state: "LEFT";
     leaver: string;
   };
+
+  type ChannelTaskMessage = {
+    state: "CREATED";
+    task: string;
+    creator: string;
+  };
 }
 
 export {};
