@@ -6,8 +6,10 @@ import { useHistory } from "react-router";
 
 import useApartment from "../../contexts/apartment";
 import useInvitations from "../../contexts/invitations";
+import useAuth from "../../contexts/auth";
 
 function NotificationBadge() {
+  const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment();
   const { invitationCollection } = useInvitations();
 
@@ -35,7 +37,11 @@ function NotificationBadge() {
   }
 
   const title = "Task Request";
-  const taskRequestNum = apartment.task_requests.length;
+  const taskRequestNum = apartment.task_requests.filter((taskRequest) =>
+    taskRequest.requests.find(
+      (request) => request.assigner.id === authState.id,
+    ),
+  ).length;
   return (
     <Tooltip
       title={title}

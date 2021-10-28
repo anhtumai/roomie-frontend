@@ -5,7 +5,6 @@ import { InvitationsProvider } from "../contexts/invitations";
 import useAuth from "../contexts/auth";
 
 import TaskRequestCardList from "../components/TaskRequestCardList";
-import { Typography } from "@mui/material";
 
 function MainContent() {
   const { authState } = useAuth() as { authState: UserWithToken };

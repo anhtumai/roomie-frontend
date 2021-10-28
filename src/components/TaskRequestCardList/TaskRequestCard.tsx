@@ -15,7 +15,6 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 
-import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
 
 import "./style.css";
