@@ -15,6 +15,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 
+import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
 
 import "./style.css";
@@ -38,21 +39,28 @@ function parseDateString(dateString: string) {
 }
 
 function TaskRequestCard({ taskRequest }: { taskRequest: TaskRequest }) {
+  const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
 
   const { task } = taskRequest;
-  const startDate = parseDateString(task.start);
-  const endDate = parseDateString(task.end);
 
   const taskCreator = apartment.members.find(
     (member) => member.id === taskRequest.task.creator_id,
   );
-  console.log(taskCreator);
+
+  const startDate = parseDateString(task.start);
+  const endDate = parseDateString(task.end);
+
+  const requestState = taskRequest.requests.find(
+    (request) => request.assigner.id === authState.id,
+  )?.state;
 
   return (
     <Card
       sx={{
         maxWidth: "280px",
+        border: "2px ridge",
+        backgroundColor: "#edf3f1",
       }}
       className="TaskRequestCard"
     >
@@ -92,17 +100,30 @@ function TaskRequestCard({ taskRequest }: { taskRequest: TaskRequest }) {
         <AvatarGroup>
           {taskRequest.requests.map((request) => {
             return (
-              <Avatar sx={{ width: 32, height: 32, fontSize: "1rem" }}>
+              <Avatar
+                key={request.id}
+                sx={{ width: 32, height: 32, fontSize: "1rem" }}
+              >
                 {getAbbreviation(request.assigner.name)}
               </Avatar>
             );
           })}
         </AvatarGroup>
         <Box className="button-group">
-          <Button size="small" variant="contained" color="success">
-            Confirm
+          <Button
+            size="small"
+            variant="contained"
+            color="success"
+            disabled={requestState === "accepted" ? true : false}
+          >
+            Accept
           </Button>
-          <Button size="small" variant="contained" color="error">
+          <Button
+            size="small"
+            variant="contained"
+            color="error"
+            disabled={requestState === "rejected" ? true : false}
+          >
             Reject
           </Button>
         </Box>
