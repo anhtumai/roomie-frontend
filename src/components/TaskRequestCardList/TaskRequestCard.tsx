@@ -15,9 +15,17 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import EditIcon from "@mui/icons-material/Edit";
 
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+
+import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
 
+import taskService from "../../services/task";
+
 import "./style.css";
+import { useState } from "react";
+import TaskDetailModal from "../TaskDetailModal";
 
 function getAbbreviation(name: string) {
   return name
@@ -44,6 +52,9 @@ function TaskRequestCard({
   taskRequest: TaskRequest;
   requestState: string;
 }) {
+  const queryClient = useQueryClient();
+  const { authState } = useAuth() as { authState: UserWithToken };
+  const [openDetailsModal, setOpenDetailsModal] = useState(false);
   const { apartment } = useApartment() as { apartment: Apartment };
 
   const { task } = taskRequest;
@@ -55,80 +66,107 @@ function TaskRequestCard({
   const startDate = parseDateString(task.start);
   const endDate = parseDateString(task.end);
 
+  async function handleDelete() {
+    const decision = window.confirm(`Delete task ${task.name} ?`);
+    if (!decision) {
+      return;
+    }
+    try {
+      await taskService.deleteOne(authState.token, task.id);
+      queryClient.invalidateQueries("apartment");
+      toast.success(`Delete task ${task.name}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } catch (err) {
+      console.log(err);
+      toast.error("Fail to delete task", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  }
+
   return (
-    <Card
-      sx={{
-        width: "270px",
-        border: "2px ridge",
-        backgroundColor: "#edf3f1",
-      }}
-      className="TaskRequestCard"
-    >
-      <CardHeader
-        title={task.name}
-        subheader={`By ${taskCreator?.username}`}
-        action={
-          <>
-            <IconButton>
-              <DeleteIcon />
-            </IconButton>
-            <IconButton>
-              <EditIcon />
-            </IconButton>
-            <IconButton>
-              <InfoIcon />
-            </IconButton>
-          </>
-        }
-      />
-      <CardContent
+    <>
+      <Card
         sx={{
-          minHeight: "80px",
+          width: "270px",
+          border: "2px ridge",
+          backgroundColor: "#edf3f1",
         }}
+        className="TaskRequestCard"
       >
-        <Typography variant="body2" color="text.secodary">
-          Difficulty: {task.difficulty} out of 10
-        </Typography>
-        <Typography variant="body2" color="text.secodary">
-          Frequency: Every {task.frequency} week(s)
-        </Typography>
-        <Typography variant="body2" color="text.secodary">
-          Duration: {startDate} - {endDate}
-        </Typography>
-      </CardContent>
-      <CardActions className="TaskRequestCardAction">
-        <AvatarGroup>
-          {taskRequest.requests.map((request) => {
-            return (
-              <Avatar
-                key={request.id}
-                sx={{ width: 32, height: 32, fontSize: "1rem" }}
-              >
-                {getAbbreviation(request.assigner.name)}
-              </Avatar>
-            );
-          })}
-        </AvatarGroup>
-        <Box className="button-group">
-          <Button
-            size="small"
-            variant="contained"
-            color="success"
-            disabled={requestState === "accepted" ? true : false}
-          >
-            Accept
-          </Button>
-          <Button
-            size="small"
-            variant="contained"
-            color="error"
-            disabled={requestState === "rejected" ? true : false}
-          >
-            Reject
-          </Button>
-        </Box>
-      </CardActions>
-    </Card>
+        <CardHeader
+          title={task.name}
+          subheader={`By ${taskCreator?.username}`}
+          action={
+            <>
+              <IconButton onClick={handleDelete}>
+                <DeleteIcon />
+              </IconButton>
+              <IconButton>
+                <EditIcon />
+              </IconButton>
+              <IconButton onClick={() => setOpenDetailsModal(true)}>
+                <InfoIcon />
+              </IconButton>
+            </>
+          }
+        />
+        <CardContent
+          sx={{
+            minHeight: "80px",
+          }}
+        >
+          <Typography variant="body2" color="text.secodary">
+            Difficulty: {task.difficulty} out of 10
+          </Typography>
+          <Typography variant="body2" color="text.secodary">
+            Frequency: Every {task.frequency} week(s)
+          </Typography>
+          <Typography variant="body2" color="text.secodary">
+            Duration: {startDate} - {endDate}
+          </Typography>
+        </CardContent>
+        <CardActions className="TaskRequestCardAction">
+          <AvatarGroup>
+            {taskRequest.requests.map((request) => {
+              return (
+                <Avatar
+                  key={request.id}
+                  sx={{ width: 32, height: 32, fontSize: "1rem" }}
+                >
+                  {getAbbreviation(request.assigner.name)}
+                </Avatar>
+              );
+            })}
+          </AvatarGroup>
+          <Box className="button-group">
+            <Button
+              size="small"
+              variant="contained"
+              color="success"
+              disabled={requestState === "accepted" ? true : false}
+            >
+              Accept
+            </Button>
+            <Button
+              size="small"
+              variant="contained"
+              color="error"
+              disabled={requestState === "rejected" ? true : false}
+            >
+              Reject
+            </Button>
+          </Box>
+        </CardActions>
+      </Card>
+      <TaskDetailModal
+        open={openDetailsModal}
+        setOpen={setOpenDetailsModal}
+        task={taskRequest.task}
+        assigners={taskRequest.requests.map((request) => request.assigner)}
+      />
+    </>
   );
 }
 

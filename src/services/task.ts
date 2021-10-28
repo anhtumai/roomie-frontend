@@ -14,8 +14,15 @@ async function create(
   return response.data;
 }
 
+async function deleteOne(token: string, taskId: number) {
+  const config = constructConfig(token);
+  const response = await axios.delete(`${baseUrl}/${taskId}`, config);
+  return response.data;
+}
+
 const taskService = {
   create,
+  deleteOne,
 };
 
 export default taskService;
