@@ -1,0 +1,42 @@
+.TaskRequestCard .MuiCardHeader-root {
+  padding-top: 10px;
+  padding-left: 7px;
+  padding-right: 4px;
+}
+
+.TaskRequestCard .MuiCardContent-root {
+  padding-left: 7px;
+}
+
+.TaskRequestCard .MuiCardHeader-title {
+  font-size: 1rem;
+}
+
+.TaskRequestCard .MuiCardHeader-subheader {
+  font-size: 0.9rem;
+}
+
+.TaskRequestCard .MuiCardHeader-action {
+  padding-right: 7px;
+}
+
+.TaskRequestCard .MuiIconButton-root {
+  padding: 0 0 0 0;
+}
+
+.TaskRequestCardAction {
+  margin-right: 0;
+  padding-right: 7px !important;
+  justify-content: space-between;
+}
+
+.TaskRequestCardAction .MuiButton-root {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0 !important;
+  margin-right: 0;
+  width: 2px;
+  font-size: 0.8rem;
+  align-self: flex-end;
+}
+
