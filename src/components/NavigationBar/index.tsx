@@ -89,7 +89,7 @@ function NavigationBar({
             <RouteItem text="Tasks" path="/tasks">
               <TaskIcon />
             </RouteItem>
-            <RouteItem text="Requests" path="/requests">
+            <RouteItem text="Requests" path="/task_requests">
               <AssignmentIcon />
             </RouteItem>
           </List>

@@ -66,8 +66,8 @@ declare global {
     name: string;
     admin: Member;
     members: Member[];
-    task_requests: Member[];
-    task_assignments: Member[];
+    task_requests: TaskRequest[];
+    task_assignments: TaskAssignment[];
   };
 
   type Invitation = {

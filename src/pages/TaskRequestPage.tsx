@@ -2,18 +2,48 @@ import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
 import ApartmentForm from "../components/ApartmentForm";
 import useApartment, { ApartmentProvider } from "../contexts/apartment";
 import { InvitationsProvider } from "../contexts/invitations";
+import useAuth from "../contexts/auth";
+
+import TaskRequestCardList from "../components/TaskRequestCardList";
+import { Typography } from "@mui/material";
 
 function MainContent() {
+  const { authState } = useAuth() as { authState: UserWithToken };
   const { isLoading, error, apartment } = useApartment();
 
-  return isLoading ? (
-    <div>Loading...</div>
-  ) : error || apartment === undefined ? (
-    <div>An error has occurred</div>
-  ) : apartment === "" ? (
-    <ApartmentForm />
-  ) : (
-    <div>Here is the list of requested tasks</div>
+  if (isLoading) return <div>Loading...</div>;
+  if (error || apartment === undefined) return <div>An error has occured</div>;
+  if (apartment === "") return <div>You dont have apartment yet</div>;
+
+  const taskRequests = apartment.task_requests;
+
+  const pendingTaskRequests: TaskRequest[] = [];
+  const acceptedTaskRequests: TaskRequest[] = [];
+  const rejectedTaskRequests: TaskRequest[] = [];
+
+  for (const taskRequest of taskRequests) {
+    const requestState = taskRequest.requests.find(
+      (request) => request.assigner.id === authState.id,
+    )?.state;
+    if (requestState === "pending") pendingTaskRequests.push(taskRequest);
+    if (requestState === "accepted") acceptedTaskRequests.push(taskRequest);
+    if (requestState === "rejected") rejectedTaskRequests.push(taskRequest);
+  }
+  return (
+    <>
+      <TaskRequestCardList
+        taskRequests={pendingTaskRequests}
+        requestState={"pending"}
+      />
+      <TaskRequestCardList
+        taskRequests={acceptedTaskRequests}
+        requestState={"accepted"}
+      />
+      <TaskRequestCardList
+        taskRequests={rejectedTaskRequests}
+        requestState={"rejected"}
+      />
+    </>
   );
 }
 
