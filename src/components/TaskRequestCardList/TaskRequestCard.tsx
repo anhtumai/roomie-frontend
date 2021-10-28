@@ -66,6 +66,11 @@ function TaskRequestCard({
   const startDate = parseDateString(task.start);
   const endDate = parseDateString(task.end);
 
+  const taskRequestId = Number(
+    taskRequest.requests.find((request) => request.assigner.id === authState.id)
+      ?.id,
+  );
+
   async function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);
     if (!decision) {
@@ -85,6 +90,29 @@ function TaskRequestCard({
     }
   }
 
+  async function handleAccept() {
+    try {
+      await taskService.accept(authState.token, taskRequestId);
+      queryClient.invalidateQueries("apartment");
+    } catch (err) {
+      console.log(err);
+      toast.error("Fail to accept task", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  }
+
+  async function handleReject() {
+    try {
+      await taskService.reject(authState.token, taskRequestId);
+      queryClient.invalidateQueries("apartment");
+    } catch (err) {
+      console.log(err);
+      toast.error("Fail to reject task", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    }
+  }
   return (
     <>
       <Card
@@ -103,12 +131,16 @@ function TaskRequestCard({
               <IconButton onClick={handleDelete}>
                 <DeleteIcon />
               </IconButton>
-              <IconButton>
-                <EditIcon />
-              </IconButton>
-              <IconButton onClick={() => setOpenDetailsModal(true)}>
-                <InfoIcon />
-              </IconButton>
+              {taskCreator?.id === authState.id && (
+                <>
+                  <IconButton>
+                    <EditIcon />
+                  </IconButton>
+                  <IconButton onClick={() => setOpenDetailsModal(true)}>
+                    <InfoIcon />
+                  </IconButton>
+                </>
+              )}
             </>
           }
         />
@@ -146,6 +178,7 @@ function TaskRequestCard({
               variant="contained"
               color="success"
               disabled={requestState === "accepted" ? true : false}
+              onClick={handleAccept}
             >
               Accept
             </Button>
@@ -154,6 +187,7 @@ function TaskRequestCard({
               variant="contained"
               color="error"
               disabled={requestState === "rejected" ? true : false}
+              onClick={handleReject}
             >
               Reject
             </Button>
