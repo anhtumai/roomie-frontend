@@ -25,7 +25,7 @@ import taskService from "../../services/task";
 
 import "./style.css";
 import { useState } from "react";
-import TaskDetailModal from "../TaskDetailModal";
+import ReadonlyTaskDetailModal from "./ReadonlyTaskDetailModal";
 
 function getAbbreviation(name: string) {
   return name
@@ -128,19 +128,15 @@ function TaskRequestCard({
           subheader={`By ${taskCreator?.username}`}
           action={
             <>
-              <IconButton onClick={handleDelete}>
-                <DeleteIcon />
-              </IconButton>
-              {taskCreator?.id === authState.id && (
-                <>
-                  <IconButton>
-                    <EditIcon />
-                  </IconButton>
-                  <IconButton onClick={() => setOpenDetailsModal(true)}>
-                    <InfoIcon />
-                  </IconButton>
-                </>
+              {(taskCreator?.id === authState.id ||
+                apartment.admin.id === authState.id) && (
+                <IconButton onClick={handleDelete}>
+                  <DeleteIcon />
+                </IconButton>
               )}
+              <IconButton onClick={() => setOpenDetailsModal(true)}>
+                <InfoIcon />
+              </IconButton>
             </>
           }
         />
@@ -194,7 +190,7 @@ function TaskRequestCard({
           </Box>
         </CardActions>
       </Card>
-      <TaskDetailModal
+      <ReadonlyTaskDetailModal
         open={openDetailsModal}
         setOpen={setOpenDetailsModal}
         task={taskRequest.task}

@@ -9,6 +9,10 @@ function TaskRequestCardList({
   taskRequests: TaskRequest[];
   requestState: "pending" | "accepted" | "rejected";
 }) {
+  if (taskRequests.length === 0) {
+    return <Typography>There are no {requestState} tasks.</Typography>;
+  }
+
   return (
     <Box>
       <Typography>

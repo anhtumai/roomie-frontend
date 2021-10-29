@@ -15,10 +15,11 @@ import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import InvitationPage from "./pages/InvitationPage";
+import TaskRequestPage from "./pages/TaskRequestPage";
+import TaskPage from "./pages/TaskPage";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-import TaskRequestPage from "./pages/TaskRequestPage";
 
 function ContextWrapper() {
   return (
@@ -64,6 +65,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/invitations">
           <InvitationPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/tasks">
+          <TaskPage />
         </ProtectedRoute>
         <ProtectedRoute exact path="/task_requests">
           <TaskRequestPage />

@@ -98,6 +98,7 @@ function TaskDialog({
       toast.success(`Create new task ${data.name}`, {
         position: toast.POSITION.TOP_CENTER,
       });
+      queryClient.invalidateQueries("apartment");
     } catch (err) {
       console.log(err);
       toast.error("Fail to create new task", {
