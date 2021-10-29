@@ -100,8 +100,15 @@ declare global {
   type ChannelTaskMessage = {
     state: "CREATED";
     task: string;
-    creator: string;
   };
+
+  interface ChannelCreateTaskMessage extends ChannelTaskMessage {
+    creator: string;
+  }
+
+  interface ChannelAssignTaskMessage extends ChannelTaskMessage {
+    assigners: string[];
+  }
 }
 
 export {};

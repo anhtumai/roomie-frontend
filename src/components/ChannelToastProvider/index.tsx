@@ -57,7 +57,17 @@ function ChannelToastProvider({
     channel.bind(pusherConstant.TASK_EVENT, (data: ChannelTaskMessage) => {
       const { state } = data;
       if (state === pusherConstant.CREATED_STATE) {
-        toast.info(`User ${data.creator} assign task ${data.task} to you`);
+        toast.info(
+          `User ${(data as ChannelCreateTaskMessage).creator} assign task ${
+            data.task
+          } to you`,
+        );
+        queryClient.invalidateQueries("apartment");
+      } else if (state === pusherConstant.ASSIGNED_STATE) {
+        const { assigners } = data as ChannelAssignTaskMessage;
+        if (assigners.includes(authState.username)) {
+          toast.info(`Every assigner accepts task ${data.task}`);
+        }
         queryClient.invalidateQueries("apartment");
       }
     });
