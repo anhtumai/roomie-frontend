@@ -109,6 +109,10 @@ declare global {
   interface ChannelAssignTaskMessage extends ChannelTaskMessage {
     assigners: string[];
   }
+
+  interface ChannelDeleteTaskMessage extends ChannelTaskMessage {
+    deleter: string;
+  }
 }
 
 export {};

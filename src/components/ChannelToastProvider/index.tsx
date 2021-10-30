@@ -69,6 +69,10 @@ function ChannelToastProvider({
           toast.info(`Every assigner accepts task ${data.task}`);
         }
         queryClient.invalidateQueries("apartment");
+      } else if (state === pusherConstant.DELETED_STATE) {
+        const { deleter } = data as ChannelDeleteTaskMessage;
+        toast.info(`User ${deleter} deleted task ${data.task}`);
+        queryClient.invalidateQueries("apartment");
       }
     });
   }, []);

@@ -13,4 +13,5 @@ export const pusherConstant = {
   ACCEPTED_STATE: "ACCEPTED",
   LEAVE_STATE: "LEFT",
   ASSIGNED_STATE: "ASSIGNED",
+  DELETED_STATE: "DELETED",
 };
