@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useHistory } from "react-router";
 import { toast } from "react-toastify";
 
@@ -42,6 +42,17 @@ function Invitations({
 
   function handleReject(invitationId: number) {
     rejectInvitationMutation.mutate(invitationId);
+  }
+
+  if (
+    invitationCollection.sent.length === 0 &&
+    invitationCollection.received.length === 0
+  ) {
+    return (
+      <Box>
+        <Typography>There are no invitations</Typography>
+      </Box>
+    );
   }
 
   return (
