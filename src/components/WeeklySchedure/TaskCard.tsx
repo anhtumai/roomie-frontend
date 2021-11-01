@@ -13,7 +13,6 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
-import EditIcon from "@mui/icons-material/Edit";
 
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -69,6 +68,7 @@ function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
         sx={{
           border: "2px ridge",
           backgroundColor: "#edf3f1",
+          width: "30%",
         }}
         className="TaskCard"
       >

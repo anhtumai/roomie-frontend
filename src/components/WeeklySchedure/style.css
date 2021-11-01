@@ -1,0 +1,12 @@
+.weekly-schedure .date {
+  flex-grow: 1;
+  margin: auto
+}
+
+.weekly-schedure .date p {
+  text-align: center;
+}
+
+
+
+

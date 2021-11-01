@@ -21,6 +21,7 @@ function TaskCardList({
         <div>Requesting</div>
         {taskRequests.map(({ task, requests }) => (
           <TaskCard
+            key={task.id}
             task={task}
             assigners={requests.map((request) => request.assigner.username)}
           />
