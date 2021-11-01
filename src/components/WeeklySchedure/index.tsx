@@ -49,13 +49,19 @@ function SingleUserAssignment({
     <>
       {" "}
       <p>{isAuthUser ? "You have" : `${username} has`} task(s):</p>
-      {tasks.map((task) => (
-        <TaskCard
-          key={task.id}
-          task={task}
-          assigners={getAssignerUsernames(task.id, taskAssignments)}
-        />
-      ))}
+      <div
+        style={{
+          display: "flex",
+        }}
+      >
+        {tasks.map((task) => (
+          <TaskCard
+            key={task.id}
+            task={task}
+            assigners={getAssignerUsernames(task.id, taskAssignments)}
+          />
+        ))}
+      </div>
     </>
   );
 }
