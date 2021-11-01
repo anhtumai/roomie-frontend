@@ -80,7 +80,6 @@ function WeeklySchedure() {
     apartment.task_assignments,
     apartment.members.map((member) => member.username),
   );
-  console.log(assignmentMap);
 
   function handleClickNext() {
     setStartOfWeekDate(add(startOfWeekDate, { weeks: 1 }));
