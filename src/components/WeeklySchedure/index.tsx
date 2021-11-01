@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-import { startOfWeek, add } from "date-fns";
+import { startOfWeek, add, isSameDay } from "date-fns";
 
-import { Box, IconButton } from "@mui/material";
+import { Box, IconButton, Button, Typography } from "@mui/material";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
@@ -21,6 +21,7 @@ const months = [
   "February",
   "March",
   "April",
+  "May",
   "June",
   "July",
   "August",
@@ -29,6 +30,34 @@ const months = [
   "November",
   "December",
 ];
+
+function DateButton({
+  date,
+  selectedDate,
+  setSelectedDate,
+}: {
+  date: Date;
+  selectedDate: Date;
+  setSelectedDate: (x: Date) => void;
+}) {
+  function handleClick() {
+    setSelectedDate(date);
+  }
+  return (
+    <Button
+      sx={{
+        border: isSameDay(date, selectedDate) ? 1 : 0,
+        justifyContent: "center",
+      }}
+      style={{
+        margin: "auto",
+      }}
+      onClick={handleClick}
+    >
+      {date.getDate()}
+    </Button>
+  );
+}
 
 function SingleUserAssignment({
   username,
@@ -69,11 +98,12 @@ function SingleUserAssignment({
 function WeeklySchedure() {
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
-  const today = new Date();
 
+  const today = new Date();
   const [startOfWeekDate, setStartOfWeekDate] = useState(
     startOfWeek(today, { weekStartsOn: 1 }),
   );
+  const [selectedDate, setSelectedDate] = useState(today);
 
   const assignmentMap = getAssignmentMap(
     startOfWeekDate,
@@ -82,11 +112,22 @@ function WeeklySchedure() {
   );
 
   function handleClickNext() {
-    setStartOfWeekDate(add(startOfWeekDate, { weeks: 1 }));
+    const newStartOfWeekDate = add(startOfWeekDate, { weeks: 1 });
+    setStartOfWeekDate(newStartOfWeekDate);
+    setSelectedDate(newStartOfWeekDate);
   }
+
   function handleClickPrevious() {
-    setStartOfWeekDate(add(startOfWeekDate, { weeks: -1 }));
+    const newStartOfWeekDate = add(startOfWeekDate, { weeks: -1 });
+    setStartOfWeekDate(newStartOfWeekDate);
+    setSelectedDate(newStartOfWeekDate);
   }
+
+  function handleResetCurrentDate() {
+    setStartOfWeekDate(today);
+    setSelectedDate(today);
+  }
+
   return (
     <Box
       sx={{
@@ -119,8 +160,7 @@ function WeeklySchedure() {
             margin: "auto",
           }}
         >
-          {months[startOfWeekDate.getMonth() - 1]},{" "}
-          {startOfWeekDate.getFullYear()}
+          {months[selectedDate.getMonth()]}, {selectedDate.getFullYear()}
         </div>
         <IconButton
           sx={{
@@ -139,7 +179,11 @@ function WeeklySchedure() {
         {[0, 1, 2, 3, 4, 5, 6].map((i) => (
           <div key={i} className="date">
             <p>{weekDays[i]}</p>
-            <p>{add(startOfWeekDate, { days: i }).getDate()}</p>
+            <DateButton
+              date={add(startOfWeekDate, { days: i })}
+              selectedDate={selectedDate}
+              setSelectedDate={setSelectedDate}
+            />
           </div>
         ))}
       </div>
@@ -160,6 +204,9 @@ function WeeklySchedure() {
             taskAssignments={apartment.task_assignments}
           />
         ))}
+      <Button variant="outlined" onClick={handleResetCurrentDate}>
+        Reset to current date
+      </Button>
     </Box>
   );
 }

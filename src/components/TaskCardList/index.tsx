@@ -31,6 +31,7 @@ function TaskCardList({
         <div>Assigned</div>
         {taskAssignments.map(({ task, assignments }) => (
           <TaskCard
+            key={task.id}
             task={task}
             assigners={assignments.map(
               (assignment) => assignment.assigner.username,
