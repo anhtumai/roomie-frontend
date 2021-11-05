@@ -12,7 +12,9 @@ import InviteDialog from "./InviteDialog";
 
 import useApartment from "../../../contexts/apartment";
 import useAuth from "../../../contexts/auth";
-import { iconSx } from "./style";
+
+import { iconSx } from "../style";
+import { headerTextButtonSx } from "../../sharedStyles/headerStyles";
 
 function ApartmentMenu() {
   const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
@@ -49,10 +51,7 @@ function ApartmentMenu() {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
-        sx={{
-          color: "white",
-          paddingRight: "1.25rem",
-        }}
+        sx={headerTextButtonSx}
       >
         <p>Apartment</p>
         <KeyboardArrowDownIcon />

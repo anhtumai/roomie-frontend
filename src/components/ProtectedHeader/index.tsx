@@ -11,6 +11,7 @@ import ApartmentMenu from "./ApartmentMenu";
 import TaskMenu from "./TaskMenu";
 
 import { drawerWidth } from "../sharedStyles/drawerConfig";
+import { appBarSx } from "../sharedStyles/headerStyles";
 
 import useApartment from "../../contexts/apartment";
 
@@ -49,7 +50,7 @@ function ProtectedHeader({
     setOpen(true);
   }
   return (
-    <AppBar position="fixed" open={open}>
+    <AppBar position="fixed" open={open} sx={appBarSx}>
       <Toolbar>
         <IconButton
           color="inherit"

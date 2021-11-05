@@ -184,7 +184,7 @@ function TaskDialog({
               value={selectedUsernames}
               onChange={handleSelectChange}
               input={<OutlinedInput label="Name" />}
-              className="task-form-select"
+              className="task-form__select"
               required
             >
               {members.map(({ username }) => (

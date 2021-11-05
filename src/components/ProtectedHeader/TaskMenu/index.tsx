@@ -5,7 +5,7 @@ import { Button, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 
-import { iconSx } from "./style";
+import { iconSx } from "../style";
 import TaskDialog from "./TaskDialog";
 
 function TaskMenu() {
@@ -37,7 +37,8 @@ function TaskMenu() {
         onClick={handleClick}
         sx={{
           color: "white",
-          paddingRight: "1.25rem",
+          textTransform: "none",
+          fontSize: "1rem",
         }}
       >
         <p>Task</p>

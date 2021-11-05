@@ -32,7 +32,7 @@
   font-weight: 200;
 }
 
-.task-form-select {
+.task-form__select {
   display: block;
   box-sizing: border-box;
   width: 100%;
