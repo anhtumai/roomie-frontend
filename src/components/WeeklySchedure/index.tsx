@@ -47,7 +47,6 @@ function DateButton({
     <Button
       sx={{
         border: isSameDay(date, selectedDate) ? 1 : 0,
-        justifyContent: "center",
       }}
       style={{
         margin: "auto",
@@ -124,14 +123,15 @@ function WeeklySchedure() {
   }
 
   function handleResetCurrentDate() {
-    setStartOfWeekDate(today);
+    setStartOfWeekDate(startOfWeek(today, { weekStartsOn: 1 }));
     setSelectedDate(today);
   }
 
   return (
     <Box
       sx={{
-        width: "700px",
+        minWidth: "500px",
+        maxWidth: "900px",
         border: 1,
         borderColor: "black",
       }}
