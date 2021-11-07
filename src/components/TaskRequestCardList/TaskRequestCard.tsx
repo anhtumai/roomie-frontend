@@ -13,7 +13,6 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
-import EditIcon from "@mui/icons-material/Edit";
 
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
@@ -23,9 +22,11 @@ import useApartment from "../../contexts/apartment";
 
 import taskService from "../../services/task";
 
-import "./style.css";
 import { useState } from "react";
 import ReadonlyTaskDetailModal from "./ReadonlyTaskDetailModal";
+
+import "./style.css";
+import { cardSx, avatarSx } from "./style";
 
 function getAbbreviation(name: string) {
   return name
@@ -115,14 +116,7 @@ function TaskRequestCard({
   }
   return (
     <>
-      <Card
-        sx={{
-          width: "270px",
-          border: "2px ridge",
-          backgroundColor: "#edf3f1",
-        }}
-        className="TaskRequestCard"
-      >
+      <Card sx={cardSx} className="TaskRequestCard">
         <CardHeader
           title={task.name}
           subheader={`By ${taskCreator?.username}`}
@@ -159,10 +153,7 @@ function TaskRequestCard({
           <AvatarGroup>
             {taskRequest.requests.map((request) => {
               return (
-                <Avatar
-                  key={request.id}
-                  sx={{ width: 32, height: 32, fontSize: "1rem" }}
-                >
+                <Avatar key={request.id} sx={avatarSx}>
                   {getAbbreviation(request.assigner.name)}
                 </Avatar>
               );

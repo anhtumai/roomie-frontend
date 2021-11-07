@@ -1,12 +1,49 @@
-.weekly-schedure .date {
-  flex-grow: 1;
-  margin: auto
+.weekly-schedule {
+  max-width: 900px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  border-color: #ccc;
+
+  background-color: "#f2f2f7";
 }
 
-.weekly-schedure .date p {
+.weekly-schedule__header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+
+.weekly-schedule__date-button {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.weekly-schedule__month-year-text {
+  flex-grow: 12;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  color: #047cfc;
+  font-size: 1.2rem;
+}
+
+.weekly-schedule__day-date-block {
+  flex-grow: 1;
+  margin: auto;
+}
+
+.weekly-schedule__day-date-block p {
+  font-size: 0.7rem;
   text-align: center;
 }
 
+.weekly-schedule__dates {
+  display: flex;
+}
 
-
+.weekly-schedule__date-wrapper {
+  display: flex;
+}
 

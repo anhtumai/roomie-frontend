@@ -44,17 +44,17 @@ function DateButton({
     setSelectedDate(date);
   }
   return (
-    <Button
-      sx={{
-        border: isSameDay(date, selectedDate) ? 1 : 0,
-      }}
-      style={{
-        margin: "auto",
-      }}
-      onClick={handleClick}
-    >
-      {date.getDate()}
-    </Button>
+    <div className="weekly-schedule__date-wrapper">
+      <button
+        style={{
+          border: isSameDay(date, selectedDate) ? 1 : 0,
+        }}
+        className="weekly-schedule__date-button"
+        onClick={handleClick}
+      >
+        {date.getDate()}
+      </button>
+    </div>
   );
 }
 
@@ -128,38 +128,17 @@ function WeeklySchedure() {
   }
 
   return (
-    <Box
-      sx={{
-        minWidth: "500px",
-        maxWidth: "900px",
-        border: 1,
-        borderColor: "black",
-      }}
-      className="weekly-schedure"
-    >
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "center",
-        }}
-      >
+    <div className="weekly-schedule">
+      <div className="weekly-schedule__header">
         <IconButton
           sx={{
             flexGrow: 1,
           }}
           onClick={handleClickPrevious}
         >
-          <ChevronLeftIcon />
+          <ChevronLeftIcon htmlColor="#047cfc" fontSize="inherit" />
         </IconButton>
-        <div
-          style={{
-            flexGrow: 12,
-            display: "flex",
-            justifyContent: "center",
-            margin: "auto",
-          }}
-        >
+        <div className="weekly-schedule__month-year-text">
           {months[selectedDate.getMonth()]}, {selectedDate.getFullYear()}
         </div>
         <IconButton
@@ -168,16 +147,12 @@ function WeeklySchedure() {
           }}
           onClick={handleClickNext}
         >
-          <ChevronRightIcon />
+          <ChevronRightIcon htmlColor="#047cfc" fontSize="inherit" />
         </IconButton>
       </div>
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
+      <div className="weekly-schedule__dates">
         {[0, 1, 2, 3, 4, 5, 6].map((i) => (
-          <div key={i} className="date">
+          <div key={i} className="weekly-schedule__day-date-block">
             <p>{weekDays[i]}</p>
             <DateButton
               date={add(startOfWeekDate, { days: i })}
@@ -207,7 +182,7 @@ function WeeklySchedure() {
       <Button variant="outlined" onClick={handleResetCurrentDate}>
         Reset to current date
       </Button>
-    </Box>
+    </div>
   );
 }
 

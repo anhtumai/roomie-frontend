@@ -1,5 +1,4 @@
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-import ApartmentForm from "../components/ApartmentForm";
 import useApartment, { ApartmentProvider } from "../contexts/apartment";
 import { InvitationsProvider } from "../contexts/invitations";
 import useAuth from "../contexts/auth";
