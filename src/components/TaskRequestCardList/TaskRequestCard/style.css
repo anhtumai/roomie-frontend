@@ -1,0 +1,46 @@
+.task-request-card__card-content {
+  min-height: 80px;
+}
+
+.task-request-card .MuiCardHeader-root {
+  padding-top: 0.6rem;
+  padding-left: 0.5rem;
+  padding-right: 0.25rem;
+}
+
+.task-request-card .MuiCardContent-root {
+  padding-left: 0.5rem;
+}
+
+.task-request-card .MuiCardHeader-title {
+  font-size: 1rem;
+}
+
+.task-request-card .MuiCardHeader-subheader {
+  font-size: 0.9rem;
+}
+
+.task-request-card .MuiCardHeader-action {
+  padding-right: 0.5rem;
+}
+
+.task-request-card .MuiIconButton-root {
+  padding: 0 0 0 0;
+}
+
+.task-request-card__action {
+  margin-right: 0;
+  padding-right: 0.5rem !important;
+  justify-content: space-between;
+}
+
+.task-request-cardAction .MuiButton-root {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0 !important;
+  margin-right: 0;
+  width: 0.125rem;
+  font-size: 0.8rem;
+  align-self: flex-end;
+}
+

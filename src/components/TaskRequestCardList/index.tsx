@@ -23,7 +23,7 @@ function TaskRequestCardList({
           display: "flex",
           flexDirection: "row",
           flexWrap: "wrap",
-          gap: "50px",
+          gap: "3rem",
         }}
       >
         {taskRequests.map((taskRequest) => (
