@@ -1,4 +1,5 @@
 .weekly-schedule {
+  display: block !important;
   max-width: 900px;
   border-top: 1px solid;
   border-bottom: 1px solid;
@@ -54,4 +55,11 @@
   margin-bottom: auto;
 
   height: 2rem
+}
+
+.weekly-schedule__scrollable-list {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  white-space: nowrap;
 }

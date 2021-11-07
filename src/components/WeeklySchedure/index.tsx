@@ -12,6 +12,7 @@ import useApartment from "../../contexts/apartment";
 import { getAssignmentMap, getAssignerUsernames } from "./utils";
 
 import TaskCard from "../TaskCard";
+import ScrollableTaskCardList from "./ScrollableTaskCardList";
 
 import "./style.css";
 
@@ -85,11 +86,7 @@ function SingleUserAssignment({
     <>
       {" "}
       <p>{isAuthUser ? "You have" : `${username} has`} task(s):</p>
-      <div
-        style={{
-          display: "flex",
-        }}
-      >
+      <div className="weekly-schedule__scrollable-list">
         {tasks.map((task) => (
           <TaskCard
             key={task.id}
