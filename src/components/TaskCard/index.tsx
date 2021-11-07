@@ -65,13 +65,7 @@ function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
 
   return (
     <>
-      <Card
-        sx={{
-          border: "2px ridge",
-          backgroundColor: "#edf3f1",
-        }}
-        className="TaskCard"
-      >
+      <Card className="task-card">
         <CardHeader
           title={task.name}
           subheader={`By ${taskCreator?.username}`}
@@ -89,7 +83,7 @@ function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
             </>
           }
         />
-        <CardActions className="TaskCardAction">
+        <CardActions className="task-card-action">
           <AvatarGroup sx={{ flexGrow: 1 }}>
             {assigners.map((assigner) => {
               return (

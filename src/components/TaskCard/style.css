@@ -1,36 +1,43 @@
-.TaskCard .MuiCardHeader-root {
+.task-card {
+  width: 15rem;
+  border: 2px ridge;
+  background-color: "#edf3f1";
+  display: inline-block;
+}
+
+.task-card .MuiCardHeader-root {
   padding-top: 10px;
   padding-left: 7px;
   padding-right: 4px;
 }
 
-.TaskCard .MuiCardContent-root {
+.task-card .MuiCardContent-root {
   padding-left: 7px;
 }
 
-.TaskCard .MuiCardHeader-title {
+.task-card .MuiCardHeader-title {
   font-size: 1rem;
 }
 
-.TaskCard .MuiCardHeader-subheader {
+.task-card .MuiCardHeader-subheader {
   font-size: 0.9rem;
 }
 
-.TaskCard .MuiCardHeader-action {
+.task-card .MuiCardHeader-action {
   padding-right: 7px;
 }
 
-.TaskCard .MuiIconButton-root {
+.task-card .MuiIconButton-root {
   padding: 0 0 0 0;
 }
 
-.TaskCardAction {
+.task-card-action {
   margin-right: 0;
   padding-right: 7px !important;
   justify-content: space-between;
 }
 
-.TaskCardAction .MuiButton-root {
+.task-card-action .MuiButton-root {
   padding-left: 0;
   padding-right: 0;
   margin-left: 0 !important;

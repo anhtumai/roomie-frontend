@@ -11,7 +11,7 @@ import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
 import { getAssignmentMap, getAssignerUsernames } from "./utils";
 
-import TaskCard from "./TaskCard";
+import TaskCard from "../TaskCard";
 
 import "./style.css";
 
