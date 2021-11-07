@@ -14,10 +14,11 @@
   justify-content: center;
 }
 
-
 .weekly-schedule__date-button {
   margin-left: auto;
   margin-right: auto;
+  border: 0;
+  padding: 0px;
 }
 
 .weekly-schedule__month-year-text {
@@ -37,6 +38,8 @@
 .weekly-schedule__day-date-block p {
   font-size: 0.7rem;
   text-align: center;
+  margin-top: 5px;
+  margin-bottom: 0;
 }
 
 .weekly-schedule__dates {
@@ -45,5 +48,8 @@
 
 .weekly-schedule__date-wrapper {
   display: flex;
-}
+  margin-top: auto;
+  margin-bottom: auto;
 
+  height: 2rem
+}

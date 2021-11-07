@@ -31,6 +31,16 @@ const months = [
   "December",
 ];
 
+const buttonBackgroundColor = "#288cfc";
+const selectedStyle = {
+  border: `5px solid ${buttonBackgroundColor}`,
+  borderRadius: "50%",
+  width: "2rem",
+  height: "2rem",
+  background: buttonBackgroundColor,
+  color: "white",
+};
+
 function DateButton({
   date,
   selectedDate,
@@ -46,9 +56,7 @@ function DateButton({
   return (
     <div className="weekly-schedule__date-wrapper">
       <button
-        style={{
-          border: isSameDay(date, selectedDate) ? 1 : 0,
-        }}
+        style={isSameDay(date, selectedDate) ? selectedStyle : undefined}
         className="weekly-schedule__date-button"
         onClick={handleClick}
       >
