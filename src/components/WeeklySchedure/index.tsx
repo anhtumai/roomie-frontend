@@ -12,7 +12,6 @@ import useApartment from "../../contexts/apartment";
 import { getAssignmentMap, getAssignerUsernames } from "./utils";
 
 import TaskCard from "../TaskCard";
-import ScrollableTaskCardList from "./ScrollableTaskCardList";
 
 import "./style.css";
 

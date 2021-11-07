@@ -16,6 +16,7 @@
 }
 
 .task-card .MuiCardHeader-title {
+  max-width: 9rem;
   font-size: 1rem;
 }
 
@@ -37,13 +38,4 @@
   justify-content: space-between;
 }
 
-.task-card-action .MuiButton-root {
-  padding-left: 0;
-  padding-right: 0;
-  margin-left: 0 !important;
-  margin-right: 0;
-  width: 2px;
-  font-size: 0.8rem;
-  align-self: flex-end;
-}
 
