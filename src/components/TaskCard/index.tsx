@@ -24,17 +24,9 @@ import useApartment from "../../contexts/apartment";
 
 import taskService from "../../services/task";
 
-import "./style.css";
+import commonUtils from "../../utils/common";
 
-function getAbbreviation(name: string) {
-  return name
-    .replace(/\s+/g, " ")
-    .trim()
-    .split(" ")
-    .map((word) => word[0].toUpperCase())
-    .join("")
-    .slice(0, 2);
-}
+import "./style.css";
 
 function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
   const queryClient = useQueryClient();
@@ -45,6 +37,8 @@ function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
   const taskCreator = apartment.members.find(
     (member) => member.id === task.creator_id,
   );
+
+  const { getAbbreviation } = commonUtils;
 
   async function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);

@@ -23,29 +23,13 @@ import useApartment from "../../../contexts/apartment";
 
 import taskService from "../../../services/task";
 
+import commonUtils from "../../../utils/common";
+
 import { useState } from "react";
 
 import { cardSx, avatarSx } from "./style";
 
 import "./style.css";
-
-function getAbbreviation(name: string) {
-  return name
-    .replace(/\s+/g, " ")
-    .trim()
-    .split(" ")
-    .map((word) => word[0].toUpperCase())
-    .join("")
-    .slice(0, 2);
-}
-
-function parseDateString(dateString: string) {
-  const dateObject = new Date(dateString);
-  const month = dateObject.getMonth();
-  const day = dateObject.getDay();
-  const year = dateObject.getFullYear();
-  return `${day}/${month}/${year}`;
-}
 
 function TaskRequestCard({
   taskRequest,
@@ -55,6 +39,9 @@ function TaskRequestCard({
   requestState: string;
 }) {
   const queryClient = useQueryClient();
+
+  const { parseDateString, getAbbreviation } = commonUtils;
+
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
 

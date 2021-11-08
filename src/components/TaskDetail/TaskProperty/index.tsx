@@ -1,14 +1,8 @@
+import commonUtils from "../../../utils/common";
 import "./style.css";
 
-function parseDateString(dateString: string) {
-  const dateObject = new Date(dateString);
-  const month = dateObject.getMonth();
-  const day = dateObject.getDay();
-  const year = dateObject.getFullYear();
-  return `${day}/${month}/${year}`;
-}
-
 function TaskProperty({ task }: { task: Task }) {
+  const { parseDateString } = commonUtils;
   return (
     <div className="task-property">
       <h1>{task.name}</h1>
