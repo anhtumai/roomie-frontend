@@ -1,0 +1,31 @@
+.task-property {
+
+}
+
+.task-property h1 {
+  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+}
+
+.task-property h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+.task-property span {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.task-property__description-block {
+  min-height: 12rem;
+}
+
+.task-property__description-block h2 {
+  margin-bottom: 0;
+}
+
+.task-property__description-block p {
+  margin-top: 0;
+}

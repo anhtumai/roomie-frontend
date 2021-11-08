@@ -22,6 +22,7 @@
   width: 100%;
   padding: 0px;
   cursor: pointer;
+  background-color: #fff;
 }
 
 .weekly-schedule__month-year-text {

@@ -13,10 +13,11 @@ import {
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
-import EditIcon from "@mui/icons-material/Edit";
 
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+
+import { useHistory } from "react-router-dom";
 
 import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
@@ -37,6 +38,7 @@ function getAbbreviation(name: string) {
 
 function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
   const queryClient = useQueryClient();
+  const history = useHistory();
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
 
@@ -77,7 +79,7 @@ function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
                   <DeleteIcon />
                 </IconButton>
               )}
-              <IconButton onClick={() => console.log("Open new page")}>
+              <IconButton onClick={() => history.push(`/tasks/${task.id}`)}>
                 <InfoIcon />
               </IconButton>
             </>
