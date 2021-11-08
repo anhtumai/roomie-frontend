@@ -60,3 +60,7 @@
 .weekly-schedule__scrollable-list {
   display: flex;
 }
+
+.weekly-schedule__reset_button {
+  margin-top: 20px !important;
+}

@@ -183,7 +183,11 @@ function WeeklySchedure() {
             taskAssignments={apartment.task_assignments}
           />
         ))}
-      <Button variant="outlined" onClick={handleResetCurrentDate}>
+      <Button
+        variant="outlined"
+        onClick={handleResetCurrentDate}
+        className="weekly-schedule__reset_button"
+      >
         Reset to current date
       </Button>
     </div>
