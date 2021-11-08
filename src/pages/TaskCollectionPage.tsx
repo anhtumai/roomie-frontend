@@ -1,39 +1,30 @@
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-
+import ApartmentForm from "../components/ApartmentForm";
 import useApartment, { ApartmentProvider } from "../contexts/apartment";
 import { InvitationsProvider } from "../contexts/invitations";
-import { useParams } from "react-router-dom";
-import TaskDetail from "../components/TaskDetail";
+import useAuth from "../contexts/auth";
+
+import TaskCardCollection from "../components/TaskCardCollection";
 
 function MainContent() {
-  const taskIdStr = (useParams() as any).id;
-  const taskId = Number(taskIdStr);
+  const { authState } = useAuth() as { authState: UserWithToken };
   const { isLoading, error, apartment } = useApartment();
 
   if (isLoading) return <div>Loading...</div>;
-  if (error || apartment === undefined) return <div>An error has occurred</div>;
+  if (error || apartment === undefined) return <div>An error has occured</div>;
   if (apartment === "") return <div>You dont have apartment yet</div>;
 
   const { task_requests, task_assignments } = apartment;
 
-  let task: Task | undefined = undefined;
-
-  task = task_requests.find(
-    (taskRequest) => taskRequest.task.id === taskId,
-  )?.task;
-
-  if (!task) {
-    task = task_assignments.find(
-      (taskAssignment) => taskAssignment.task.id === taskId,
-    )?.task;
-  }
-
-  if (!task) return <div>404 not found</div>;
-
-  return <TaskDetail task={task} />;
+  return (
+    <TaskCardCollection
+      taskRequests={task_requests}
+      taskAssignments={task_assignments}
+    />
+  );
 }
 
-function SingleTaskPage() {
+function TaskRequestPage() {
   return (
     <ApartmentProvider>
       <InvitationsProvider>
@@ -45,4 +36,4 @@ function SingleTaskPage() {
   );
 }
 
-export default SingleTaskPage;
+export default TaskRequestPage;

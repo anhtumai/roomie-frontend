@@ -16,6 +16,7 @@ import HomePage from "./pages/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import InvitationPage from "./pages/InvitationPage";
 import TaskRequestPage from "./pages/TaskRequestPage";
+import TaskCollectionPage from "./pages/TaskCollectionPage";
 import TaskPage from "./pages/TaskPage";
 
 import "./App.css";
@@ -66,8 +67,11 @@ function App() {
         <ProtectedRoute exact path="/invitations">
           <InvitationPage />
         </ProtectedRoute>
-        <ProtectedRoute exact path="/tasks">
+        <ProtectedRoute path="/tasks/:id">
           <TaskPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/tasks">
+          <TaskCollectionPage />
         </ProtectedRoute>
         <ProtectedRoute exact path="/task_requests">
           <TaskRequestPage />
