@@ -1,6 +1,7 @@
 import { Box, Typography } from "@mui/material";
 
 import TaskRequestCard from "./TaskRequestCard";
+import "./style.css";
 
 function TaskRequestCardList({
   taskRequests,
@@ -18,14 +19,7 @@ function TaskRequestCardList({
       <Typography>
         {requestState.charAt(0).toUpperCase() + requestState.slice(1)} tasks:{" "}
       </Typography>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "wrap",
-          gap: "3rem",
-        }}
-      >
+      <Box className="task-request-card-list">
         {taskRequests.map((taskRequest) => (
           <TaskRequestCard
             key={taskRequest.task.id}

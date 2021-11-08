@@ -9,6 +9,7 @@ import {
   Box,
   IconButton,
   Button,
+  Popover,
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -23,7 +24,6 @@ import useApartment from "../../../contexts/apartment";
 import taskService from "../../../services/task";
 
 import { useState } from "react";
-import ReadonlyTaskDetailModal from "../ReadonlyTaskDetailModal";
 
 import { cardSx, avatarSx } from "./style";
 
@@ -56,10 +56,9 @@ function TaskRequestCard({
 }) {
   const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const [openDetailsModal, setOpenDetailsModal] = useState(false);
   const { apartment } = useApartment() as { apartment: Apartment };
 
-  const { task } = taskRequest;
+  const { task, requests } = taskRequest;
 
   const taskCreator = apartment.members.find(
     (member) => member.id === taskRequest.task.creator_id,
@@ -72,6 +71,18 @@ function TaskRequestCard({
     taskRequest.requests.find((request) => request.assigner.id === authState.id)
       ?.id,
   );
+
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
+  function handleOpenPopover(event: React.MouseEvent<HTMLButtonElement>) {
+    setAnchorEl(event.currentTarget);
+  }
+
+  function handleClosePopover() {
+    setAnchorEl(null);
+  }
+
+  const openPopover = Boolean(anchorEl);
 
   async function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);
@@ -129,7 +140,7 @@ function TaskRequestCard({
                   <DeleteIcon />
                 </IconButton>
               )}
-              <IconButton onClick={() => setOpenDetailsModal(true)}>
+              <IconButton onClick={handleOpenPopover}>
                 <InfoIcon />
               </IconButton>
             </>
@@ -178,12 +189,27 @@ function TaskRequestCard({
           </Box>
         </CardActions>
       </Card>
-      <ReadonlyTaskDetailModal
-        open={openDetailsModal}
-        setOpen={setOpenDetailsModal}
-        task={taskRequest.task}
-        assigners={taskRequest.requests.map((request) => request.assigner)}
-      />
+      <Popover
+        open={openPopover}
+        anchorEl={anchorEl}
+        onClose={handleClosePopover}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
+      >
+        <Typography sx={{ p: 1, fontSize: "0.9rem" }}>
+          Description: {task.description}
+        </Typography>
+        <Typography sx={{ p: 1, fontSize: "0.9rem" }}>
+          Assigned to:{" "}
+          {requests.map((request) => request.assigner.username).join(", ")}
+        </Typography>
+      </Popover>
     </>
   );
 }
