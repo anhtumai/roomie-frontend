@@ -16,6 +16,12 @@
   padding: 10px 15px;
 }
 
+.task-form input:focus {
+  outline: none !important;
+  border-color: #347cd8;
+  border-width: 2px;
+}
+
 .task-form textarea {
   display: block;
   box-sizing: border-box;
@@ -25,6 +31,12 @@
   padding: 10px 15px;
 }
 
+.task-form textarea:focus {
+  outline: none !important;
+  border-color: #347cd8;
+  border-width: 2px;
+}
+
 .task-form label {
   line-height: 2;
   text-align: left;
@@ -32,10 +44,18 @@
   font-weight: 200;
 }
 
+.task-form__date_inputs {
+  display: flex;
+}
+
+.task-form__date_input {
+  display: block;
+}
+
 .task-form__select {
   display: block;
   box-sizing: border-box;
   width: 100%;
-  border-radius: 4px;
+  border-radius: 2px;
   border: 1px solid grey;
 }

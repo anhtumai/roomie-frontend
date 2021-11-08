@@ -20,9 +20,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
-import useAuth from "../../../contexts/auth";
-import useApartment from "../../../contexts/apartment";
-import taskService from "../../../services/task";
+
+import useAuth from "../../../../contexts/auth";
+import useApartment from "../../../../contexts/apartment";
+import taskService from "../../../../services/task";
 
 import "./style.css";
 
@@ -144,7 +145,7 @@ function TaskDialog({
               maxLength: 500,
             })}
           ></textarea>
-          <label>Difficulty</label>
+          <label>Difficulty (N out of 10)</label>
           <input
             type="number"
             min="1"
@@ -153,7 +154,7 @@ function TaskDialog({
               required: true,
             })}
           />
-          <label>Frequency</label>
+          <label>Frequency (every N weeks)</label>
           <input
             type="number"
             min="1"
@@ -162,20 +163,26 @@ function TaskDialog({
               required: true,
             })}
           />
-          <label>Start Date</label>
-          <input
-            type="date"
-            {...register("startDate", {
-              required: true,
-            })}
-          />
-          <label>End Date</label>
-          <input
-            type="date"
-            {...register("endDate", {
-              required: true,
-            })}
-          />
+          <div className="task-form__date_inputs">
+            <div className="task-form__date_input">
+              <label>Start Date</label>
+              <input
+                type="date"
+                {...register("startDate", {
+                  required: true,
+                })}
+              />
+            </div>
+            <div className="task-form__date_input">
+              <label>End Date</label>
+              <input
+                type="date"
+                {...register("endDate", {
+                  required: true,
+                })}
+              />
+            </div>
+          </div>
           <FormControl sx={{ width: "100%" }}>
             <label>Assigners</label>
             <Select

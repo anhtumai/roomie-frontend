@@ -14,7 +14,7 @@ import {
   submitButtonSx,
 } from "../sharedStyles/authFormStyles";
 
-import "../sharedStyles/authFormStyles.scss";
+import "../sharedStyles/authFormStyles.css";
 
 import useAuth from "../../contexts/auth";
 

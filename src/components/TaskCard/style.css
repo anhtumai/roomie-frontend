@@ -6,13 +6,13 @@
 }
 
 .task-card .MuiCardHeader-root {
-  padding-top: 10px;
-  padding-left: 7px;
-  padding-right: 4px;
+  padding-top: 0.625rem;
+  padding-left: 0.5rem;
+  padding-right: 0.25rem;
 }
 
 .task-card .MuiCardContent-root {
-  padding-left: 7px;
+  padding-left: 0.5rem;
 }
 
 .task-card .MuiCardHeader-title {
@@ -21,11 +21,11 @@
 }
 
 .task-card .MuiCardHeader-subheader {
-  font-size: 0.9rem;
+  font-size: 0.56rem;
 }
 
 .task-card .MuiCardHeader-action {
-  padding-right: 7px;
+  padding-right: 0.44rem;
 }
 
 .task-card .MuiIconButton-root {
@@ -34,7 +34,7 @@
 
 .task-card-action {
   margin-right: 0;
-  padding-right: 7px !important;
+  padding-right: 0.44rem !important;
   justify-content: space-between;
 }
 
