@@ -183,9 +183,9 @@ function CreateTaskDialog({
             </div>
           </div>
           <FormControl sx={{ width: "100%" }}>
-            <label>Assigners</label>
+            <label>Assignees</label>
             <Select
-              labelId="assigner-label"
+              labelId="assignee-label"
               multiple
               value={selectedUsernames}
               onChange={handleSelectChange}

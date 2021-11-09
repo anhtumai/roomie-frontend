@@ -16,10 +16,8 @@ import {
 } from "../sharedStyles/authFormStyles";
 
 import "../sharedStyles/authFormStyles.css";
-import useAuth from "../../contexts/auth";
 
-function LoginForm() {
-  const { authState } = useAuth() as { authState: UserWithToken };
+function RegisterForm() {
   const history = useHistory();
 
   const validationSchema = Yup.object().shape({
@@ -27,7 +25,7 @@ function LoginForm() {
       .required("Username is required")
       .min(5, "Username must be at least 5 characters"),
     name: Yup.string()
-      .required("Username is required")
+      .required("Name is required")
       .min(10, "Name must be at least 10 characters"),
     password: Yup.string()
       .required("Password is required")
@@ -46,7 +44,7 @@ function LoginForm() {
 
   async function onSubmit({ username, name, password }: Account) {
     try {
-      await accountService.create(authState.token, {
+      await accountService.create({
         username,
         name,
         password,
@@ -162,11 +160,11 @@ function LoginForm() {
           color="primary"
           sx={submitButtonSx}
         >
-          Login
+          Sign up
         </Button>
       </form>
     </Box>
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

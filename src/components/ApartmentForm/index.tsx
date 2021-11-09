@@ -45,7 +45,7 @@ function ApartmentForm() {
 
   return (
     <Paper sx={paperSx}>
-      <form onSubmit={handleSubmit(onSubmit)} className="form">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <Typography variant="h6" component="h6" sx={headerSx}>
           Create new apartment
         </Typography>
@@ -67,6 +67,10 @@ function ApartmentForm() {
         {errors.name && (
           <span className="errorSpan">{errors.name.message}</span>
         )}
+        <Typography variant="body1" component="p" sx={noteSx}>
+          <b>Note:</b> You can create a new apartment or wait for invitation
+          from other people
+        </Typography>
 
         <Button
           data-testid="login-btn"
@@ -78,10 +82,6 @@ function ApartmentForm() {
           Submit
         </Button>
       </form>
-      <Typography variant="body1" component="p" sx={noteSx}>
-        <b>Note:</b> You can create a new apartment or wait for invitation from
-        other people
-      </Typography>
     </Paper>
   );
 }

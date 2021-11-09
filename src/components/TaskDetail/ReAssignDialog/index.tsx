@@ -3,16 +3,11 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
-  TextField,
   Button,
-  Typography,
   Select,
   MenuItem,
   OutlinedInput,
-  Checkbox,
-  ListItemText,
   FormControl,
 } from "@mui/material";
 
@@ -83,12 +78,12 @@ function ReAssignDialog({
   }
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Assigners</DialogTitle>
+      <DialogTitle>Assignees</DialogTitle>
       <DialogContent>
         <FormControl sx={{ width: "100%" }}>
-          <label>Assigners</label>
+          <label>Assignees</label>
           <Select
-            labelId="assigner-label"
+            labelId="assignee-label"
             multiple
             value={selectedUsernames}
             onChange={handleSelectChange}
@@ -110,7 +105,7 @@ function ReAssignDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Edit assigners</Button>
+        <Button onClick={handleSubmit}>Edit assignees</Button>
       </DialogActions>
     </Dialog>
   );

@@ -64,9 +64,9 @@ function ChannelToastProvider({
         );
         queryClient.invalidateQueries("apartment");
       } else if (state === pusherConstant.ASSIGNED_STATE) {
-        const { assigners } = data as ChannelAssignTaskMessage;
-        if (assigners.includes(authState.username)) {
-          toast.info(`Every assigner accepts task ${data.task}`);
+        const { assignees } = data as ChannelAssignTaskMessage;
+        if (assignees.includes(authState.username)) {
+          toast.info(`Every assignee accepts task ${data.task}`);
         }
         queryClient.invalidateQueries("apartment");
       } else if (state === pusherConstant.DELETED_STATE) {

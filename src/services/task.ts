@@ -10,10 +10,10 @@ const taskRequestUrl = `${process.env.REACT_APP_BACKEND_URL}/api/taskrequests`;
 async function create(
   token: string,
   task: Omit<Task, "id" | "creator_id">,
-  assigners: string[],
+  assignees: string[],
 ) {
   const config = constructConfig(token);
-  const response = await axios.post(taskUrl, { ...task, assigners }, config);
+  const response = await axios.post(taskUrl, { ...task, assignees }, config);
   return response.data;
 }
 
@@ -52,6 +52,14 @@ async function update(
 
   const response = await axios.put(`${taskUrl}/${taskId}`, task, config);
   return response.data;
+}
+
+async function updateAssignees(
+  token: string,
+  taskId: number,
+  assigneeUsernames: string[],
+) {
+  //
 }
 
 const taskService = {

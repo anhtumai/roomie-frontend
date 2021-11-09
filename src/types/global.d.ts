@@ -48,7 +48,7 @@ declare global {
     requests: {
       id: number;
       state: "accepted" | "pending" | "rejected";
-      assigner: Member;
+      assignee: Member;
     }[];
   };
 
@@ -57,7 +57,7 @@ declare global {
     assignments: {
       id: number;
       order: number;
-      assigner: Member;
+      assignee: Member;
     }[];
   };
 
@@ -107,7 +107,7 @@ declare global {
   }
 
   interface ChannelAssignTaskMessage extends ChannelTaskMessage {
-    assigners: string[];
+    assignees: string[];
   }
 
   interface ChannelDeleteTaskMessage extends ChannelTaskMessage {

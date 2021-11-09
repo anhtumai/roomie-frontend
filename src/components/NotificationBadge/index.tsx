@@ -49,7 +49,7 @@ function NotificationBadge() {
 
   const taskRequestNum = apartment.task_requests.filter((taskRequest) =>
     taskRequest.requests.find(
-      (request) => request.assigner.id === authState.id,
+      (request) => request.assignee.id === authState.id,
     ),
   ).length;
   const title = `You have ${taskRequestNum} task ${

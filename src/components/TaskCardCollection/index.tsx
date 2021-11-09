@@ -23,7 +23,7 @@ function TaskCardCollection({
           <TaskCard
             key={task.id}
             task={task}
-            assigners={requests.map((request) => request.assigner.username)}
+            assignees={requests.map((request) => request.assignee.username)}
           />
         ))}
       </Grid>
@@ -33,8 +33,8 @@ function TaskCardCollection({
           <TaskCard
             key={task.id}
             task={task}
-            assigners={assignments.map(
-              (assignment) => assignment.assigner.username,
+            assignees={assignments.map(
+              (assignment) => assignment.assignee.username,
             )}
           />
         ))}

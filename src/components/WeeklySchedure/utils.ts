@@ -23,14 +23,14 @@ export function getAssignmentMap(
       const weeksDifference = daysDifference / 7;
       const remainder = weeksDifference % (task.frequency * assignments.length);
       const order = (remainder + 1) / task.frequency - 1;
-      const assigner = assignments.find(
+      const assignee = assignments.find(
         (assignment) => assignment.order === order,
-      )?.assigner;
-      if (!assigner) {
+      )?.assignee;
+      if (!assignee) {
         continue;
       }
-      result.set(assigner.username, [
-        ...(result.get(assigner.username) as Task[]),
+      result.set(assignee.username, [
+        ...(result.get(assignee.username) as Task[]),
         task,
       ]);
     }
@@ -39,7 +39,7 @@ export function getAssignmentMap(
   return result;
 }
 
-export function getAssignerUsernames(
+export function getAssigneeUsernames(
   taskId: number,
   taskAssignments: TaskAssignment[],
 ): string[] {
@@ -48,6 +48,6 @@ export function getAssignerUsernames(
   );
   if (!taskAssignment) return [];
   return taskAssignment.assignments.map(
-    (assignment) => assignment.assigner.username,
+    (assignment) => assignment.assignee.username,
   );
 }

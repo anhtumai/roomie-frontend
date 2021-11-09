@@ -28,7 +28,7 @@ import { getAbbreviation } from "../../utils/common";
 
 import "./style.css";
 
-function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
+function TaskCard({ task, assignees }: { task: Task; assignees: string[] }) {
   const queryClient = useQueryClient();
   const history = useHistory();
   const { authState } = useAuth() as { authState: UserWithToken };
@@ -79,13 +79,13 @@ function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
         />
         <CardActions className="task-card-action">
           <AvatarGroup sx={{ flexGrow: 1 }}>
-            {assigners.map((assigner) => {
+            {assignees.map((assignee) => {
               return (
                 <Avatar
-                  key={assigner}
+                  key={assignee}
                   sx={{ width: 32, height: 32, fontSize: "1rem" }}
                 >
-                  {getAbbreviation(assigner)}
+                  {getAbbreviation(assignee)}
                 </Avatar>
               );
             })}

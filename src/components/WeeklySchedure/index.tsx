@@ -9,7 +9,7 @@ import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
 import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
-import { getAssignmentMap, getAssignerUsernames } from "./utils";
+import { getAssignmentMap, getAssigneeUsernames } from "./utils";
 
 import TaskCard from "../TaskCard";
 
@@ -90,7 +90,7 @@ function SingleUserAssignment({
           <TaskCard
             key={task.id}
             task={task}
-            assigners={getAssignerUsernames(task.id, taskAssignments)}
+            assignees={getAssigneeUsernames(task.id, taskAssignments)}
           />
         ))}
       </div>

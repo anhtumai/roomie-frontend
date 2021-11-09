@@ -21,7 +21,7 @@ function MainContent() {
 
   for (const taskRequest of taskRequests) {
     const requestState = taskRequest.requests.find(
-      (request) => request.assigner.id === authState.id,
+      (request) => request.assignee.id === authState.id,
     )?.state;
     if (requestState === "pending") pendingTaskRequests.push(taskRequest);
     if (requestState === "accepted") acceptedTaskRequests.push(taskRequest);

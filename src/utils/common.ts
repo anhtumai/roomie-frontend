@@ -20,7 +20,7 @@ export function getAssigneeUsernames(
   );
 
   if (taskRequest) {
-    return taskRequest.requests.map((_request) => _request.assigner.username);
+    return taskRequest.requests.map((_request) => _request.assignee.username);
   }
 
   const taskAssignment = taskAssignments.find(
@@ -28,7 +28,7 @@ export function getAssigneeUsernames(
   );
   if (taskAssignment)
     return taskAssignment.assignments.map(
-      (assignment) => assignment.assigner.username,
+      (assignment) => assignment.assignee.username,
     );
   return [];
 }

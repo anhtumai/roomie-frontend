@@ -55,7 +55,7 @@ function TaskRequestCard({
   const endDate = format(new Date(task.end), "dd/MM/yyyy");
 
   const taskRequestId = Number(
-    taskRequest.requests.find((request) => request.assigner.id === authState.id)
+    taskRequest.requests.find((request) => request.assignee.id === authState.id)
       ?.id,
   );
 
@@ -149,7 +149,7 @@ function TaskRequestCard({
             {taskRequest.requests.map((request) => {
               return (
                 <Avatar key={request.id} sx={avatarSx}>
-                  {getAbbreviation(request.assigner.name)}
+                  {getAbbreviation(request.assignee.name)}
                 </Avatar>
               );
             })}
@@ -194,7 +194,7 @@ function TaskRequestCard({
         </Typography>
         <Typography sx={{ p: 1, fontSize: "0.9rem" }}>
           Assigned to:{" "}
-          {requests.map((request) => request.assigner.username).join(", ")}
+          {requests.map((request) => request.assignee.username).join(", ")}
         </Typography>
       </Popover>
     </>

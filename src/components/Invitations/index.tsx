@@ -66,7 +66,7 @@ function Invitations({
       ))}
       {received.map((invitation) => (
         <div key={invitation.id}>
-          {invitation.invitee.username} ({invitation.invitee.name}) invites you
+          {invitation.invitor.username} ({invitation.invitor.name}) invites you
           to {invitation.apartment.name}
           <button onClick={() => handleAccept(invitation.id)}>
             Accept
