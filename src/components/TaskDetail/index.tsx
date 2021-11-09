@@ -1,14 +1,18 @@
 import { useState } from "react";
 
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
-import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 import TaskProperty from "./TaskProperty";
 import EditTaskDialog from "./EditTaskDialog";
+import ReAssignDialog from "./ReAssignDialog";
+
 import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
+
+import { getAssigneeUsernames } from "../../utils/common";
 
 import "./style.css";
 
@@ -17,9 +21,14 @@ function TaskDetail({ task }: { task: Task }) {
   const { apartment } = useApartment() as { apartment: Apartment };
 
   const [openTaskDialog, setOpenTaskDialog] = useState(false);
+  const [openReAssignDialog, setOpenReAssignDialog] = useState(false);
 
   const isAdminOrCreator =
     authState.id === apartment.admin.id || authState.id === task.creator_id;
+
+  function handleReAssign() {
+    setOpenReAssignDialog(true);
+  }
 
   function handleEdit() {
     setOpenTaskDialog(true);
@@ -29,10 +38,6 @@ function TaskDetail({ task }: { task: Task }) {
     console.log("Handle delete");
   }
 
-  function handleReturnToTaskCollection() {
-    console.log("Handle return");
-  }
-
   return (
     <div className="task-detail">
       <div className="task-detail__header">
@@ -40,6 +45,13 @@ function TaskDetail({ task }: { task: Task }) {
         <span className="task-detail__task-span">TASK-{task.id}</span>
         {isAdminOrCreator && (
           <>
+            <div
+              className="task-detail__header-button"
+              onClick={handleReAssign}
+            >
+              <AssignmentIndIcon htmlColor="#505f78" />
+              <span>Re-assign</span>
+            </div>
             <div className="task-detail__header-button" onClick={handleEdit}>
               <EditIcon htmlColor="#505f78" />
               <span>Edit</span>
@@ -50,15 +62,6 @@ function TaskDetail({ task }: { task: Task }) {
             </div>
           </>
         )}
-        <div className="task-detail__header-button" onClick={handleDelete}>
-          <KeyboardReturnIcon
-            htmlColor="#505f78"
-            sx={{
-              marginTop: "0.15rem",
-            }}
-          />
-          <span>Return</span>
-        </div>
       </div>
       <div className="task-detail__main-content">
         <div
@@ -80,6 +83,11 @@ function TaskDetail({ task }: { task: Task }) {
         open={openTaskDialog}
         setOpen={setOpenTaskDialog}
         task={task}
+      />
+      <ReAssignDialog
+        open={openReAssignDialog}
+        setOpen={setOpenReAssignDialog}
+        assigneeUsernames={getAssigneeUsernames(task.id, apartment)}
       />
     </div>
   );
