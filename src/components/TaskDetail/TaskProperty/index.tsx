@@ -3,12 +3,13 @@ import "./style.css";
 
 function TaskProperty({ task }: { task: Task }) {
   const { parseDateString } = commonUtils;
+  console.log(task.description);
   return (
     <div className="task-property">
       <h1>{task.name}</h1>
       <div className="task-property__description-block">
         <h2>Description</h2>
-        <p>{task.description}</p>
+        <div>{task.description}</div>
       </div>
       <h2>
         Frequency: <span>every {task.frequency} week(s)</span>

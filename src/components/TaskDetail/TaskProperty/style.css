@@ -26,6 +26,7 @@
   margin-bottom: 0;
 }
 
-.task-property__description-block p {
+.task-property__description-block div {
   margin-top: 0;
+  white-space: pre-wrap;
 }
