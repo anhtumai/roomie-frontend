@@ -1,5 +1,7 @@
 import axios from "axios";
 
+import * as _ from "lodash";
+
 import { constructConfig } from "./utils";
 
 const taskUrl = `${process.env.REACT_APP_BACKEND_URL}/api/tasks`;
@@ -41,11 +43,23 @@ async function reject(token: string, taskRequestId: number) {
   return response.data;
 }
 
+async function update(
+  token: string,
+  taskId: number,
+  task: Omit<Task, "id" | "creator_id">,
+) {
+  const config = constructConfig(token);
+
+  const response = await axios.put(`${taskUrl}/${taskId}`, task, config);
+  return response.data;
+}
+
 const taskService = {
   create,
   deleteOne,
   accept,
   reject,
+  update,
 };
 
 export default taskService;
