@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import useAuth from "../../../contexts/auth";
 import taskService from "../../../services/task";
 
+import "../../sharedStyles/taskFormStyle.css";
+
 function toInputTypeDateFormat(dateString: string) {
   const dateObject = new Date(dateString);
   return dateObject.toLocaleDateString("en-CA");

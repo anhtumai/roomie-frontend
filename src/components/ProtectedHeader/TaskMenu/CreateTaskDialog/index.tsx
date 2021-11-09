@@ -25,7 +25,7 @@ import useAuth from "../../../../contexts/auth";
 import useApartment from "../../../../contexts/apartment";
 import taskService from "../../../../services/task";
 
-import "./style.css";
+import "../../../sharedStyles/taskFormStyle.css";
 
 interface IFormInput {
   name: string;
