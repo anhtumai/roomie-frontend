@@ -6,7 +6,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 
 import { iconSx } from "../style";
-import TaskDialog from "./TaskDialog";
+import CreateTaskDialog from "./CreateTaskDialog";
 
 function TaskMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -54,7 +54,7 @@ function TaskMenu() {
           <AddIcon sx={iconSx} /> Create
         </MenuItem>
       </Menu>
-      <TaskDialog open={openTaskDialog} setOpen={setOpenTaskDialog} />
+      <CreateTaskDialog open={openTaskDialog} setOpen={setOpenTaskDialog} />
     </div>
   );
 }

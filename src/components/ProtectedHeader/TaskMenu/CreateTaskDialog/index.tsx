@@ -49,7 +49,7 @@ function getStyles(
   };
 }
 
-function TaskDialog({
+function CreateTaskDialog({
   open,
   setOpen,
 }: {
@@ -215,4 +215,4 @@ function TaskDialog({
   );
 }
 
-export default TaskDialog;
+export default CreateTaskDialog;
