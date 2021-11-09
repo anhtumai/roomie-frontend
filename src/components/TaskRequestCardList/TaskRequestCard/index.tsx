@@ -18,12 +18,14 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
+import { format } from "date-fns";
+
 import useAuth from "../../../contexts/auth";
 import useApartment from "../../../contexts/apartment";
 
 import taskService from "../../../services/task";
 
-import commonUtils from "../../../utils/common";
+import { getAbbreviation } from "../../../utils/common";
 
 import { useState } from "react";
 
@@ -40,8 +42,6 @@ function TaskRequestCard({
 }) {
   const queryClient = useQueryClient();
 
-  const { parseDateString, getAbbreviation } = commonUtils;
-
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
 
@@ -51,8 +51,8 @@ function TaskRequestCard({
     (member) => member.id === taskRequest.task.creator_id,
   );
 
-  const startDate = parseDateString(task.start);
-  const endDate = parseDateString(task.end);
+  const startDate = format(new Date(task.start), "dd/MM/yyyy");
+  const endDate = format(new Date(task.end), "dd/MM/yyyy");
 
   const taskRequestId = Number(
     taskRequest.requests.find((request) => request.assigner.id === authState.id)

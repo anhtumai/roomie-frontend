@@ -1,10 +1,4 @@
-import {
-  startOfWeek,
-  endOfWeek,
-  compareAsc,
-  differenceInDays,
-  format,
-} from "date-fns";
+import { startOfWeek, endOfWeek, compareAsc, differenceInDays } from "date-fns";
 
 export function getAssignmentMap(
   currentDate: Date,

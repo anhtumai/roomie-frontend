@@ -21,6 +21,7 @@ import { Theme, useTheme } from "@mui/material/styles";
 
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+
 import useApartment from "../../../contexts/apartment";
 
 function getStyles(
@@ -57,7 +58,16 @@ function ReAssignDialog({
   }
 
   async function handleSubmit() {
-    console.log(selectedUsernames);
+    if (selectedUsernames === assigneeUsernames) {
+      setOpen(false);
+      return;
+    }
+    try {
+      //
+    } catch (err) {
+      console.log(err);
+      setSelectedUsernames(assigneeUsernames);
+    }
   }
 
   function handleSelectChange(
@@ -100,7 +110,7 @@ function ReAssignDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Add task</Button>
+        <Button onClick={handleSubmit}>Edit assigners</Button>
       </DialogActions>
     </Dialog>
   );

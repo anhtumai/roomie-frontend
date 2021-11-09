@@ -114,7 +114,6 @@ function CreateTaskDialog({
   function handleSelectChange(
     event: SelectChangeEvent<typeof selectedUsernames>,
   ) {
-    console.log("This is", event.target.value, selectedUsernames);
     const {
       target: { value },
     } = event;

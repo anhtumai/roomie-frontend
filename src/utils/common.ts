@@ -1,12 +1,4 @@
-function parseDateString(dateString: string) {
-  const dateObject = new Date(dateString);
-  const month = dateObject.getMonth();
-  const day = dateObject.getDay();
-  const year = dateObject.getFullYear();
-  return `${day}/${month}/${year}`;
-}
-
-function getAbbreviation(name: string) {
+export function getAbbreviation(name: string) {
   return name
     .replace(/\s+/g, " ")
     .trim()
@@ -16,9 +8,27 @@ function getAbbreviation(name: string) {
     .slice(0, 2);
 }
 
-const commonUtils = {
-  parseDateString,
-  getAbbreviation,
-};
+export function getAssigneeUsernames(
+  taskId: number,
+  apartment: Apartment,
+): string[] {
+  const taskRequests = apartment.task_requests;
+  const taskAssignments = apartment.task_assignments;
 
-export default commonUtils;
+  const taskRequest = taskRequests.find(
+    (element) => element.task.id === taskId,
+  );
+
+  if (taskRequest) {
+    return taskRequest.requests.map((_request) => _request.assigner.username);
+  }
+
+  const taskAssignment = taskAssignments.find(
+    (element) => element.task.id === taskId,
+  );
+  if (taskAssignment)
+    return taskAssignment.assignments.map(
+      (assignment) => assignment.assigner.username,
+    );
+  return [];
+}

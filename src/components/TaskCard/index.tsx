@@ -24,7 +24,7 @@ import useApartment from "../../contexts/apartment";
 
 import taskService from "../../services/task";
 
-import commonUtils from "../../utils/common";
+import { getAbbreviation } from "../../utils/common";
 
 import "./style.css";
 
@@ -37,8 +37,6 @@ function TaskCard({ task, assigners }: { task: Task; assigners: string[] }) {
   const taskCreator = apartment.members.find(
     (member) => member.id === task.creator_id,
   );
-
-  const { getAbbreviation } = commonUtils;
 
   async function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);

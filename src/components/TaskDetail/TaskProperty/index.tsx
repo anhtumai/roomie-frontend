@@ -1,9 +1,7 @@
-import commonUtils from "../../../utils/common";
+import { format } from "date-fns";
 import "./style.css";
 
 function TaskProperty({ task }: { task: Task }) {
-  const { parseDateString } = commonUtils;
-  console.log(task.description);
   return (
     <div className="task-property">
       <h1>{task.name}</h1>
@@ -20,7 +18,8 @@ function TaskProperty({ task }: { task: Task }) {
       <h2>
         Duration:{" "}
         <span>
-          from {parseDateString(task.start)} to {parseDateString(task.end)}
+          from {format(new Date(task.start), "dd/MM/yyyy")} to{" "}
+          {format(new Date(task.end), "dd/MM/yyyy")}
         </span>
       </h2>
     </div>
