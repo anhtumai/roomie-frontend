@@ -87,6 +87,7 @@ function TaskDetail({ task }: { task: Task }) {
       <ReAssignDialog
         open={openReAssignDialog}
         setOpen={setOpenReAssignDialog}
+        taskId={task.id}
         assigneeUsernames={getAssigneeUsernames(task.id, apartment)}
       />
     </div>
