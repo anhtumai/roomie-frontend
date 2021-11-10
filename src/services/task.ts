@@ -59,7 +59,16 @@ async function updateAssignees(
   taskId: number,
   assigneeUsernames: string[],
 ) {
-  //
+  const config = constructConfig(token);
+
+  const response = await axios.put(
+    `${taskUrl}/${taskId}/assignees`,
+    {
+      assignees: assigneeUsernames,
+    },
+    config,
+  );
+  return response.data;
 }
 
 const taskService = {
@@ -68,6 +77,7 @@ const taskService = {
   accept,
   reject,
   update,
+  updateAssignees,
 };
 
 export default taskService;

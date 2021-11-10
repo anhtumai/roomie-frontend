@@ -17,7 +17,10 @@ import { Theme, useTheme } from "@mui/material/styles";
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
+import useAuth from "../../../contexts/auth";
 import useApartment from "../../../contexts/apartment";
+
+import taskService from "../../../services/task";
 
 function getStyles(
   text: string,
@@ -35,13 +38,17 @@ function getStyles(
 function ReAssignDialog({
   open,
   setOpen,
+  taskId,
   assigneeUsernames,
 }: {
   open: boolean;
   setOpen: (x: boolean) => void;
+  taskId: number;
   assigneeUsernames: string[];
 }) {
+  const queryClient = useQueryClient();
   const theme = useTheme();
+  const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
   const { members } = apartment;
   const [selectedUsernames, setSelectedUsernames] =
@@ -53,15 +60,26 @@ function ReAssignDialog({
   }
 
   async function handleSubmit() {
-    if (selectedUsernames === assigneeUsernames) {
+    if (
+      selectedUsernames.length === 0 ||
+      selectedUsernames === assigneeUsernames
+    ) {
       setOpen(false);
+      setSelectedUsernames(assigneeUsernames);
       return;
     }
     try {
-      //
+      await taskService.updateAssignees(
+        authState.token,
+        taskId,
+        selectedUsernames,
+      );
+      queryClient.invalidateQueries("apartment");
     } catch (err) {
       console.log(err);
       setSelectedUsernames(assigneeUsernames);
+    } finally {
+      setOpen(false);
     }
   }
 
@@ -78,7 +96,7 @@ function ReAssignDialog({
   }
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Assignees</DialogTitle>
+      <DialogTitle>Re-assign the task</DialogTitle>
       <DialogContent>
         <FormControl sx={{ width: "100%" }}>
           <label>Assignees</label>
@@ -105,7 +123,7 @@ function ReAssignDialog({
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Edit assignees</Button>
+        <Button onClick={handleSubmit}>Update</Button>
       </DialogActions>
     </Dialog>
   );
