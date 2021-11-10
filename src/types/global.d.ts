@@ -98,20 +98,33 @@ declare global {
   };
 
   type ChannelTaskMessage = {
-    state: "CREATED";
+    state: string;
     task: string;
   };
 
   interface ChannelCreateTaskMessage extends ChannelTaskMessage {
+    state: "CREATED";
     creator: string;
   }
 
   interface ChannelAssignTaskMessage extends ChannelTaskMessage {
+    state: "ASSIGNED";
     assignees: string[];
   }
 
   interface ChannelDeleteTaskMessage extends ChannelTaskMessage {
+    state: "DELETED";
     deleter: string;
+  }
+
+  interface ChannelEditedTaskMessage extends ChannelTaskMessage {
+    state: "EDITTED";
+    updater: string;
+  }
+
+  interface ChannelReAssignedTaskMessage extends ChannelTaskMessage {
+    state: "REASSIGNED";
+    assigner: string;
   }
 }
 

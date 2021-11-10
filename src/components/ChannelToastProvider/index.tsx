@@ -73,6 +73,14 @@ function ChannelToastProvider({
         const { deleter } = data as ChannelDeleteTaskMessage;
         toast.info(`User ${deleter} deleted task ${data.task}`);
         queryClient.invalidateQueries("apartment");
+      } else if (state === pusherConstant.EDITED_STATE) {
+        const { updater } = data as ChannelEditedTaskMessage;
+        toast.info(`User ${updater} updated task ${data.task}`);
+        queryClient.invalidateQueries("apartment");
+      } else if (state === pusherConstant.REASSIGNED_STATE) {
+        const { assigner } = data as ChannelReAssignedTaskMessage;
+        toast.info(`User ${assigner} re assigned task ${data.task}`);
+        queryClient.invalidateQueries("apartment");
       }
     });
   }, []);
