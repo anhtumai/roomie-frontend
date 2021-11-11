@@ -1,7 +1,6 @@
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
 
-import useApartment, { ApartmentProvider } from "../contexts/apartment";
-import { InvitationsProvider } from "../contexts/invitations";
+import useApartment from "../contexts/apartment";
 import { useParams } from "react-router-dom";
 import TaskDetail from "../components/TaskDetail";
 
@@ -36,13 +35,9 @@ function MainContent() {
 
 function SingleTaskPage() {
   return (
-    <ApartmentProvider>
-      <InvitationsProvider>
-        <ProtectedPageLayout>
-          <MainContent />
-        </ProtectedPageLayout>
-      </InvitationsProvider>
-    </ApartmentProvider>
+    <ProtectedPageLayout>
+      <MainContent />
+    </ProtectedPageLayout>
   );
 }
 
