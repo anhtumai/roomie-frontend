@@ -3,12 +3,8 @@ import {
   AvatarGroup,
   Card,
   CardHeader,
-  CardContent,
   CardActions,
-  Typography,
-  Box,
   IconButton,
-  Button,
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -28,7 +24,13 @@ import { getAbbreviation } from "../../utils/common";
 
 import "./style.css";
 
-function TaskCard({ task, assignees }: { task: Task; assignees: string[] }) {
+function TaskCard({
+  task,
+  assigneeNames,
+}: {
+  task: Task;
+  assigneeNames: string[];
+}) {
   const queryClient = useQueryClient();
   const history = useHistory();
   const { authState } = useAuth() as { authState: UserWithToken };
@@ -79,13 +81,13 @@ function TaskCard({ task, assignees }: { task: Task; assignees: string[] }) {
         />
         <CardActions className="task-card-action">
           <AvatarGroup sx={{ flexGrow: 1 }}>
-            {assignees.map((assignee) => {
+            {assigneeNames.map((name) => {
               return (
                 <Avatar
-                  key={assignee}
+                  key={name}
                   sx={{ width: 32, height: 32, fontSize: "1rem" }}
                 >
-                  {getAbbreviation(assignee)}
+                  {getAbbreviation(name)}
                 </Avatar>
               );
             })}

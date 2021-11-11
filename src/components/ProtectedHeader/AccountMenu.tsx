@@ -2,17 +2,12 @@ import { IconButton, Avatar, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 
 import useAuth from "../../contexts/auth";
+import { getAbbreviation } from "../../utils/common";
 
 function AccountMenu() {
   const { logout, authState } = useAuth();
   const { name } = authState as UserWithToken;
-  const abbreviation = name
-    .replace(/\s+/g, " ")
-    .trim()
-    .split(" ")
-    .map((word) => word[0].toUpperCase())
-    .join("")
-    .slice(0, 2);
+  const abbreviation = getAbbreviation(name);
 
   const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
   const open = Boolean(anchorEl);

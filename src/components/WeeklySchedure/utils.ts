@@ -39,15 +39,13 @@ export function getAssignmentMap(
   return result;
 }
 
-export function getAssigneeUsernames(
+export function getAssignees(
   taskId: number,
   taskAssignments: TaskAssignment[],
-): string[] {
+): Member[] {
   const taskAssignment = taskAssignments.find(
     (element) => element.task.id === taskId,
   );
   if (!taskAssignment) return [];
-  return taskAssignment.assignments.map(
-    (assignment) => assignment.assignee.username,
-  );
+  return taskAssignment.assignments.map((assignment) => assignment.assignee);
 }
