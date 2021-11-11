@@ -1,9 +1,12 @@
 import { useState } from "react";
 
+import { useHistory } from "react-router-dom";
+
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 import TaskProperty from "./TaskProperty";
 import EditTaskDialog from "./EditTaskDialog";
@@ -23,6 +26,7 @@ function TaskDetail({
 }: {
   taskUnion: TaskRequest | TaskAssignment;
 }) {
+  const history = useHistory();
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
 
@@ -67,6 +71,16 @@ function TaskDetail({
             <div className="task-detail__header-button" onClick={handleDelete}>
               <DeleteIcon htmlColor="#505f78" />
               <span>Delete</span>
+            </div>
+            <div
+              className="task-detail__header-button"
+              onClick={() => history.goBack()}
+            >
+              <KeyboardReturnIcon
+                sx={{ marginTop: "0.2rem" }}
+                htmlColor="#505f78"
+              />
+              <span>Go back</span>
             </div>
           </>
         )}
