@@ -1,0 +1,41 @@
+.task-request-property {
+}
+
+.task-request-property h2 {
+  color: #606f86;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.task-request-property__status {
+  background-color: #ff7404;
+  color: white;
+  font-size: 1rem;
+  height: 2.4rem;
+  width: 6rem;
+  display: inline-flex;
+  align-items: center;
+
+  margin-top: 0;
+  border-radius: 4px;
+}
+
+.task-request-property__status p {
+  margin-left: 0.25rem;
+}
+
+.task-request-property span {
+  font-size: 1rem;
+}
+
+.task-request-property__accepted-span {
+  color: #1b5e20
+}
+
+.task-request-property__rejected-span {
+  color: #b71c1c
+}
+
+.task-request-property__pending-span {
+  color: #e65100
+}

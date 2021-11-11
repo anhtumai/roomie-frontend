@@ -1,0 +1,20 @@
+.member-display {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 7px;
+
+  background: #e0e4e4;
+  padding-right: 1rem 
+}
+
+.member-display__avatar {
+  margin-left: 0.7rem;
+}
+
+
+.member-display p {
+  margin-left: 0.7rem;
+  font-size: 0.9rem;
+  color: #374966;
+  margin-right: 0.4rem
+}
