@@ -66,7 +66,7 @@ function ChannelToastProvider({
       } else if (state === pusherConstant.ASSIGNED_STATE) {
         const { assignees } = data as ChannelAssignTaskMessage;
         if (assignees.includes(authState.username)) {
-          toast.info(`Every assignee accepts task ${data.task}`);
+          toast.info(`All assignee(s) accept task ${data.task}`);
         }
         queryClient.invalidateQueries("apartment");
       } else if (state === pusherConstant.DELETED_STATE) {

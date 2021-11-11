@@ -8,6 +8,8 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import TaskProperty from "./TaskProperty";
 import EditTaskDialog from "./EditTaskDialog";
 import ReAssignDialog from "./ReAssignDialog";
+import TaskRequestProperty from "./TaskRequestProperty";
+import TaskAssignmentProperty from "./TaskAssignmentProperty";
 
 import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
@@ -16,12 +18,18 @@ import { getAssigneeUsernames } from "../../utils/common";
 
 import "./style.css";
 
-function TaskDetail({ task }: { task: Task }) {
+function TaskDetail({
+  taskUnion,
+}: {
+  taskUnion: TaskRequest | TaskAssignment;
+}) {
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
 
   const [openTaskDialog, setOpenTaskDialog] = useState(false);
   const [openReAssignDialog, setOpenReAssignDialog] = useState(false);
+
+  const { task } = taskUnion;
 
   const isAdminOrCreator =
     authState.id === apartment.admin.id || authState.id === task.creator_id;
@@ -76,7 +84,14 @@ function TaskDetail({ task }: { task: Task }) {
             flex: "1 0 0",
           }}
         >
-          Hihi
+          {"requests" in taskUnion && (
+            <TaskRequestProperty taskRequest={taskUnion as TaskRequest} />
+          )}
+          {"assignments" in taskUnion && (
+            <TaskAssignmentProperty
+              taskAssignment={taskUnion as TaskAssignment}
+            />
+          )}
         </div>
       </div>
       <EditTaskDialog

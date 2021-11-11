@@ -16,21 +16,22 @@ function MainContent() {
 
   const { task_requests, task_assignments } = apartment;
 
-  let task: Task | undefined = undefined;
-
-  task = task_requests.find(
+  const taskRequest = task_requests.find(
     (taskRequest) => taskRequest.task.id === taskId,
-  )?.task;
+  );
 
-  if (!task) {
-    task = task_assignments.find(
-      (taskAssignment) => taskAssignment.task.id === taskId,
-    )?.task;
+  if (taskRequest) {
+    return <TaskDetail taskUnion={taskRequest} />;
   }
 
-  if (!task) return <div>404 not found</div>;
+  const taskAssignment = task_assignments.find(
+    (taskAssignment) => taskAssignment.task.id === taskId,
+  );
 
-  return <TaskDetail task={task} />;
+  if (taskAssignment) {
+    return <TaskDetail taskUnion={taskAssignment} />;
+  }
+  return <div>404 not found ...</div>;
 }
 
 function SingleTaskPage() {
