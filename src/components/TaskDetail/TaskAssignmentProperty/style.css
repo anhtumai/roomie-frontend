@@ -1,0 +1,42 @@
+.task-assignment-property {
+}
+
+.task-assignment-property h2 {
+  color: #606f86;
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.task-assignment-property__status {
+  background-color: #4caf50;
+  color: white;
+  font-size: 1rem;
+  height: 2.4rem;
+  width: 6rem;
+  display: inline-flex;
+  align-items: center;
+
+  margin-top: 0;
+  border-radius: 4px;
+  display: flex;
+}
+
+.task-assignment-property__status p {
+  margin: auto;
+}
+
+.task-assignment-property span {
+  font-size: 0.9rem;
+}
+
+.task-assignment-property__accepted-span {
+  color: #1b5e20
+}
+
+.task-assignment-property__rejected-span {
+  color: #b71c1c
+}
+
+.task-assignment-property__pending-span {
+  color: #e65100
+}

@@ -18,10 +18,15 @@
 
   margin-top: 0;
   border-radius: 4px;
+  display: flex;
 }
 
 .task-request-property__status p {
-  margin-left: 0.25rem;
+  margin: auto;
+}
+
+.task-request-property__assignee-display {
+  margin-bottom: 0.25rem;
 }
 
 .task-request-property span {
