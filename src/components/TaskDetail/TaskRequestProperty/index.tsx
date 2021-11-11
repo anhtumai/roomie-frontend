@@ -22,7 +22,7 @@ function TaskRequestProperty({ taskRequest }: { taskRequest: TaskRequest }) {
 
   return (
     <div className="task-request-property">
-      <h2>Status</h2>
+      <h2 className="task-request-property__first-header">Status</h2>
       <div className="task-request-property__status">
         <p>Requesting</p>
       </div>

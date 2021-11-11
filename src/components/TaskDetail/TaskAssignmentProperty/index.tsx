@@ -1,7 +1,7 @@
 import ReorderIcon from "@mui/icons-material/Reorder";
 import { IconButton } from "@mui/material";
 
-import * as _ from "lodash";
+import _ from "lodash";
 
 import "./style.css";
 
@@ -21,8 +21,8 @@ function TaskAssignmentProperty({
 
   return (
     <div className="task-assignment-property">
-      <h2>Status</h2>
-      <div className="task-assignment-property__status">
+      <h2 className="task-assignment-property__first-header">Status</h2>
+      <div className="task-assignment-property__status ">
         <p>Assigned</p>
       </div>
       <div className="task-assignment-property__order">
