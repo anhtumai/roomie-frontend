@@ -1,6 +1,7 @@
 import { useState } from "react";
-
 import { useHistory } from "react-router-dom";
+
+import { IconButton } from "@mui/material";
 
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import AssignmentIndIcon from "@mui/icons-material/AssignmentInd";
@@ -57,33 +58,24 @@ function TaskDetail({
         <span className="task-detail__task-span">TASK-{task.id}</span>
         {isAdminOrCreator && (
           <>
-            <div
-              className="task-detail__header-button"
-              onClick={handleReAssign}
-            >
+            <IconButton onClick={handleReAssign}>
               <AssignmentIndIcon htmlColor="#505f78" />
               <span>Re-assign</span>
-            </div>
-            <div className="task-detail__header-button" onClick={handleEdit}>
+            </IconButton>
+            <IconButton onClick={handleEdit}>
               <EditIcon htmlColor="#505f78" />
               <span>Edit</span>
-            </div>
-            <div className="task-detail__header-button" onClick={handleDelete}>
+            </IconButton>
+            <IconButton onClick={handleDelete}>
               <DeleteIcon htmlColor="#505f78" />
               <span>Delete</span>
-            </div>
-            <div
-              className="task-detail__header-button"
-              onClick={() => history.goBack()}
-            >
-              <KeyboardReturnIcon
-                sx={{ marginTop: "0.2rem" }}
-                htmlColor="#505f78"
-              />
-              <span>Go back</span>
-            </div>
+            </IconButton>
           </>
         )}
+        <IconButton onClick={() => history.goBack()}>
+          <KeyboardReturnIcon htmlColor="#505f78" />
+          <span>Go back</span>
+        </IconButton>
       </div>
       <div className="task-detail__main-content">
         <div
