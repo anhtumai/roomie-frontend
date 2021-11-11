@@ -9,7 +9,6 @@ import {
   Box,
   IconButton,
   Button,
-  Popover,
 } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -17,6 +16,7 @@ import InfoIcon from "@mui/icons-material/Info";
 
 import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import { format } from "date-fns";
 
@@ -26,8 +26,6 @@ import useApartment from "../../../contexts/apartment";
 import taskService from "../../../services/task";
 
 import { getAbbreviation } from "../../../utils/common";
-
-import { useState } from "react";
 
 import { cardSx, avatarSx } from "./style";
 
@@ -41,11 +39,12 @@ function TaskRequestCard({
   requestState: string;
 }) {
   const queryClient = useQueryClient();
+  const history = useHistory();
 
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
 
-  const { task, requests } = taskRequest;
+  const { task } = taskRequest;
 
   const taskCreator = apartment.members.find(
     (member) => member.id === taskRequest.task.creator_id,
@@ -59,17 +58,9 @@ function TaskRequestCard({
       ?.id,
   );
 
-  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
-
-  function handleOpenPopover(event: React.MouseEvent<HTMLButtonElement>) {
-    setAnchorEl(event.currentTarget);
+  function handleRedirectTaskPage() {
+    history.push(`/tasks/${task.id}`);
   }
-
-  function handleClosePopover() {
-    setAnchorEl(null);
-  }
-
-  const openPopover = Boolean(anchorEl);
 
   async function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);
@@ -127,7 +118,7 @@ function TaskRequestCard({
                   <DeleteIcon />
                 </IconButton>
               )}
-              <IconButton onClick={handleOpenPopover}>
+              <IconButton onClick={handleRedirectTaskPage}>
                 <InfoIcon />
               </IconButton>
             </>
@@ -176,27 +167,6 @@ function TaskRequestCard({
           </Box>
         </CardActions>
       </Card>
-      <Popover
-        open={openPopover}
-        anchorEl={anchorEl}
-        onClose={handleClosePopover}
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        transformOrigin={{
-          vertical: "top",
-          horizontal: "center",
-        }}
-      >
-        <Typography sx={{ p: 1, fontSize: "0.9rem" }}>
-          Description: {task.description}
-        </Typography>
-        <Typography sx={{ p: 1, fontSize: "0.9rem" }}>
-          Assigned to:{" "}
-          {requests.map((request) => request.assignee.username).join(", ")}
-        </Typography>
-      </Popover>
     </>
   );
 }

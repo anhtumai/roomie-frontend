@@ -2,7 +2,7 @@ import { Badge, IconButton, Tooltip } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import PersonAddAltTwoToneIcon from "@mui/icons-material/PersonAddAltTwoTone";
 
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 
 import useApartment from "../../contexts/apartment";
 import useInvitations from "../../contexts/invitations";

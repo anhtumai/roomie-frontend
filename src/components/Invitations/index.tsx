@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
 import useAuth from "../../contexts/auth";

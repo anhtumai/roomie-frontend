@@ -28,7 +28,7 @@ function TaskRequestProperty({ taskRequest }: { taskRequest: TaskRequest }) {
       </div>
       <h2>Assignees</h2>
       {taskRequest.requests.map((_request) => (
-        <div style={{}}>
+        <div key={_request.id}>
           <MemberDisplay member={_request.assignee} />:{" "}
           {stateDisplay[_request.state]}
         </div>
