@@ -1,6 +1,5 @@
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-import useApartment, { ApartmentProvider } from "../contexts/apartment";
-import { InvitationsProvider } from "../contexts/invitations";
+import useApartment from "../contexts/apartment";
 import useAuth from "../contexts/auth";
 
 import TaskRequestCardList from "../components/TaskRequestCardList";
@@ -47,13 +46,9 @@ function MainContent() {
 
 function TaskRequestPage() {
   return (
-    <ApartmentProvider>
-      <InvitationsProvider>
-        <ProtectedPageLayout>
-          <MainContent />
-        </ProtectedPageLayout>
-      </InvitationsProvider>
-    </ApartmentProvider>
+    <ProtectedPageLayout>
+      <MainContent />
+    </ProtectedPageLayout>
   );
 }
 

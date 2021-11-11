@@ -16,13 +16,9 @@ function MainContent() {
 
 function InvitationPage() {
   return (
-    <ApartmentProvider>
-      <InvitationsProvider>
-        <ProtectedPageLayout>
-          <MainContent />
-        </ProtectedPageLayout>
-      </InvitationsProvider>
-    </ApartmentProvider>
+    <ProtectedPageLayout>
+      <MainContent />
+    </ProtectedPageLayout>
   );
 }
 export default InvitationPage;

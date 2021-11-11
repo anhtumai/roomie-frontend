@@ -9,6 +9,9 @@ import {
 import { ToastContainer } from "react-toastify";
 
 import useAuth, { AuthProvider } from "./contexts/auth";
+import { ApartmentProvider } from "./contexts/apartment";
+import { InvitationsProvider } from "./contexts/invitations";
+
 import ChannelToastProvider from "./components/ChannelToastProvider";
 
 import LoginPage from "./pages/LoginPage";
@@ -21,14 +24,6 @@ import TaskPage from "./pages/TaskPage";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
-
-function ContextWrapper() {
-  return (
-    <AuthProvider>
-      <App />
-    </AuthProvider>
-  );
-}
 
 function PublicRoutes() {
   return (
@@ -49,17 +44,21 @@ function PublicRoutes() {
 function ProtectedRoute({ ...rest }: RouteProps) {
   const { isAuthenticated } = useAuth();
   return isAuthenticated() ? (
-    <ChannelToastProvider>
-      <Route {...rest} />
-    </ChannelToastProvider>
+    <ApartmentProvider>
+      <InvitationsProvider>
+        <ChannelToastProvider>
+          <Route {...rest} />
+        </ChannelToastProvider>
+      </InvitationsProvider>
+    </ApartmentProvider>
   ) : (
     <Redirect to="/login" />
   );
 }
 
-function App() {
+function AppRoutes() {
   return (
-    <Router>
+    <>
       <Switch>
         <ProtectedRoute exact path="/home">
           <HomePage />
@@ -79,6 +78,16 @@ function App() {
         <PublicRoutes />
       </Switch>
       <ToastContainer />
+    </>
+  );
+}
+
+function ContextWrapper() {
+  return (
+    <Router>
+      <AuthProvider>
+        <AppRoutes />
+      </AuthProvider>
     </Router>
   );
 }
