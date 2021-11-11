@@ -4,6 +4,7 @@
 .task-assignment-property h2 {
   color: #606f86;
   font-size: 1.2rem;
+  margin-top: 0;
   margin-bottom: 0;
 }
 
@@ -29,14 +30,24 @@
   font-size: 0.9rem;
 }
 
-.task-assignment-property__accepted-span {
-  color: #1b5e20
+.task-assignment-property__assignee-display {
+  margin-bottom: 0.25rem;
 }
 
-.task-assignment-property__rejected-span {
-  color: #b71c1c
+.task-assignment-property__order {
+  display: flex;
 }
 
-.task-assignment-property__pending-span {
-  color: #e65100
+.task-assignment-property__order h2 {
+  flex-grow: 1;
 }
+
+.task-assignment-property__order span {
+  color: #505f78;
+}
+
+.task-assignment-property__order .MuiIconButton-root {
+  padding-top: 0;
+  padding-right: 2rem;
+}
+

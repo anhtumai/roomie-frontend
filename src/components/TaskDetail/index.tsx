@@ -88,14 +88,14 @@ function TaskDetail({
       <div className="task-detail__main-content">
         <div
           style={{
-            flex: "2 1 0",
+            flex: "5 1 0",
           }}
         >
           <TaskProperty task={task} />
         </div>
         <div
           style={{
-            flex: "1 0 0",
+            flex: "3 0 0",
           }}
         >
           {"requests" in taskUnion && (

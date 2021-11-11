@@ -1,3 +1,8 @@
+import ReorderIcon from "@mui/icons-material/Reorder";
+import { IconButton } from "@mui/material";
+
+import * as _ from "lodash";
+
 import "./style.css";
 
 import MemberDisplay from "../MemberDisplay";
@@ -10,9 +15,9 @@ function TaskAssignmentProperty({
 }) {
   const { apartment } = useApartment() as { apartment: Apartment };
   const { members } = apartment;
-  const creator = members.find(
-    (member) => member.id === taskAssignment.task.creator_id,
-  );
+
+  const { task, assignments } = taskAssignment;
+  const creator = members.find((member) => member.id === task.creator_id);
 
   return (
     <div className="task-assignment-property">
@@ -20,7 +25,27 @@ function TaskAssignmentProperty({
       <div className="task-assignment-property__status">
         <p>Assigned</p>
       </div>
-      <h2>Orders</h2>
+      <div className="task-assignment-property__order">
+        <h2
+          style={{
+            flexGrow: 1,
+          }}
+        >
+          Order
+        </h2>
+        <IconButton>
+          <ReorderIcon htmlColor="#505f78" />
+          <span>Reorder</span>
+        </IconButton>
+      </div>
+      {_.sortBy(assignments, ["order"]).map((assignment) => (
+        <div
+          key={assignment.id}
+          className="task-assignment-property__assignee-display"
+        >
+          <MemberDisplay member={assignment.assignee} />
+        </div>
+      ))}
 
       <h2>Creator</h2>
       {creator && <MemberDisplay member={creator} />}
