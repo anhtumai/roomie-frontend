@@ -1,4 +1,5 @@
 import { useState } from "react";
+import * as _ from "lodash";
 import {
   Dialog,
   DialogTitle,
@@ -47,6 +48,7 @@ function ReAssignDialog({
   assigneeUsernames: string[];
 }) {
   const theme = useTheme();
+  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
   const { members } = apartment;
@@ -61,9 +63,15 @@ function ReAssignDialog({
   async function handleSubmit() {
     if (
       setSelectedUsernames.length === 0 ||
-      selectedUsernames === assigneeUsernames
+      _.isEqual(_.sortBy(selectedUsernames), _.sortBy(assigneeUsernames))
     ) {
       setOpen(false);
+      toast.error(
+        "Selected assignee usernames must be different and have length bigger than 0.",
+        {
+          position: toast.POSITION.TOP_CENTER,
+        },
+      );
       return;
     }
     try {
@@ -76,6 +84,7 @@ function ReAssignDialog({
         `Re-assign TASK-${taskId} to ${selectedUsernames.join(", ")}`,
         { position: toast.POSITION.TOP_CENTER },
       );
+      queryClient.invalidateQueries("apartment");
     } catch (err) {
       console.log(err);
       toast.error("Fail to re-assign the task", {
