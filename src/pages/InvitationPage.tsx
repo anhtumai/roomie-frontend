@@ -1,5 +1,4 @@
-import { ApartmentProvider } from "../contexts/apartment";
-import useInvitations, { InvitationsProvider } from "../contexts/invitations";
+import useInvitations from "../contexts/invitations";
 
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
 import Invitations from "../components/Invitations";

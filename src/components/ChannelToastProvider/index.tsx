@@ -36,7 +36,12 @@ function ChannelToastProvider({
           toast.info(`User ${invitee} rejected the invitation`);
           queryClient.invalidateQueries("invitations");
         } else if (state === pusherConstant.ACCEPTED_STATE) {
-          toast.info(`User ${invitee} accepted the invitation`);
+          if (invitor === authState.username) {
+            toast.info(`User ${invitee} accepted the invitation`);
+          } else if (invitee === authState.username) {
+          } else {
+            toast.info(`${invitor} added ${invitee} to the apartment`);
+          }
           queryClient.invalidateQueries("apartment");
           queryClient.invalidateQueries("invitations");
         }
