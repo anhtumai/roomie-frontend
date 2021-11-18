@@ -1,8 +1,9 @@
 import { useState } from "react";
 
+import _ from "lodash";
+
 import {
   Dialog,
-  DialogTitle,
   DialogContent,
   DialogActions,
   Button,
@@ -10,6 +11,9 @@ import {
 } from "@mui/material";
 
 import MemberDisplay from "../../MemberDisplay";
+
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
 
 import {
   DragDropContext,
@@ -19,6 +23,9 @@ import {
 } from "react-beautiful-dnd";
 
 import "./style.css";
+
+import taskService from "../../../../services/task";
+import useAuth from "../../../../contexts/auth";
 
 function reorder(
   previousOrder: Assignment[],
@@ -35,20 +42,56 @@ function reorder(
 function ReorderDialog({
   open,
   setOpen,
+  taskId,
   assignments,
 }: {
   open: boolean;
   setOpen: (x: boolean) => void;
+  taskId: number;
   assignments: Assignment[];
 }) {
+  const queryClient = useQueryClient();
+  const { authState } = useAuth() as { authState: UserWithToken };
+
   const [currentOrder, setCurrentOrder] = useState<Assignment[]>(assignments);
 
   function handleClose() {
     setOpen(false);
   }
 
-  function handleSubmit() {
-    console.log("submit");
+  async function handleSubmit() {
+    const assignmentUsernames = assignments.map(
+      (assignment) => assignment.assignee.username,
+    );
+    const currentOrderUsernames = currentOrder.map(
+      (assignment) => assignment.assignee.username,
+    );
+
+    if (_.isEqual(assignmentUsernames, currentOrderUsernames)) {
+      setOpen(false);
+      return;
+    }
+
+    try {
+      await taskService.updateOrder(
+        authState.token,
+        taskId,
+        currentOrderUsernames,
+      );
+      toast.success(
+        `Reorder TASK-${taskId} to ${currentOrderUsernames.join(", ")}`,
+        { position: toast.POSITION.TOP_CENTER },
+      );
+      queryClient.invalidateQueries("apartment");
+    } catch (err) {
+      console.log(err);
+      toast.error("Fail to re-assign the task", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      setCurrentOrder(assignments);
+    } finally {
+      setOpen(false);
+    }
   }
 
   function onEnd(result: DropResult) {

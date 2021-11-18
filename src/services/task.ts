@@ -70,6 +70,20 @@ async function updateAssignees(
   return response.data;
 }
 
+async function updateOrder(
+  token: string,
+  taskId: number,
+  assigneeUsernames: string[],
+) {
+  const config = constructConfig(token);
+  const response = await axios.put(
+    `${taskUrl}/${taskId}/order`,
+    { order: assigneeUsernames },
+    config,
+  );
+  return response.data;
+}
+
 const taskService = {
   create,
   deleteOne,
@@ -77,6 +91,7 @@ const taskService = {
   reject,
   update,
   updateAssignees,
+  updateOrder,
 };
 
 export default taskService;
