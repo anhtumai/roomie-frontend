@@ -20,9 +20,10 @@
   margin-right: auto;
   border: 0;
   width: 100%;
-  padding: 0px;
+  padding: 0;
   cursor: pointer;
   background-color: #fff;
+  font-size: 0.85rem;
 }
 
 .weekly-schedule__month-year-text {
@@ -42,7 +43,7 @@
 .weekly-schedule__day-date-block p {
   font-size: 0.7rem;
   text-align: center;
-  margin-top: 5px;
+  margin-top: 0.5rem;
   margin-bottom: 0;
 }
 

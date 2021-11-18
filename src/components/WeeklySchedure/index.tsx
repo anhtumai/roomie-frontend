@@ -33,7 +33,7 @@ const months = [
 
 const buttonBackgroundColor = "#288cfc";
 const selectedStyle = {
-  border: `5px solid ${buttonBackgroundColor}`,
+  border: `1px solid ${buttonBackgroundColor}`,
   borderRadius: "50%",
   width: "2rem",
   height: "2rem",
