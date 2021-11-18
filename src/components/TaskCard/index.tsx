@@ -78,16 +78,14 @@ function TaskCard({
         />
         <CardActions className="task-card-action">
           <AvatarGroup sx={{ flexGrow: 1 }}>
-            {assigneeNames.map((name) => {
-              return (
-                <Avatar
-                  key={name}
-                  sx={{ width: 32, height: 32, fontSize: "1rem" }}
-                >
-                  {getAbbreviation(name)}
-                </Avatar>
-              );
-            })}
+            {assigneeNames.map((name) => (
+              <Avatar
+                key={name}
+                sx={{ width: "2.25rem", height: "2.25rem", fontSize: "1rem" }}
+              >
+                {getAbbreviation(name)}
+              </Avatar>
+            ))}
           </AvatarGroup>
         </CardActions>
       </Card>
