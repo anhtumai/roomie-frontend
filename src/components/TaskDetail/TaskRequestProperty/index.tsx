@@ -32,7 +32,9 @@ function TaskRequestProperty({ taskRequest }: { taskRequest: TaskRequest }) {
           key={_request.id}
           className="task-request-property__assignee-display"
         >
-          <MemberDisplay member={_request.assignee} />:{" "}
+          <div className="task-request-property__member-display">
+            <MemberDisplay member={_request.assignee} />{" "}
+          </div>
           {stateDisplay[_request.state]}
         </div>
       ))}

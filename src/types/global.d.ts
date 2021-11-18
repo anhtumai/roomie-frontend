@@ -52,13 +52,15 @@ declare global {
     }[];
   };
 
+  type Assignment = {
+    id: number;
+    order: number;
+    assignee: Member;
+  };
+
   type TaskAssignment = {
     task: Task;
-    assignments: {
-      id: number;
-      order: number;
-      assignee: Member;
-    }[];
+    assignments: Assignment[];
   };
 
   type Apartment = {

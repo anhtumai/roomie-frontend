@@ -30,6 +30,11 @@
   margin: auto;
 }
 
+.task-request-property__member-display {
+  min-width: 60%;
+  display: inline-flex;
+}
+
 .task-request-property__assignee-display {
   margin-bottom: 0.25rem;
 }

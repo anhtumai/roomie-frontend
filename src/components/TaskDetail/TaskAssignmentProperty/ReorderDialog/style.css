@@ -1,0 +1,29 @@
+.reorder-dialog__header {
+  display: inline-flex;
+  margin-bottom: 1rem;
+}
+
+.reorder-dialog__assignment-display {
+  margin-bottom: 0.7rem;
+}
+
+.reorder-dialog__member-display {
+  display: inline-flex;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.reorder-dialog__member-display:hover {
+  transform: scale(1.1);
+}
+
+.reorder-dialog__note {
+  margin-top: 2rem;
+  font-style: italic;
+}
+
+.reorder-dialog__preview-task {
+  font-size: 1rem;
+  margin-top: 1.9rem;
+  margin-bottom: 2.2rem
+}
