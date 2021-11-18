@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-import { TextField, Button, Typography, Avatar, Box } from "@mui/material";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Controller, useForm } from "react-hook-form";
 import { Redirect } from "react-router";
-
 import { toast } from "react-toastify";
+
+import { TextField, Button, Typography, Avatar, Box } from "@mui/material";
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 import {
   boxSx,
@@ -13,7 +13,6 @@ import {
   h2Sx,
   submitButtonSx,
 } from "../sharedStyles/authFormStyles";
-
 import "../sharedStyles/authFormStyles.css";
 
 import useAuth from "../../contexts/auth";

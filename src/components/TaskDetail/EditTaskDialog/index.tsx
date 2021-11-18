@@ -1,3 +1,7 @@
+import { useForm } from "react-hook-form";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+
 import {
   Dialog,
   DialogTitle,
@@ -5,9 +9,6 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-import { useForm } from "react-hook-form";
-import { useQueryClient } from "react-query";
-import { toast } from "react-toastify";
 
 import useAuth from "../../../contexts/auth";
 import taskService from "../../../services/task";

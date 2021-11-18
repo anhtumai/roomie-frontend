@@ -1,3 +1,7 @@
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+
 import {
   Avatar,
   AvatarGroup,
@@ -10,16 +14,9 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 
-import { useQueryClient } from "react-query";
-import { toast } from "react-toastify";
-
-import { useHistory } from "react-router-dom";
-
 import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
-
 import taskService from "../../services/task";
-
 import { getAbbreviation } from "../../utils/common";
 
 import "./style.css";

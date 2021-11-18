@@ -1,7 +1,7 @@
-import "./style.css";
-
 import MemberDisplay from "../MemberDisplay";
 import useApartment from "../../../contexts/apartment";
+
+import "./style.css";
 
 const stateDisplay = {
   accepted: (

@@ -1,4 +1,8 @@
 import { useState } from "react";
+import { useQueryClient } from "react-query";
+import { createBrowserHistory } from "history";
+import { toast } from "react-toastify";
+
 import {
   Dialog,
   DialogTitle,
@@ -8,12 +12,9 @@ import {
   TextField,
   Button,
 } from "@mui/material";
-import { useQueryClient } from "react-query";
-import { createBrowserHistory } from "history";
-import { toast } from "react-toastify";
 
-import useAuth from "../../../contexts/auth";
-import invitationService from "../../../services/invitation";
+import useAuth from "../../../../contexts/auth";
+import invitationService from "../../../../services/invitation";
 
 function InviteDialog({
   open,

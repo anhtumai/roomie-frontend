@@ -1,5 +1,6 @@
-import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
+
+import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
 import { appBarSx, headerTextButtonSx } from "../sharedStyles/headerStyles";
 

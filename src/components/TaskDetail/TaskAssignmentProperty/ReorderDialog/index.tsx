@@ -1,6 +1,14 @@
 import { useState } from "react";
 
 import _ from "lodash";
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import {
+  DragDropContext,
+  Draggable,
+  Droppable,
+  DropResult,
+} from "react-beautiful-dnd";
 
 import {
   Dialog,
@@ -12,20 +20,10 @@ import {
 
 import MemberDisplay from "../../MemberDisplay";
 
-import { useQueryClient } from "react-query";
-import { toast } from "react-toastify";
-
-import {
-  DragDropContext,
-  Draggable,
-  Droppable,
-  DropResult,
-} from "react-beautiful-dnd";
-
-import "./style.css";
-
 import taskService from "../../../../services/task";
 import useAuth from "../../../../contexts/auth";
+
+import "./style.css";
 
 function reorder(
   previousOrder: Assignment[],

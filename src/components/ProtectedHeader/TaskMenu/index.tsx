@@ -1,12 +1,12 @@
-import * as React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 
 import { Button, Menu, MenuItem } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import AddIcon from "@mui/icons-material/Add";
 
-import { iconSx } from "../style";
 import CreateTaskDialog from "./CreateTaskDialog";
+
+import { iconSx } from "../style";
 
 function TaskMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

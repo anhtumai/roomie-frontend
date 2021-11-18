@@ -1,15 +1,15 @@
-import ReorderIcon from "@mui/icons-material/Reorder";
-import { IconButton } from "@mui/material";
-
+import { useState } from "react";
 import _ from "lodash";
 
-import "./style.css";
+import { IconButton } from "@mui/material";
+import ReorderIcon from "@mui/icons-material/Reorder";
 
 import MemberDisplay from "../MemberDisplay";
 import ReorderDialog from "./ReorderDialog";
 
 import useApartment from "../../../contexts/apartment";
-import { useState } from "react";
+
+import "./style.css";
 
 function TaskAssignmentProperty({
   taskAssignment,

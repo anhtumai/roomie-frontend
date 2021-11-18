@@ -1,3 +1,8 @@
+import { useQueryClient } from "react-query";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { format } from "date-fns";
+
 import {
   Avatar,
   AvatarGroup,
@@ -14,21 +19,12 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 
-import { useQueryClient } from "react-query";
-import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
-
-import { format } from "date-fns";
-
 import useAuth from "../../../contexts/auth";
 import useApartment from "../../../contexts/apartment";
-
 import taskService from "../../../services/task";
-
 import { getAbbreviation } from "../../../utils/common";
 
 import { cardSx, avatarSx } from "./style";
-
 import "./style.css";
 
 function TaskRequestCard({

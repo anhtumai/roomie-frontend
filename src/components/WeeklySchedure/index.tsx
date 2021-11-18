@@ -2,16 +2,16 @@ import { useState } from "react";
 
 import { startOfWeek, add, isSameDay } from "date-fns";
 
-import { Box, IconButton, Button, Typography } from "@mui/material";
+import { IconButton, Button } from "@mui/material";
 
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
+import TaskCard from "../TaskCard";
+
 import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
 import { getAssignmentMap, getAssignees } from "./utils";
-
-import TaskCard from "../TaskCard";
 
 import "./style.css";
 

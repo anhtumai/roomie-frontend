@@ -1,8 +1,9 @@
-import { IconButton, Avatar, Menu, MenuItem } from "@mui/material";
 import React, { useState } from "react";
 
-import useAuth from "../../contexts/auth";
-import { getAbbreviation } from "../../utils/common";
+import { IconButton, Avatar, Menu, MenuItem } from "@mui/material";
+
+import useAuth from "../../../contexts/auth";
+import { getAbbreviation } from "../../../utils/common";
 
 function AccountMenu() {
   const { logout, authState } = useAuth();

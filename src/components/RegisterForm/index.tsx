@@ -1,10 +1,11 @@
-import { TextField, Button, Typography, Avatar, Box } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
+import { useHistory } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+
+import { TextField, Button, Typography, Avatar, Box } from "@mui/material";
+import AddIcon from "@mui/icons-material/Add";
 
 import accountService from "../../services/account";
 
@@ -14,7 +15,6 @@ import {
   h2Sx,
   submitButtonSx,
 } from "../sharedStyles/authFormStyles";
-
 import "../sharedStyles/authFormStyles.css";
 
 function RegisterForm() {

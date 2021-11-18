@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import * as _ from "lodash";
-
 import { constructConfig } from "./utils";
 
 const taskUrl = `${process.env.REACT_APP_BACKEND_URL}/api/tasks`;

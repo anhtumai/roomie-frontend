@@ -1,10 +1,10 @@
-import { Box, Typography } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
 
+import { Box, Typography } from "@mui/material";
+
 import useAuth from "../../contexts/auth";
 import useInvitations from "../../contexts/invitations";
-
 import invitationService from "../../services/invitation";
 
 function Invitations({
