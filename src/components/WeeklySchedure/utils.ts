@@ -4,7 +4,7 @@ export function getAssignmentMap(
   currentDate: Date,
   taskAssignments: TaskAssignment[],
   memberUsernames: string[],
-) {
+): Map<string, Task[]> {
   const result = new Map<string, Task[]>();
   for (const username of memberUsernames) {
     result.set(username, []);
@@ -22,13 +22,18 @@ export function getAssignmentMap(
       const daysDifference = differenceInDays(currentDate, beginDate);
       const weeksDifference = daysDifference / 7;
       const remainder = weeksDifference % (task.frequency * assignments.length);
-      const order = (remainder + 1) / task.frequency - 1;
+
+      if (remainder % task.frequency !== 0) {
+        continue;
+      }
+      const order = remainder / task.frequency;
       const assignee = assignments.find(
         (assignment) => assignment.order === order,
       )?.assignee;
       if (!assignee) {
         continue;
       }
+
       result.set(assignee.username, [
         ...(result.get(assignee.username) as Task[]),
         task,
