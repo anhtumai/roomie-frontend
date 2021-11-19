@@ -60,8 +60,7 @@ function TaskAssignmentProperty({
       <ReorderDialog
         open={openReorderDialog}
         setOpen={setOpenReorderDialog}
-        taskId={taskAssignment.task.id}
-        assignments={sortedAssignmentsByOrder}
+        taskAssignment={taskAssignment}
       />
     </>
   );

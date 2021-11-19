@@ -23,35 +23,27 @@ import MemberDisplay from "../../MemberDisplay";
 import taskService from "../../../../services/task";
 import useAuth from "../../../../contexts/auth";
 
+import { reorder, getTaskPreviews } from "./utils";
+
 import "./style.css";
-
-function reorder(
-  previousOrder: Assignment[],
-  startIndex: number,
-  endIndex: number,
-): Assignment[] {
-  const newOrder = Array.from(previousOrder);
-  const [removed] = newOrder.splice(startIndex, 1);
-  newOrder.splice(endIndex, 0, removed);
-
-  return newOrder;
-}
 
 function ReorderDialog({
   open,
   setOpen,
-  taskId,
-  assignments,
+  taskAssignment,
 }: {
   open: boolean;
   setOpen: (x: boolean) => void;
-  taskId: number;
-  assignments: Assignment[];
+  taskAssignment: TaskAssignment;
 }) {
   const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
 
-  const [currentOrder, setCurrentOrder] = useState<Assignment[]>(assignments);
+  const { task, assignments } = taskAssignment;
+  const sortedAssignmentsByOrder = _.sortBy(assignments, ["order"]);
+  const [currentOrder, setCurrentOrder] = useState<Assignment[]>(
+    sortedAssignmentsByOrder,
+  );
 
   function handleClose() {
     setOpen(false);
@@ -73,11 +65,11 @@ function ReorderDialog({
     try {
       await taskService.updateOrder(
         authState.token,
-        taskId,
+        task.id,
         currentOrderUsernames,
       );
       toast.success(
-        `Reorder TASK-${taskId} to ${currentOrderUsernames.join(", ")}`,
+        `Reorder TASK-${task.id} to ${currentOrderUsernames.join(", ")}`,
         { position: toast.POSITION.TOP_CENTER },
       );
       queryClient.invalidateQueries("apartment");
@@ -152,9 +144,9 @@ function ReorderDialog({
             </Grid>
             <Grid item xs={6}>
               <h3>Preview next task</h3>
-              {currentOrder.map((assignment) => (
+              {getTaskPreviews(task, assignments.length).map((taskPreview) => (
                 <div className="reorder-dialog__preview-task">
-                  in 23 weeks (11/11-11/11)
+                  {taskPreview}
                 </div>
               ))}
             </Grid>
