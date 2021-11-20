@@ -219,16 +219,17 @@ function UpdateAccountForm() {
         )}
         <Stack
           direction="row"
-          spacing={0.5}
+          spacing={1.25}
           sx={{
-            marginTop: "2rem",
+            marginTop: "2.5rem",
+            marginBottom: "0.75rem",
             justifyContent: "flex-end",
           }}
         >
-          <Button size="small" variant="contained" onClick={handleReset}>
+          <Button variant="outlined" onClick={handleReset}>
             Reset
           </Button>
-          <Button size="small" variant="contained" type="submit">
+          <Button variant="outlined" type="submit">
             Update
           </Button>
         </Stack>
