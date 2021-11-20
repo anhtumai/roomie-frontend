@@ -29,7 +29,7 @@ function RegisterForm() {
       .min(10, "Name must be at least 10 characters"),
     password: Yup.string()
       .required("Password is required")
-      .min(8, "Password must be at least 8 characters"),
+      .min(10, "Password must be at least 10 characters"),
     confirmPassword: Yup.string()
       .required("Confirm Password is required")
       .oneOf([Yup.ref("password")], "Passwords must match"),

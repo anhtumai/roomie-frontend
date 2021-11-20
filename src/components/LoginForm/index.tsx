@@ -23,7 +23,7 @@ function LoginForm() {
   const [redirectOnSuccess, setRedirectOnSuccess] = useState(false);
   const { setAuthState } = useAuth();
   const { control, handleSubmit, reset } = useForm();
-  async function onSubmit(data: Credential) {
+  async function onSubmit(data: AccountCredential) {
     try {
       const userWithToken = await authService.login(data);
       setAuthState(userWithToken);

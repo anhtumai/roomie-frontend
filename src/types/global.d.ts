@@ -1,5 +1,5 @@
 declare global {
-  type Credential = {
+  type AccountCredential = {
     username: string;
     password: string;
   };
@@ -7,6 +7,11 @@ declare global {
     name: string;
     username: string;
     password: string;
+  };
+  type UpdateAccountProperty = {
+    name: string;
+    username: string;
+    password?: string;
   };
   type UserWithToken = {
     token: string;

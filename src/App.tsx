@@ -21,6 +21,7 @@ import InvitationPage from "./pages/InvitationPage";
 import TaskRequestPage from "./pages/TaskRequestPage";
 import TaskCollectionPage from "./pages/TaskCollectionPage";
 import TaskPage from "./pages/TaskPage";
+import ProfilePage from "./pages/ProfilePage";
 
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
@@ -74,6 +75,9 @@ function AppRoutes() {
         </ProtectedRoute>
         <ProtectedRoute exact path="/task_requests">
           <TaskRequestPage />
+        </ProtectedRoute>
+        <ProtectedRoute exact path="/profile">
+          <ProfilePage />
         </ProtectedRoute>
         <PublicRoutes />
       </Switch>

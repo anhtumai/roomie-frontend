@@ -1,0 +1,33 @@
+.update-account-form {
+  display: block !important;
+  max-width: 500px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+  border-color: #ccc;
+
+  background-color: "#f2f2f7";
+}
+
+.update-account-form form {
+  display: block;
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 3rem;
+}
+
+.update-account-form h4 {
+  font-size: 1.1rem;
+  font-style: italic;
+  font-weight: 450;
+
+  border-bottom: 3px solid;
+  border-color: #ccc;
+}
+
+.update-account-form .MuiFormControl-root {
+  margin-top: 0.25rem;
+  margin-bottom: 1.5rem;
+  margin-left: 0.15rem;
+  display: block;
+}
