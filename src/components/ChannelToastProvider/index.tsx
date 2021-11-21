@@ -59,7 +59,7 @@ function ChannelToastProvider({
           queryClient.invalidateQueries("apartment");
         } else if (state === pusherConstant.EDITED_STATE) {
           const { apartmentName } = data as ChannelEditedApartmentMessage;
-          toast.info(`Admin rename the apartment to ${apartmentName}`);
+          toast.info(`Admin renamed the apartment to ${apartmentName}`);
           const previousApartment = queryClient.getQueryData<
             Apartment | "" | undefined
           >("apartment");
@@ -90,7 +90,7 @@ function ChannelToastProvider({
       const { state } = data;
       if (state === pusherConstant.CREATED_STATE) {
         toast.info(
-          `User ${(data as ChannelCreateTaskMessage).creator} assign task ${
+          `User ${(data as ChannelCreateTaskMessage).creator} assigned task ${
             data.task
           } to you`,
         );
@@ -98,7 +98,7 @@ function ChannelToastProvider({
       } else if (state === pusherConstant.ASSIGNED_STATE) {
         const { assignees } = data as ChannelAssignTaskMessage;
         if (assignees.includes(authState.username)) {
-          toast.info(`All assignee(s) accept task ${data.task}`);
+          toast.info(`All assignee(s) accepted task ${data.task}`);
         }
         queryClient.invalidateQueries("apartment");
       } else if (state === pusherConstant.DELETED_STATE) {
@@ -115,7 +115,7 @@ function ChannelToastProvider({
         queryClient.invalidateQueries("apartment");
       } else if (state === pusherConstant.REORDERED_STATE) {
         const { assigner } = data as ChannelReorderedTaskMessage;
-        toast.info(`User ${assigner} reorder task ${data.task}`);
+        toast.info(`User ${assigner} reordered task ${data.task}`);
         queryClient.invalidateQueries("apartment");
       }
     });
