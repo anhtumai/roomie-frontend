@@ -28,11 +28,21 @@ async function getInvitations(token: string): Promise<InvitationCollection> {
   return response.data;
 }
 
+async function removeMember(token: string, memberId: number) {
+  const config = constructConfig(token);
+  const response = await axios.delete(
+    `${baseUrl}/apartment/members/${memberId}`,
+    config,
+  );
+  return response.data;
+}
+
 const meService = {
   getProfile,
   getApartment,
   deleteApartment,
   getInvitations,
+  removeMember,
 };
 
 export default meService;

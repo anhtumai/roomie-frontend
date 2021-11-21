@@ -1,6 +1,8 @@
 import { useState } from "react";
 
 import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useQueryClient } from "react-query";
 
 import { IconButton, Button } from "@mui/material";
 
@@ -11,11 +13,13 @@ import RenameDialog from "./RenameDialog";
 import MemberDisplay from "../TaskDetail/MemberDisplay";
 
 import useAuth from "../../contexts/auth";
+import meService from "../../services/me";
 
 import "./style.css";
 
 function ApartmentDetail({ apartment }: { apartment: Apartment }) {
   const history = useHistory();
+  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
 
   const [openRenameDialog, setOpenRenameDialog] = useState(false);
@@ -25,8 +29,24 @@ function ApartmentDetail({ apartment }: { apartment: Apartment }) {
     setOpenRenameDialog(true);
   }
 
-  async function handleRemoveMember(memberId: number) {
-    console.log("hihihaha");
+  async function handleRemoveMember(member: { id: number; username: string }) {
+    const decision = window.confirm(`Remove member ${member.username} ?`);
+    if (!decision) return;
+    try {
+      await meService.removeMember(authState.token, member.id);
+      toast.success(`Remove member ${member.username}`, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+      queryClient.invalidateQueries("apartment");
+    } catch (err) {
+      console.log(err);
+      const errMessage = `Fail to remove member ${member.username}`;
+      toast.error(errMessage, {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } finally {
+      //
+    }
   }
 
   return (
@@ -63,13 +83,15 @@ function ApartmentDetail({ apartment }: { apartment: Apartment }) {
                 <div className="apartment-detail__member-display">
                   <MemberDisplay member={member} />
                 </div>
-                <Button
-                  size="small"
-                  color="error"
-                  onClick={() => handleRemoveMember(member.id)}
-                >
-                  Remove
-                </Button>
+                {isAdmin && (
+                  <Button
+                    size="small"
+                    color="error"
+                    onClick={() => handleRemoveMember(member)}
+                  >
+                    Remove
+                  </Button>
+                )}
               </div>
             ))}
         </div>
