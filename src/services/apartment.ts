@@ -10,8 +10,23 @@ async function create(token: string, apartmentName: string) {
   return response.data;
 }
 
+async function update(
+  token: string,
+  apartmentId: number,
+  apartmentName: string,
+) {
+  const config = constructConfig(token);
+  const response = await axios.put(
+    `${baseUrl}/${apartmentId}`,
+    { name: apartmentName },
+    config,
+  );
+  return response.data;
+}
+
 const apartmentService = {
   create,
+  update,
 };
 
 export default apartmentService;

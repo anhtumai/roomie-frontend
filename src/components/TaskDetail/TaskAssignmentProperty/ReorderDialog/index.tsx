@@ -144,11 +144,13 @@ function ReorderDialog({
             </Grid>
             <Grid item xs={6}>
               <h3>Preview next task</h3>
-              {getTaskPreviews(task, assignments.length).map((taskPreview) => (
-                <div className="reorder-dialog__preview-task">
-                  {taskPreview}
-                </div>
-              ))}
+              {getTaskPreviews(task, assignments.length).map(
+                (taskPreview, index) => (
+                  <div key={index} className="reorder-dialog__preview-task">
+                    {taskPreview}
+                  </div>
+                ),
+              )}
             </Grid>
           </Grid>
           <p className="reorder-dialog__note">

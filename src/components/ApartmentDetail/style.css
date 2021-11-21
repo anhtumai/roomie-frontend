@@ -1,0 +1,37 @@
+.apartment-detail {
+  display: block;
+  max-width: 900px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-right: 1px solid;
+
+  background-color: "#f2f2f7";
+}
+
+.apartment-detail__header {
+  margin-top: 1.5rem;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+}
+
+.apartment-detail__header h2 {
+  font-size: 1.5rem;
+  flex-grow: 1;
+}
+
+.apartment-detail__header .MuiIconButton-root {
+  padding-top: 0;
+  color: #505f78;
+  font-size: 0.9rem;
+  padding-right: 0.4rem;
+}
+
+.apartment-detail__member-display-wrapper {
+  margin-bottom: 1rem;
+  display: flex;
+}
+
+.apartment-detail__member-display {
+  min-width: 17rem;
+}

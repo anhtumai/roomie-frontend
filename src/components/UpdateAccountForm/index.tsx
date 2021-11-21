@@ -38,7 +38,7 @@ function UpdateAccountForm() {
         "Passwords must match",
       ),
       currentPassword: Yup.string()
-        .required()
+        .required("Need password for authentication")
         .min(10, "Current password should be at least 10 characters"),
     },
     [["newPassword", "newPassword"]],
