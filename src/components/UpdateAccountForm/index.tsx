@@ -113,7 +113,7 @@ function UpdateAccountForm() {
       toast.success("Update account profile", {
         position: toast.POSITION.TOP_CENTER,
       });
-      reset({ newPassword: "", confirmPassword: "", currentPassword: "" });
+      resetAllFields();
       queryClient.clear();
     } catch (err) {
       console.log(err);
