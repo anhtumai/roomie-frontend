@@ -100,9 +100,24 @@ declare global {
   };
 
   type ChannelApartmentMessage = {
+    state: string;
+  };
+
+  interface ChannelLeftApartmentMessage extends ChannelApartmentMessage {
     state: "LEFT";
     leaver: string;
-  };
+  }
+
+  interface ChannelMemberRemovedApartmentMessage
+    extends ChannelApartmentMessage {
+    state: "MEMBER_REMOVED";
+    removedMember: string;
+  }
+
+  interface ChannelEditedApartmentMessage extends ChannelApartmentMessage {
+    state: "EDITED";
+    apartmentName: string;
+  }
 
   type ChannelTaskMessage = {
     state: string;
@@ -131,6 +146,11 @@ declare global {
 
   interface ChannelReAssignedTaskMessage extends ChannelTaskMessage {
     state: "REASSIGNED";
+    assigner: string;
+  }
+
+  interface ChannelReorderedTaskMessage extends ChannelTaskMessage {
+    state: "REORDERED";
     assigner: string;
   }
 }

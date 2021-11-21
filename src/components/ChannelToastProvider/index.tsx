@@ -54,8 +54,34 @@ function ChannelToastProvider({
       (data: ChannelApartmentMessage) => {
         const { state } = data;
         if (state === pusherConstant.LEAVE_STATE) {
-          toast.info(`User ${data.leaver} left the apartment`);
+          const { leaver } = data as ChannelLeftApartmentMessage;
+          toast.info(`User ${leaver} left the apartment`);
           queryClient.invalidateQueries("apartment");
+        } else if (state === pusherConstant.EDITED_STATE) {
+          const { apartmentName } = data as ChannelEditedApartmentMessage;
+          toast.info(`Admin rename the apartment to ${apartmentName}`);
+          const previousApartment = queryClient.getQueryData<
+            Apartment | "" | undefined
+          >("apartment");
+          if (previousApartment) {
+            queryClient.setQueryData("apartment", {
+              ...previousApartment,
+              name: apartmentName,
+            });
+          } else {
+            queryClient.invalidateQueries("apartment");
+          }
+        } else if (state === pusherConstant.MEMBER_REMOVED_STATE) {
+          const { removedMember } =
+            data as ChannelMemberRemovedApartmentMessage;
+
+          if (authState.username === removedMember) {
+            toast.info("Admin removed you from the apartment");
+            queryClient.setQueryData("apartment", "");
+          } else {
+            toast.info(`Admin removed ${removedMember} from the apartment`);
+            queryClient.invalidateQueries("apartment");
+          }
         }
       },
     );
@@ -86,6 +112,10 @@ function ChannelToastProvider({
       } else if (state === pusherConstant.REASSIGNED_STATE) {
         const { assigner } = data as ChannelReAssignedTaskMessage;
         toast.info(`User ${assigner} re assigned task ${data.task}`);
+        queryClient.invalidateQueries("apartment");
+      } else if (state === pusherConstant.REORDERED_STATE) {
+        const { assigner } = data as ChannelReorderedTaskMessage;
+        toast.info(`User ${assigner} reorder task ${data.task}`);
         queryClient.invalidateQueries("apartment");
       }
     });
