@@ -6,7 +6,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   TextField,
   Button,
@@ -95,10 +94,9 @@ function RenameDialog({
       <form onSubmit={handleRename}>
         <DialogTitle>Apartment</DialogTitle>
         <DialogContent>
-          <DialogContentText>Insert new apartment name</DialogContentText>
           <TextField
             autoFocus
-            label="Apartment Name"
+            label="New name"
             data-testid="apartmentName"
             variant="filled"
             required

@@ -2,26 +2,27 @@ import * as React from "react";
 import { useState } from "react";
 import { useQueryClient, useMutation } from "react-query";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import { Button, Menu, MenuItem, Divider } from "@mui/material";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
-import EditIcon from "@mui/icons-material/Edit";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
 import DeleteIcon from "@mui/icons-material/Delete";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
-
-import InviteDialog from "./InviteDialog";
+import SettingsIcon from "@mui/icons-material/Settings";
 
 import useApartment from "../../../contexts/apartment";
 import useAuth from "../../../contexts/auth";
-
 import meService from "../../../services/me";
+
+import InviteDialog from "./InviteDialog";
 
 import { iconSx } from "../style";
 import { headerTextButtonSx } from "../../sharedStyles/headerStyles";
 
 function ApartmentMenu() {
   const queryClient = useQueryClient();
+  const history = useHistory();
   const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
 
   const apartmentContext = useApartment();
@@ -105,11 +106,9 @@ function ApartmentMenu() {
         <MenuItem onClick={() => setOpenInvitationDialog(true)} disableRipple>
           <PersonAddAlt1Icon sx={iconSx} /> Invite
         </MenuItem>
-        {isAdmin && (
-          <MenuItem onClick={handleClose} disableRipple>
-            <EditIcon sx={iconSx} /> Edit
-          </MenuItem>
-        )}
+        <MenuItem onClick={() => history.push("/apartment")} disableRipple>
+          <SettingsIcon sx={iconSx} /> Settings
+        </MenuItem>
         <Divider sx={{ my: 0.5 }} />
         <MenuItem onClick={handleLeave} disableRipple>
           <ExitToAppIcon sx={iconSx} /> Leave
