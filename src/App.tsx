@@ -27,6 +27,49 @@ import ApartmentDetailPage from "./pages/ApartmentDetailPage";
 import "./App.css";
 import "react-toastify/dist/ReactToastify.css";
 
+function ProtectedRoute({ ...rest }: RouteProps) {
+  return (
+    <ApartmentProvider>
+      <InvitationsProvider>
+        <ChannelToastProvider>
+          <Route {...rest} />
+        </ChannelToastProvider>
+      </InvitationsProvider>
+    </ApartmentProvider>
+  );
+}
+
+function ProtectedRoutes() {
+  return (
+    <Switch>
+      <ProtectedRoute exact path="/home">
+        <HomePage />
+      </ProtectedRoute>
+      <ProtectedRoute exact path="/invitations">
+        <InvitationPage />
+      </ProtectedRoute>
+      <ProtectedRoute path="/tasks/:id">
+        <TaskPage />
+      </ProtectedRoute>
+      <ProtectedRoute exact path="/tasks">
+        <TaskCollectionPage />
+      </ProtectedRoute>
+      <ProtectedRoute exact path="/task_requests">
+        <TaskRequestPage />
+      </ProtectedRoute>
+      <ProtectedRoute exact path="/profile">
+        <ProfilePage />
+      </ProtectedRoute>
+      <ProtectedRoute exact path="/apartment">
+        <ApartmentDetailPage />
+      </ProtectedRoute>
+      <Route path="*">
+        <Redirect to="/home" />
+      </Route>
+    </Switch>
+  );
+}
+
 function PublicRoutes() {
   return (
     <Switch>
@@ -36,61 +79,24 @@ function PublicRoutes() {
       <Route exact path="/register">
         <RegisterPage />
       </Route>
-      <Route exact path="/">
+      <Route path="*">
         <Redirect to="/login" />
       </Route>
     </Switch>
   );
 }
 
-function ProtectedRoute({ ...rest }: RouteProps) {
-  const { isAuthenticated } = useAuth();
-  return isAuthenticated() ? (
-    <ApartmentProvider>
-      <InvitationsProvider>
-        <ChannelToastProvider>
-          <Route {...rest} />
-        </ChannelToastProvider>
-      </InvitationsProvider>
-    </ApartmentProvider>
-  ) : (
-    <Redirect to="/login" />
-  );
-}
-
 function AppRoutes() {
+  const { isAuthenticated } = useAuth();
   return (
     <>
-      <Switch>
-        <ProtectedRoute exact path="/home">
-          <HomePage />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/invitations">
-          <InvitationPage />
-        </ProtectedRoute>
-        <ProtectedRoute path="/tasks/:id">
-          <TaskPage />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/tasks">
-          <TaskCollectionPage />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/task_requests">
-          <TaskRequestPage />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/profile">
-          <ProfilePage />
-        </ProtectedRoute>
-        <ProtectedRoute exact path="/apartment">
-          <ApartmentDetailPage />
-        </ProtectedRoute>
-        <PublicRoutes />
-      </Switch>
+      {isAuthenticated() ? <ProtectedRoutes /> : <PublicRoutes />}
       <ToastContainer />
     </>
   );
 }
 
-function ContextWrapper() {
+function AuthWrapper() {
   return (
     <Router>
       <AuthProvider>
@@ -100,4 +106,4 @@ function ContextWrapper() {
   );
 }
 
-export default ContextWrapper;
+export default AuthWrapper;
