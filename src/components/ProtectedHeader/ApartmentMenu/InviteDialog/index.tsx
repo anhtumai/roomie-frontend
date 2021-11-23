@@ -44,8 +44,21 @@ function InviteDialog({
     setOpen(false);
 
     try {
-      await invitationService.create(authState.token, inviteeUsername);
-      if (history.location.pathname === "/invitations") {
+      const newInvitation = await invitationService.create(
+        authState.token,
+        inviteeUsername,
+      );
+
+      const previousInvitations =
+        queryClient.getQueryData<InvitationCollection>("invitations");
+      if (previousInvitations) {
+        const { sent } = previousInvitations;
+        const updatedSent = [...sent, newInvitation];
+        queryClient.setQueryData("invitations", {
+          ...previousInvitations,
+          sent: updatedSent,
+        });
+      } else {
         queryClient.invalidateQueries("invitations");
       }
       toast.success(`Send invitation to ${inviteeUsername}`, {

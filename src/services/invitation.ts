@@ -4,14 +4,17 @@ import { constructConfig } from "./utils";
 
 const baseUrl = `${process.env.REACT_APP_BACKEND_URL}/api/invitations`;
 
-async function create(token: string, inviteeUsername: string) {
+async function create(
+  token: string,
+  inviteeUsername: string,
+): Promise<Invitation> {
   const config = constructConfig(token);
   const response = await axios.post(
     baseUrl,
     { username: inviteeUsername },
     config,
   );
-  return response.data;
+  return response.data as unknown as Invitation;
 }
 
 async function deleteById(token: string, invitationId: number) {
