@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Redirect } from "react-router";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 import { TextField, Button, Typography, Avatar, Box } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
@@ -20,7 +21,7 @@ import useAuth from "../../contexts/auth";
 import authService from "../../services/auth";
 
 function LoginForm() {
-  const [redirectOnSuccess, setRedirectOnSuccess] = useState(false);
+  const history = useHistory();
   const { setAuthState } = useAuth();
   const { control, handleSubmit, reset } = useForm();
   async function onSubmit(data: AccountCredential) {
@@ -29,7 +30,7 @@ function LoginForm() {
       setAuthState(userWithToken);
 
       setTimeout(() => {
-        setRedirectOnSuccess(true);
+        history.push("/home");
         toast.success("Login successfully", {
           position: toast.POSITION.TOP_CENTER,
         });
@@ -49,7 +50,6 @@ function LoginForm() {
 
   return (
     <>
-      {redirectOnSuccess && <Redirect to="/home" />}
       <Box sx={boxSx}>
         <Avatar className="avatar" sx={avatarSx}>
           <LockOutlinedIcon />
