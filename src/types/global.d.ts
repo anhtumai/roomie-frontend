@@ -68,6 +68,12 @@ declare global {
     assignments: Assignment[];
   };
 
+  type ResponseCreateApartment = {
+    id: number;
+    name: string;
+    admin_id: number;
+  };
+
   type Apartment = {
     id: number;
     name: string;

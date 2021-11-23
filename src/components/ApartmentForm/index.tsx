@@ -1,6 +1,7 @@
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
+import { useQueryClient } from "react-query";
 
 import { Paper, Typography, TextField, Button } from "@mui/material";
 
@@ -12,6 +13,7 @@ import useAuth from "../../contexts/auth";
 import { paperSx, headerSx, buttonSx, noteSx } from "./style";
 
 function ApartmentForm() {
+  const queryClient = useQueryClient();
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .required("Apartment name is required")
@@ -25,21 +27,31 @@ function ApartmentForm() {
     formState: { errors },
   } = useForm(formOptions);
 
-  const { authState } = useAuth();
+  const { authState } = useAuth() as { authState: UserWithToken };
 
   async function onSubmit({ name }: { name: string }) {
     try {
-      await apartmentService.create((authState as UserWithToken).token, name);
+      const responseCreateApartment = await apartmentService.create(
+        authState.token,
+        name,
+      );
+      const apartment: Apartment = {
+        id: responseCreateApartment.id,
+        name: responseCreateApartment.name,
+        admin: authState,
+        members: [authState],
+        task_requests: [],
+        task_assignments: [],
+      };
+      queryClient.setQueryData("apartment", apartment);
       toast.success(`Create new apartment: ${name}`, {
         position: toast.POSITION.TOP_CENTER,
       });
-
-      setTimeout(() => {
-        window.location.reload();
-      }, 3000);
     } catch (err) {
       console.log(err);
-      toast.error("Fail to create an apartment", {
+      const errMessage =
+        (err as any).response?.data.error || "Fail to create an apartment";
+      toast.error(errMessage, {
         position: toast.POSITION.TOP_CENTER,
       });
     }
