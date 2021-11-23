@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useQueryClient } from "react-query";
-import { createBrowserHistory } from "history";
 import { toast } from "react-toastify";
 
 import {
@@ -23,7 +22,6 @@ function InviteDialog({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
-  const history = createBrowserHistory();
   const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
   const [inviteeUsername, setInviteeUsername] = useState("");
@@ -66,8 +64,10 @@ function InviteDialog({
       });
     } catch (err) {
       console.log(err);
-      console.log((err as any).response);
-      toast.error("Fail to send invitation", {
+      console.log("Response", (err as any).response);
+      const errMessage =
+        (err as any).response?.data.error || "Fail to send invitation";
+      toast.error(errMessage, {
         position: toast.POSITION.TOP_CENTER,
       });
     }
