@@ -54,10 +54,8 @@ export function InvitationsProvider({
 
         if (previousCollection) {
           queryClient.setQueryData<InvitationCollection>("invitations", {
+            ...previousCollection,
             sent: previousCollection.sent.filter(
-              (invitation) => invitation.id !== invitationId,
-            ),
-            received: previousCollection.sent.filter(
               (invitation) => invitation.id !== invitationId,
             ),
           });
@@ -96,10 +94,8 @@ export function InvitationsProvider({
 
         if (previousCollection) {
           queryClient.setQueryData<InvitationCollection>("invitations", {
-            sent: previousCollection.sent.filter(
-              (invitation) => invitation.id !== invitationId,
-            ),
-            received: previousCollection.sent.filter(
+            ...previousCollection,
+            received: previousCollection.received.filter(
               (invitation) => invitation.id !== invitationId,
             ),
           });
