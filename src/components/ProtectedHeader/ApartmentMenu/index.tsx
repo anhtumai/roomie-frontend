@@ -53,6 +53,7 @@ function ApartmentMenu() {
       toast.success("Leave apartment", {
         position: toast.POSITION.TOP_CENTER,
       });
+      history.push("/home");
     } catch (err) {
       console.log(err);
       toast.error("Fail to leave apartment", {
