@@ -40,36 +40,36 @@ function ReorderDialog({
   const { authState } = useAuth() as { authState: UserWithToken };
 
   const { task, assignments } = taskAssignment;
-  const sortedAssignmentsByOrder = _.sortBy(assignments, ["order"]);
-  const [currentOrder, setCurrentOrder] = useState<Assignment[]>(
-    sortedAssignmentsByOrder,
-  );
+  const currentOrder = _.sortBy(assignments, (assignment) => assignment.order);
+  const [proposedOrder, setProposedOrder] =
+    useState<Assignment[]>(currentOrder);
 
   function handleClose() {
     setOpen(false);
   }
 
   async function handleSubmit() {
-    const assignmentUsernames = assignments.map(
-      (assignment) => assignment.assignee.username,
-    );
     const currentOrderUsernames = currentOrder.map(
       (assignment) => assignment.assignee.username,
     );
+    const proposedOrderUsernames = proposedOrder.map(
+      (assignment) => assignment.assignee.username,
+    );
 
-    if (_.isEqual(assignmentUsernames, currentOrderUsernames)) {
+    if (_.isEqual(currentOrderUsernames, proposedOrderUsernames)) {
       setOpen(false);
       return;
     }
 
     try {
-      await taskService.updateOrder(
+      const x = await taskService.updateOrder(
         authState.token,
         task.id,
-        currentOrderUsernames,
+        proposedOrderUsernames,
       );
+      console.log(x);
       toast.success(
-        `Reorder TASK-${task.id} to ${currentOrderUsernames.join(", ")}`,
+        `Reorder TASK-${task.id} to ${proposedOrderUsernames.join(", ")}`,
         { position: toast.POSITION.TOP_CENTER },
       );
       queryClient.invalidateQueries("apartment");
@@ -78,24 +78,22 @@ function ReorderDialog({
       toast.error("Fail to re-assign the task", {
         position: toast.POSITION.TOP_CENTER,
       });
-      setCurrentOrder(assignments);
+      setProposedOrder(currentOrder);
     } finally {
       setOpen(false);
     }
   }
 
   function onEnd(result: DropResult) {
-    console.log(result);
-
     if (!result.destination) return;
 
     const newOrder = reorder(
-      currentOrder,
+      proposedOrder,
       result.source.index,
       result.destination.index,
     );
 
-    setCurrentOrder(newOrder);
+    setProposedOrder(newOrder);
   }
 
   return (
@@ -119,7 +117,7 @@ function ReorderDialog({
               <Droppable droppableId="orderlist">
                 {(provided, snapshot) => (
                   <div ref={provided.innerRef}>
-                    {currentOrder.map((assignment, index) => (
+                    {proposedOrder.map((assignment, index) => (
                       <Draggable
                         draggableId={String(assignment.id)}
                         key={assignment.id}

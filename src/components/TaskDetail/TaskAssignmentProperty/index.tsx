@@ -22,7 +22,10 @@ function TaskAssignmentProperty({
   const [openReorderDialog, setOpenReorderDialog] = useState(false);
 
   const { task, assignments } = taskAssignment;
-  const sortedAssignmentsByOrder = _.sortBy(assignments, ["order"]);
+  const sortedAssignmentsByOrder = _.sortBy(
+    assignments,
+    (assignment) => assignment.order,
+  );
   const creator = members.find((member) => member.id === task.creator_id);
 
   return (
