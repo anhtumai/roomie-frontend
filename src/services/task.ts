@@ -9,10 +9,10 @@ async function create(
   token: string,
   task: Omit<Task, "id" | "creator_id">,
   assignees: string[],
-) {
+): Promise<TaskRequest> {
   const config = constructConfig(token);
   const response = await axios.post(taskUrl, { ...task, assignees }, config);
-  return response.data;
+  return response.data as unknown as TaskRequest;
 }
 
 async function deleteOne(token: string, taskId: number) {
@@ -56,7 +56,7 @@ async function updateAssignees(
   token: string,
   taskId: number,
   assigneeUsernames: string[],
-) {
+): Promise<TaskRequest> {
   const config = constructConfig(token);
   const response = await axios.put(
     `${taskUrl}/${taskId}/assignees`,
@@ -65,7 +65,7 @@ async function updateAssignees(
     },
     config,
   );
-  return response.data;
+  return response.data as unknown as TaskRequest;
 }
 
 async function updateOrder(

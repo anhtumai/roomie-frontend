@@ -82,7 +82,7 @@ function CreateTaskDialog({
   async function onSubmit(data: IFormInput) {
     try {
       console.log(data);
-      await taskService.create(
+      const taskRequest = await taskService.create(
         authState.token,
         {
           ...data,
@@ -96,7 +96,19 @@ function CreateTaskDialog({
       toast.success(`Create new task ${data.name}`, {
         position: toast.POSITION.TOP_CENTER,
       });
-      queryClient.invalidateQueries("apartment");
+
+      const previousApartment =
+        queryClient.getQueryData<Apartment>("apartment");
+      if (previousApartment) {
+        const previousTaskRequests = previousApartment.task_requests;
+        const updatedTaskRequests = [...previousTaskRequests, taskRequest];
+        queryClient.setQueryData("apartment", {
+          ...previousApartment,
+          task_requests: updatedTaskRequests,
+        });
+      } else {
+        queryClient.invalidateQueries("apartment");
+      }
     } catch (err) {
       console.log(err);
       toast.error("Fail to create new task", {

@@ -74,16 +74,31 @@ function ReAssignDialog({
       return;
     }
     try {
-      await taskService.updateAssignees(
+      const taskRequest = await taskService.updateAssignees(
         authState.token,
         taskId,
         selectedUsernames,
       );
       toast.success(
-        `Re-assign TASK-${taskId} to ${selectedUsernames.join(", ")}`,
+        `Re-assign task ${taskRequest.task.name} to ${selectedUsernames.join(
+          ", ",
+        )}`,
         { position: toast.POSITION.TOP_CENTER },
       );
-      queryClient.invalidateQueries("apartment");
+      const previousApartment =
+        queryClient.getQueryData<Apartment>("apartment");
+      if (previousApartment) {
+        const previousTaskRequests = previousApartment.task_requests;
+        const updatedTaskRequests = previousTaskRequests.map((element) =>
+          element.task.id === taskRequest.task.id ? taskRequest : element,
+        );
+        queryClient.setQueryData("apartment", {
+          ...previousApartment,
+          task_requests: updatedTaskRequests,
+        });
+      } else {
+        queryClient.invalidateQueries("apartment");
+      }
     } catch (err) {
       console.log(err);
       toast.error("Fail to re-assign the task", {
