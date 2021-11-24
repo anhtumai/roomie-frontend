@@ -62,17 +62,32 @@ function ReorderDialog({
     }
 
     try {
-      const x = await taskService.updateOrder(
+      const taskAssignment = await taskService.updateOrder(
         authState.token,
         task.id,
         proposedOrderUsernames,
       );
-      console.log(x);
       toast.success(
-        `Reorder TASK-${task.id} to ${proposedOrderUsernames.join(", ")}`,
+        `Reorder task ${
+          taskAssignment.task.name
+        } to ${proposedOrderUsernames.join(", ")}`,
         { position: toast.POSITION.TOP_CENTER },
       );
-      queryClient.invalidateQueries("apartment");
+
+      const previousApartment =
+        queryClient.getQueryData<Apartment>("apartment");
+      if (previousApartment) {
+        const previousTaskAssignments = previousApartment.task_assignments;
+        const updatedTaskAssignments = previousTaskAssignments.map((element) =>
+          element.task.id === taskAssignment.task.id ? taskAssignment : element,
+        );
+        queryClient.setQueryData("apartment", {
+          ...previousApartment,
+          task_assignments: updatedTaskAssignments,
+        });
+      } else {
+        queryClient.invalidateQueries("apartment");
+      }
     } catch (err) {
       console.log(err);
       toast.error("Fail to re-assign the task", {

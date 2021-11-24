@@ -72,14 +72,14 @@ async function updateOrder(
   token: string,
   taskId: number,
   assigneeUsernames: string[],
-) {
+): Promise<TaskAssignment> {
   const config = constructConfig(token);
   const response = await axios.put(
     `${taskUrl}/${taskId}/order`,
     { order: assigneeUsernames },
     config,
   );
-  return response.data;
+  return response.data as unknown as TaskAssignment;
 }
 
 const taskService = {
