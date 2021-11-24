@@ -34,41 +34,6 @@ function ApartmentMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
-  const leaveApartmentMutation = useMutation(
-    () => meService.deleteApartment(authState.token),
-    {
-      onMutate: async () => {
-        await queryClient.cancelQueries("apartment");
-        const previousApartment = queryClient.getQueryData<Apartment | "">(
-          "apartment",
-        );
-        queryClient.setQueryData("apartment", "");
-
-        return { previousApartment };
-      },
-      onError: (err, variables, context) => {
-        console.log(err);
-        if (context?.previousApartment) {
-          queryClient.setQueryData<Apartment | "">(
-            "apartment",
-            context.previousApartment,
-          );
-        }
-        toast.error("Fail to leave apartment", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      },
-      onSuccess: (data, variables, context) => {
-        toast.success("Leave apartment", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries("apartment");
-      },
-    },
-  );
-
   function handleClick(event: React.MouseEvent<HTMLButtonElement>) {
     setAnchorEl(event.currentTarget);
   }
@@ -77,10 +42,22 @@ function ApartmentMenu() {
     setAnchorEl(null);
   }
 
-  function handleLeave() {
+  async function handleLeave() {
     const decision = window.confirm(`Leave apartment ${apartment.name} ?`);
-    if (decision) {
-      leaveApartmentMutation.mutate();
+    if (!decision) {
+      return;
+    }
+    try {
+      await meService.deleteApartment(authState.token);
+      queryClient.setQueryData("apartment", "");
+      toast.success("Leave apartment", {
+        position: toast.POSITION.TOP_CENTER,
+      });
+    } catch (err) {
+      console.log(err);
+      toast.error("Fail to leave apartment", {
+        position: toast.POSITION.TOP_CENTER,
+      });
     }
   }
 
