@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useQueryClient } from "react-query";
 
 import { IconButton, Button } from "@mui/material";
 
@@ -13,14 +12,15 @@ import RenameDialog from "./RenameDialog";
 import MemberDisplay from "../TaskDetail/MemberDisplay";
 
 import useAuth from "../../contexts/auth";
+import useApartment from "../../contexts/apartment";
 import meService from "../../services/me";
 
 import "./style.css";
 
 function ApartmentDetail({ apartment }: { apartment: Apartment }) {
   const history = useHistory();
-  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
+  const { invalidateApartment } = useApartment();
 
   const [openRenameDialog, setOpenRenameDialog] = useState(false);
   const isAdmin = authState.id === apartment.admin.id;
@@ -37,15 +37,13 @@ function ApartmentDetail({ apartment }: { apartment: Apartment }) {
       toast.success(`Remove member ${member.username}`, {
         position: toast.POSITION.TOP_CENTER,
       });
-      queryClient.invalidateQueries("apartment");
+      invalidateApartment();
     } catch (err) {
       console.log(err);
       const errMessage = `Fail to remove member ${member.username}`;
       toast.error(errMessage, {
         position: toast.POSITION.TOP_CENTER,
       });
-    } finally {
-      //
     }
   }
 

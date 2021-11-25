@@ -9,6 +9,7 @@ interface ApartmentContextType {
   error: unknown;
   apartment: Apartment | "" | undefined;
   setApartment: (x: Apartment | "") => void;
+  invalidateApartment: () => void;
 }
 
 const ApartmentContext = createContext<ApartmentContextType>(
@@ -30,6 +31,10 @@ export function ApartmentProvider({
     queryClient.setQueryData("apartment", updatedApartment);
   }
 
+  function invalidateApartment() {
+    queryClient.invalidateQueries("apartment");
+  }
+
   return (
     <ApartmentContext.Provider
       value={{
@@ -37,6 +42,7 @@ export function ApartmentProvider({
         error,
         apartment: data,
         setApartment,
+        invalidateApartment,
       }}
     >
       {children}

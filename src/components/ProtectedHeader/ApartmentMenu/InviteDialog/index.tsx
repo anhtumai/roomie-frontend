@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 import {
@@ -13,6 +12,7 @@ import {
 } from "@mui/material";
 
 import useAuth from "../../../../contexts/auth";
+import useInvitations from "../../../../contexts/invitations";
 import invitationService from "../../../../services/invitation";
 
 function InviteDialog({
@@ -22,8 +22,12 @@ function InviteDialog({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
-  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
+  const {
+    invitationCollection,
+    setInvitationCollection,
+    invalidateInvitationCollection,
+  } = useInvitations();
   const [inviteeUsername, setInviteeUsername] = useState("");
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -47,24 +51,21 @@ function InviteDialog({
         inviteeUsername,
       );
 
-      const previousInvitations =
-        queryClient.getQueryData<InvitationCollection>("invitations");
-      if (previousInvitations) {
-        const { sent } = previousInvitations;
+      if (invitationCollection) {
+        const { sent } = invitationCollection;
         const updatedSent = [...sent, newInvitation];
-        queryClient.setQueryData("invitations", {
-          ...previousInvitations,
+        setInvitationCollection({
+          ...invitationCollection,
           sent: updatedSent,
         });
       } else {
-        queryClient.invalidateQueries("invitations");
+        invalidateInvitationCollection();
       }
       toast.success(`Send invitation to ${inviteeUsername}`, {
         position: toast.POSITION.TOP_CENTER,
       });
     } catch (err) {
       console.log(err);
-      console.log("Response", (err as any).response);
       const errMessage =
         (err as any).response?.data.error || "Fail to send invitation";
       toast.error(errMessage, {

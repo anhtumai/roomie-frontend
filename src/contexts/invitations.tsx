@@ -9,6 +9,7 @@ interface InvitationsContextType {
   error: unknown;
   invitationCollection: InvitationCollection | undefined;
   setInvitationCollection: (x: InvitationCollection) => void;
+  invalidateInvitationCollection: () => void;
 }
 
 const InvitationsContext = createContext<InvitationsContextType>(
@@ -35,6 +36,10 @@ export function InvitationsProvider({
     );
   }
 
+  function invalidateInvitationCollection() {
+    queryClient.invalidateQueries("invitations");
+  }
+
   return (
     <InvitationsContext.Provider
       value={{
@@ -42,6 +47,7 @@ export function InvitationsProvider({
         error,
         invitationCollection: data,
         setInvitationCollection,
+        invalidateInvitationCollection,
       }}
     >
       {children}
