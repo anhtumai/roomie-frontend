@@ -1,7 +1,6 @@
 import { Controller, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import * as Yup from "yup";
-import { useQueryClient } from "react-query";
 
 import { Paper, Typography, TextField, Button } from "@mui/material";
 
@@ -9,11 +8,11 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import apartmentService from "../../services/apartment";
 import useAuth from "../../contexts/auth";
+import useApartment from "../../contexts/apartment";
 
 import { paperSx, headerSx, buttonSx, noteSx } from "./style";
 
 function ApartmentForm() {
-  const queryClient = useQueryClient();
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .required("Apartment name is required")
@@ -28,6 +27,7 @@ function ApartmentForm() {
   } = useForm(formOptions);
 
   const { authState } = useAuth() as { authState: UserWithToken };
+  const { setApartment } = useApartment();
 
   async function onSubmit({ name }: { name: string }) {
     try {
@@ -43,7 +43,7 @@ function ApartmentForm() {
         task_requests: [],
         task_assignments: [],
       };
-      queryClient.setQueryData("apartment", apartment);
+      setApartment(apartment);
       toast.success(`Create new apartment: ${name}`, {
         position: toast.POSITION.TOP_CENTER,
       });

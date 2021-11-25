@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import { useForm } from "react-hook-form";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 import {
@@ -53,11 +52,13 @@ function CreateTaskDialog({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
-  const queryClient = useQueryClient();
   const theme = useTheme();
   const { register, handleSubmit, reset } = useForm();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment } = useApartment() as { apartment: Apartment };
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
   const { members } = apartment;
 
   const [selectedUsernames, setSelectedUsernames] = useState<string[]>([]);
@@ -97,18 +98,12 @@ function CreateTaskDialog({
         position: toast.POSITION.TOP_CENTER,
       });
 
-      const previousApartment =
-        queryClient.getQueryData<Apartment>("apartment");
-      if (previousApartment) {
-        const previousTaskRequests = previousApartment.task_requests;
-        const updatedTaskRequests = [...previousTaskRequests, taskRequest];
-        queryClient.setQueryData("apartment", {
-          ...previousApartment,
-          task_requests: updatedTaskRequests,
-        });
-      } else {
-        queryClient.invalidateQueries("apartment");
-      }
+      const taskRequests = apartment.task_requests;
+      const updatedTaskRequests = [...taskRequests, taskRequest];
+      setApartment({
+        ...apartment,
+        task_requests: updatedTaskRequests,
+      });
     } catch (err) {
       console.log(err);
       toast.error("Fail to create new task", {

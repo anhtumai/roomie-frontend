@@ -25,6 +25,7 @@ interface InvitationsContextType {
   isLoading: boolean;
   error: unknown;
   invitationCollection: InvitationCollection | undefined;
+  setInvitationCollection: (x: InvitationCollection) => void;
   cancelInvitationMutation: UseInvitationCollectionMutationResult;
   rejectInvitationMutation: UseInvitationCollectionMutationResult;
 }
@@ -43,6 +44,15 @@ export function InvitationsProvider({
   const { isLoading, error, data } = useQuery("invitations", () =>
     meService.getInvitations(authState.token),
   );
+
+  function setInvitationCollection(
+    updatedInvitationCollection: InvitationCollection,
+  ) {
+    queryClient.setQueryData<InvitationCollection>(
+      "invitations",
+      updatedInvitationCollection,
+    );
+  }
   const cancelInvitationMutation = useMutation(
     (invitationId: number) =>
       invitationService.deleteById(authState.token, invitationId),
@@ -129,6 +139,7 @@ export function InvitationsProvider({
         isLoading,
         error,
         invitationCollection: data,
+        setInvitationCollection,
         cancelInvitationMutation,
         rejectInvitationMutation,
       }}

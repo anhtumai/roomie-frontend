@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQueryClient, useMutation } from "react-query";
+import { useMutation } from "react-query";
 import { toast } from "react-toastify";
 
 import {
@@ -13,21 +13,20 @@ import {
 
 import useAuth from "../../../contexts/auth";
 import apartmentService from "../../../services/apartment";
+import useApartment from "../../../contexts/apartment";
 
 function RenameDialog({
   open,
   setOpen,
-  apartment,
 }: {
   open: boolean;
   setOpen: (x: boolean) => void;
-  apartment: {
-    id: number;
-    name: string;
-  };
 }) {
-  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
   const [newApartmentName, setNewApartmentName] = useState(apartment.name);
 
   const renameApartmentMutation = useMutation(
@@ -35,30 +34,22 @@ function RenameDialog({
       apartmentService.update(authState.token, apartment.id, newApartmentName),
     {
       onMutate: async () => {
-        await queryClient.cancelQueries("apartment");
-        const previousApartment = queryClient.getQueryData<Apartment | "">(
-          "apartment",
-        );
+        const updatedApartment = {
+          ...apartment,
+          name: newApartmentName,
+        };
+        setApartment(updatedApartment);
 
-        if (previousApartment !== undefined && previousApartment !== "") {
-          const updatedApartment = {
-            ...previousApartment,
-            name: newApartmentName,
-          };
-          queryClient.setQueryData("apartment", updatedApartment);
-        }
-
-        return { previousApartment };
+        return { previousApartment: apartment };
       },
       onError: (err, variables, context) => {
         console.log(err);
         if (context?.previousApartment) {
-          queryClient.setQueryData<Apartment | "">(
-            "apartment",
-            context.previousApartment,
-          );
+          setApartment(context.previousApartment);
         }
-        toast.error("Fail to update apartment name", {
+        const errMessage =
+          (err as any).response?.data.error || "Fail to update apartment name";
+        toast.error(errMessage, {
           position: toast.POSITION.TOP_CENTER,
         });
       },
@@ -66,9 +57,6 @@ function RenameDialog({
         toast.success("Rename apartment", {
           position: toast.POSITION.TOP_CENTER,
         });
-      },
-      onSettled: () => {
-        queryClient.invalidateQueries("apartment");
       },
     },
   );

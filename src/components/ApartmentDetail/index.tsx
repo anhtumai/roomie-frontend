@@ -96,11 +96,7 @@ function ApartmentDetail({ apartment }: { apartment: Apartment }) {
             ))}
         </div>
       </div>
-      <RenameDialog
-        open={openRenameDialog}
-        setOpen={setOpenRenameDialog}
-        apartment={apartment}
-      />
+      <RenameDialog open={openRenameDialog} setOpen={setOpenRenameDialog} />
     </div>
   );
 }

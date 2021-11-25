@@ -38,7 +38,10 @@ function TaskRequestCard({
   const history = useHistory();
 
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment } = useApartment() as { apartment: Apartment };
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
 
   const { task } = taskRequest;
 
@@ -65,7 +68,17 @@ function TaskRequestCard({
     }
     try {
       await taskService.deleteOne(authState.token, task.id);
-      queryClient.invalidateQueries("apartment");
+      const updatedTaskRequests = apartment.task_requests.filter(
+        (taskRequest) => taskRequest.task.id !== task.id,
+      );
+      const updatedTaskAssignments = apartment.task_assignments.filter(
+        (taskAssignment) => taskAssignment.task.id !== task.id,
+      );
+      setApartment({
+        ...apartment,
+        task_requests: updatedTaskRequests,
+        task_assignments: updatedTaskAssignments,
+      });
       toast.success(`Delete task ${task.name}`, {
         position: toast.POSITION.TOP_CENTER,
       });

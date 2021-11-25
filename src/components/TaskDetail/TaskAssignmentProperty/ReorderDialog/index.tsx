@@ -1,7 +1,6 @@
 import { useState } from "react";
 
 import _ from "lodash";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import {
   DragDropContext,
@@ -22,6 +21,7 @@ import MemberDisplay from "../../MemberDisplay";
 
 import taskService from "../../../../services/task";
 import useAuth from "../../../../contexts/auth";
+import useApartment from "../../../../contexts/apartment";
 
 import { reorder, getTaskPreviews } from "./utils";
 
@@ -36,8 +36,11 @@ function ReorderDialog({
   setOpen: (x: boolean) => void;
   taskAssignment: TaskAssignment;
 }) {
-  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
 
   const { task, assignments } = taskAssignment;
   const currentOrder = _.sortBy(assignments, (assignment) => assignment.order);
@@ -74,20 +77,13 @@ function ReorderDialog({
         { position: toast.POSITION.TOP_CENTER },
       );
 
-      const previousApartment =
-        queryClient.getQueryData<Apartment>("apartment");
-      if (previousApartment) {
-        const previousTaskAssignments = previousApartment.task_assignments;
-        const updatedTaskAssignments = previousTaskAssignments.map((element) =>
-          element.task.id === taskAssignment.task.id ? taskAssignment : element,
-        );
-        queryClient.setQueryData("apartment", {
-          ...previousApartment,
-          task_assignments: updatedTaskAssignments,
-        });
-      } else {
-        queryClient.invalidateQueries("apartment");
-      }
+      const updatedTaskAssignments = apartment.task_assignments.map((element) =>
+        element.task.id === taskAssignment.task.id ? taskAssignment : element,
+      );
+      setApartment({
+        ...apartment,
+        task_assignments: updatedTaskAssignments,
+      });
     } catch (err) {
       console.log(err);
       toast.error("Fail to re-assign the task", {

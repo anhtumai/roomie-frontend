@@ -1,5 +1,4 @@
 import { useForm } from "react-hook-form";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 import {
@@ -11,6 +10,7 @@ import {
 } from "@mui/material";
 
 import useAuth from "../../../contexts/auth";
+import useApartment from "../../../contexts/apartment";
 import taskService from "../../../services/task";
 
 import "../../sharedStyles/taskFormStyle.css";
@@ -38,7 +38,6 @@ function EditTaskDialog({
   setOpen: (x: boolean) => void;
   task: Task;
 }) {
-  const queryClient = useQueryClient();
   const defaultTaskValues = {
     name: task.name,
     description: task.description,
@@ -51,6 +50,10 @@ function EditTaskDialog({
     defaultValues: defaultTaskValues,
   });
   const { authState } = useAuth() as { authState: UserWithToken };
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
 
   function resetAllFields() {
     reset(defaultTaskValues);
@@ -63,7 +66,7 @@ function EditTaskDialog({
 
   async function onSubmit(data: IFormInput) {
     try {
-      await taskService.update(authState.token, task.id, {
+      const updatedTask = await taskService.update(authState.token, task.id, {
         name: data.name,
         description: data.description,
         difficulty: Number(data.difficulty),
@@ -71,10 +74,26 @@ function EditTaskDialog({
         start: data.startDate,
         end: data.endDate,
       });
-      toast.success(`Update task-${task.id}`, {
+      toast.success(`Update task ${updatedTask.name}`, {
         position: toast.POSITION.TOP_CENTER,
       });
-      queryClient.invalidateQueries("apartment");
+
+      const updatedTaskRequests = apartment.task_requests.map((taskRequest) =>
+        taskRequest.task.id === updatedTask.id
+          ? { ...taskRequest, task: updatedTask }
+          : taskRequest,
+      );
+      const updatedTaskAssignments = apartment.task_assignments.map(
+        (taskAssignment) =>
+          taskAssignment.task.id === updatedTask.id
+            ? { ...taskAssignment, task: updatedTask }
+            : taskAssignment,
+      );
+      setApartment({
+        ...apartment,
+        task_requests: updatedTaskRequests,
+        task_assignments: updatedTaskAssignments,
+      });
     } catch (err) {
       console.log(err);
       toast.error("Fail to update task", {

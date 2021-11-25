@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 
 import _ from "lodash";
@@ -47,9 +46,11 @@ function ReAssignDialog({
   assigneeUsernames: string[];
 }) {
   const theme = useTheme();
-  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment } = useApartment() as { apartment: Apartment };
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
   const { members } = apartment;
   const [selectedUsernames, setSelectedUsernames] =
     useState<string[]>(assigneeUsernames);
@@ -85,20 +86,13 @@ function ReAssignDialog({
         )}`,
         { position: toast.POSITION.TOP_CENTER },
       );
-      const previousApartment =
-        queryClient.getQueryData<Apartment>("apartment");
-      if (previousApartment) {
-        const previousTaskRequests = previousApartment.task_requests;
-        const updatedTaskRequests = previousTaskRequests.map((element) =>
-          element.task.id === taskRequest.task.id ? taskRequest : element,
-        );
-        queryClient.setQueryData("apartment", {
-          ...previousApartment,
-          task_requests: updatedTaskRequests,
-        });
-      } else {
-        queryClient.invalidateQueries("apartment");
-      }
+      const updatedTaskRequests = apartment.task_requests.map((element) =>
+        element.task.id === taskRequest.task.id ? taskRequest : element,
+      );
+      setApartment({
+        ...apartment,
+        task_requests: updatedTaskRequests,
+      });
     } catch (err) {
       console.log(err);
       toast.error("Fail to re-assign the task", {

@@ -1,4 +1,3 @@
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
@@ -28,10 +27,12 @@ function TaskCard({
   task: Task;
   assigneeNames: string[];
 }) {
-  const queryClient = useQueryClient();
   const history = useHistory();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment } = useApartment() as { apartment: Apartment };
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
 
   const taskCreator = apartment.members.find(
     (member) => member.id === task.creator_id,
@@ -44,7 +45,17 @@ function TaskCard({
     }
     try {
       await taskService.deleteOne(authState.token, task.id);
-      queryClient.invalidateQueries("apartment");
+      const updatedTaskRequests = apartment.task_requests.filter(
+        (taskRequest) => taskRequest.task.id !== task.id,
+      );
+      const updatedTaskAssignments = apartment.task_assignments.filter(
+        (taskAssignment) => taskAssignment.task.id !== task.id,
+      );
+      setApartment({
+        ...apartment,
+        task_requests: updatedTaskRequests,
+        task_assignments: updatedTaskAssignments,
+      });
       toast.success(`Delete task ${task.name}`, {
         position: toast.POSITION.TOP_CENTER,
       });

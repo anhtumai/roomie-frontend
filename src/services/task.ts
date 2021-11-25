@@ -45,11 +45,11 @@ async function update(
   token: string,
   taskId: number,
   task: Omit<Task, "id" | "creator_id">,
-) {
+): Promise<Task> {
   const config = constructConfig(token);
 
   const response = await axios.put(`${taskUrl}/${taskId}`, task, config);
-  return response.data;
+  return response.data as Task;
 }
 
 async function updateAssignees(

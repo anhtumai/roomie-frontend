@@ -1,7 +1,4 @@
-import { useState } from "react";
-
 import { Controller, useForm } from "react-hook-form";
-import { Redirect } from "react-router";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 

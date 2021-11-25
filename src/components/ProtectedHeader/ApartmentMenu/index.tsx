@@ -1,6 +1,5 @@
 import * as React from "react";
 import { useState } from "react";
-import { useQueryClient, useMutation } from "react-query";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
@@ -21,12 +20,13 @@ import { iconSx } from "../style";
 import { headerTextButtonSx } from "../../sharedStyles/headerStyles";
 
 function ApartmentMenu() {
-  const queryClient = useQueryClient();
   const history = useHistory();
   const [openInvitationDialog, setOpenInvitationDialog] = useState(false);
 
-  const apartmentContext = useApartment();
-  const apartment = apartmentContext.apartment as Apartment;
+  const { apartment, setApartment } = useApartment() as {
+    apartment: Apartment;
+    setApartment: (x: Apartment | "") => void;
+  };
   const { authState } = useAuth() as { authState: UserWithToken };
 
   const isAdmin = authState.username === apartment.admin.username;
@@ -49,7 +49,7 @@ function ApartmentMenu() {
     }
     try {
       await meService.deleteApartment(authState.token);
-      queryClient.setQueryData("apartment", "");
+      setApartment("");
       toast.success("Leave apartment", {
         position: toast.POSITION.TOP_CENTER,
       });
