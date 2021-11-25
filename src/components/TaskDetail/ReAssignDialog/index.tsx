@@ -86,12 +86,23 @@ function ReAssignDialog({
         )}`,
         { position: toast.POSITION.TOP_CENTER },
       );
-      const updatedTaskRequests = apartment.task_requests.map((element) =>
-        element.task.id === taskRequest.task.id ? taskRequest : element,
+      const updatedTaskAssignments = apartment.task_assignments.filter(
+        (element) => element.task.id !== taskRequest.task.id,
+      );
+      const unSortedUpdatedTaskRequests = [
+        ...apartment.task_requests.filter(
+          (element) => element.task.id !== taskRequest.task.id,
+        ),
+        taskRequest,
+      ];
+      const updatedTaskRequests = _.sortBy(
+        unSortedUpdatedTaskRequests,
+        (taskRequest) => taskRequest.task.id,
       );
       setApartment({
         ...apartment,
         task_requests: updatedTaskRequests,
+        task_assignments: updatedTaskAssignments,
       });
     } catch (err) {
       console.log(err);
