@@ -1,5 +1,6 @@
 import { useHistory } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useMutation } from "react-query";
 
 import { Box, Typography } from "@mui/material";
 
@@ -15,8 +16,65 @@ function Invitations({
   const history = useHistory();
   const { sent, received } = invitationCollection;
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { cancelInvitationMutation, rejectInvitationMutation } =
-    useInvitations();
+  const { setInvitationCollection } = useInvitations();
+
+  const cancelInvitationMutation = useMutation(
+    (invitationId: number) =>
+      invitationService.deleteById(authState.token, invitationId),
+    {
+      onMutate: async (invitationId: number) => {
+        setInvitationCollection({
+          ...invitationCollection,
+          sent: invitationCollection.sent.filter(
+            (invitation) => invitation.id !== invitationId,
+          ),
+        });
+
+        return { previousCollection: invitationCollection };
+      },
+
+      onError: (err, variables, context) => {
+        console.log(err);
+        if (context?.previousCollection) {
+          setInvitationCollection(context.previousCollection);
+        }
+        const errMessage =
+          (err as any).response?.data.erro || "Fail to cancel invitation";
+        toast.error(errMessage, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      },
+    },
+  );
+
+  const rejectInvitationMutation = useMutation(
+    (invitationId: number) =>
+      invitationService.reject(authState.token, invitationId),
+    {
+      onMutate: async (invitationId: number) => {
+        setInvitationCollection({
+          ...invitationCollection,
+          received: invitationCollection.received.filter(
+            (invitation) => invitation.id !== invitationId,
+          ),
+        });
+
+        return { previousCollection: invitationCollection };
+      },
+
+      onError: (err, variables, context) => {
+        console.log(err);
+        if (context?.previousCollection) {
+          setInvitationCollection(context.previousCollection);
+        }
+        const errMessage =
+          (err as any).response?.data.erro || "Fail to reject invitation";
+        toast.error(errMessage, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      },
+    },
+  );
 
   function handleDelete(invitationId: number) {
     cancelInvitationMutation.mutate(invitationId);
