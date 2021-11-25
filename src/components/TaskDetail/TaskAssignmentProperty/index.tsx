@@ -7,6 +7,7 @@ import ReorderIcon from "@mui/icons-material/Reorder";
 import MemberDisplay from "../MemberDisplay";
 import ReorderDialog from "./ReorderDialog";
 
+import useAuth from "../../../contexts/auth";
 import useApartment from "../../../contexts/apartment";
 
 import "./style.css";
@@ -16,12 +17,16 @@ function TaskAssignmentProperty({
 }: {
   taskAssignment: TaskAssignment;
 }) {
+  const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment } = useApartment() as { apartment: Apartment };
   const { members } = apartment;
 
   const [openReorderDialog, setOpenReorderDialog] = useState(false);
 
   const { task, assignments } = taskAssignment;
+  const isAdminOrTaskCreator =
+    apartment.admin.id === authState.id || task.creator_id === authState.id;
+
   const sortedAssignmentsByOrder = _.sortBy(
     assignments,
     (assignment) => assignment.order,
@@ -43,10 +48,12 @@ function TaskAssignmentProperty({
           >
             Order
           </h2>
-          <IconButton onClick={() => setOpenReorderDialog(true)}>
-            <ReorderIcon htmlColor="#505f78" />
-            <span>Reorder</span>
-          </IconButton>
+          {isAdminOrTaskCreator && (
+            <IconButton onClick={() => setOpenReorderDialog(true)}>
+              <ReorderIcon htmlColor="#505f78" />
+              <span>Reorder</span>
+            </IconButton>
+          )}
         </div>
         {sortedAssignmentsByOrder.map((assignment) => (
           <div

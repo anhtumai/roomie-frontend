@@ -86,7 +86,9 @@ function ReorderDialog({
       });
     } catch (err) {
       console.log(err);
-      toast.error("Fail to re-assign the task", {
+      const errMessage =
+        (err as any).response?.data.error || "Fail to reorder an apartment";
+      toast.error(errMessage, {
         position: toast.POSITION.TOP_CENTER,
       });
       setProposedOrder(currentOrder);
