@@ -20,7 +20,7 @@ interface ApartmentContextType {
   deleteTaskMutation: UseMutationResult<
     never,
     unknown,
-    number,
+    Task,
     {
       previousApartment: Apartment;
     }
@@ -56,16 +56,16 @@ export function ApartmentProvider({
   }
 
   const deleteTaskMutation = useMutation(
-    (taskId: number) => taskService.deleteOne(authState.token, taskId),
+    (task: Task) => taskService.deleteOne(authState.token, task.id),
     {
-      onMutate: async (taskId: number) => {
+      onMutate: async (task: Task) => {
         cancelApartmentQueries();
         const apartment = data as Apartment;
         const updatedTaskRequests = apartment.task_requests.filter(
-          (taskRequest) => taskRequest.task.id !== taskId,
+          (taskRequest) => taskRequest.task.id !== task.id,
         );
         const updatedTaskAssignments = apartment.task_assignments.filter(
-          (taskAssignment) => taskAssignment.task.id !== taskId,
+          (taskAssignment) => taskAssignment.task.id !== task.id,
         );
         setApartment({
           ...apartment,
@@ -87,20 +87,9 @@ export function ApartmentProvider({
         });
       },
       onSuccess: (data, variables, context) => {
-        if (context?.previousApartment) {
-          const { task_requests, task_assignments } = context.previousApartment;
-          const tasks = [
-            ...task_requests.map((taskRequest) => taskRequest.task),
-            ...task_assignments.map((taskAssignment) => taskAssignment.task),
-          ];
-          const deletedTask = tasks.find((task) => task.id === variables);
-          if (deletedTask) {
-            console.log("Delete task id", variables, deletedTask.id);
-            toast.success(`Delete task ${deletedTask?.name}`, {
-              position: toast.POSITION.TOP_CENTER,
-            });
-          }
-        }
+        toast.success(`Delete task ${variables.name}`, {
+          position: toast.POSITION.TOP_CENTER,
+        });
       },
       onSettled: (data, error, variables, context) => {
         invalidateApartment();

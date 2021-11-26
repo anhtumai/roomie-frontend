@@ -145,7 +145,7 @@ function TaskRequestCard({
   async function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);
     if (decision) {
-      deleteTaskMutation.mutate(task.id);
+      deleteTaskMutation.mutate(task);
     }
   }
 
