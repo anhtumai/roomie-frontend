@@ -49,8 +49,11 @@ function TaskDetail({
   }
 
   function handleDelete() {
-    deleteTaskMutation.mutate(task.id);
-    history.push("/home");
+    const decision = window.confirm(`Delete task ${task.name} ?`);
+    if (decision) {
+      deleteTaskMutation.mutate(task.id);
+      history.push("/home");
+    }
   }
 
   return (
