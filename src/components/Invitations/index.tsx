@@ -16,13 +16,18 @@ function Invitations({
   const history = useHistory();
   const { sent, received } = invitationCollection;
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { setInvitationCollection } = useInvitations();
+  const {
+    setInvitationCollection,
+    cancelInvitationsQueries,
+    invalidateInvitationCollection,
+  } = useInvitations();
 
   const cancelInvitationMutation = useMutation(
     (invitationId: number) =>
       invitationService.deleteById(authState.token, invitationId),
     {
       onMutate: async (invitationId: number) => {
+        cancelInvitationsQueries();
         setInvitationCollection({
           ...invitationCollection,
           sent: invitationCollection.sent.filter(
@@ -44,6 +49,9 @@ function Invitations({
           position: toast.POSITION.TOP_CENTER,
         });
       },
+      onSettled: (data, error, variables, context) => {
+        invalidateInvitationCollection();
+      },
     },
   );
 
@@ -52,6 +60,7 @@ function Invitations({
       invitationService.reject(authState.token, invitationId),
     {
       onMutate: async (invitationId: number) => {
+        cancelInvitationsQueries();
         setInvitationCollection({
           ...invitationCollection,
           received: invitationCollection.received.filter(
@@ -72,6 +81,9 @@ function Invitations({
         toast.error(errMessage, {
           position: toast.POSITION.TOP_CENTER,
         });
+      },
+      onSettled: (data, error, variables, context) => {
+        invalidateInvitationCollection();
       },
     },
   );
