@@ -48,11 +48,13 @@ declare global {
     creator_id: number;
   };
 
+  type RequestState = "accepted" | "pending" | "rejected";
+
   type TaskRequest = {
     task: Task;
     requests: {
       id: number;
-      state: "accepted" | "pending" | "rejected";
+      state: RequestState;
       assignee: Member;
     }[];
   };

@@ -108,7 +108,6 @@ function UpdateAccountForm() {
       );
 
       const updatedAuthState = { ...authState, ...updatedAccountResponseData };
-      console.log(updatedAuthState);
       setAuthState(updatedAuthState);
       toast.success("Update account profile", {
         position: toast.POSITION.TOP_CENTER,

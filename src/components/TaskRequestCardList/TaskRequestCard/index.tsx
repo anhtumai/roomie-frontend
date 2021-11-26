@@ -1,6 +1,6 @@
-import { useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { useMutation } from "react-query";
 import { format } from "date-fns";
 
 import {
@@ -34,7 +34,6 @@ function TaskRequestCard({
   taskRequest: TaskRequest;
   requestState: string;
 }) {
-  const queryClient = useQueryClient();
   const history = useHistory();
 
   const { authState } = useAuth() as { authState: UserWithToken };
@@ -55,6 +54,74 @@ function TaskRequestCard({
   const taskRequestId = Number(
     taskRequest.requests.find((request) => request.assignee.id === authState.id)
       ?.id,
+  );
+
+  const acceptTaskMutation = useMutation(
+    () => taskService.accept(authState.token, taskRequestId),
+    {
+      onMutate: async () => {
+        const acceptedState: "accepted" = "accepted";
+        const updatedRequests = taskRequest.requests.map((_request) =>
+          _request.id === taskRequestId
+            ? { ..._request, state: acceptedState }
+            : _request,
+        );
+        const updatedTaskRequests: TaskRequest[] = apartment.task_requests.map(
+          (element) =>
+            element.task.id === taskRequest.task.id
+              ? { ...element, requests: updatedRequests }
+              : element,
+        );
+        setApartment({ ...apartment, task_requests: updatedTaskRequests });
+        return { previousApartment: apartment };
+      },
+
+      onError: (err, variables, context) => {
+        console.log(err);
+        if (context?.previousApartment) {
+          setApartment(context.previousApartment);
+        }
+        const errMessage =
+          (err as any).response?.data.erro || "Fail to accept task request";
+        toast.error(errMessage, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      },
+    },
+  );
+
+  const rejectTaskMutation = useMutation(
+    () => taskService.reject(authState.token, taskRequestId),
+    {
+      onMutate: async () => {
+        const rejectedState: "rejected" = "rejected";
+        const updatedRequests = taskRequest.requests.map((_request) =>
+          _request.id === taskRequestId
+            ? { ..._request, state: rejectedState }
+            : _request,
+        );
+        const updatedTaskRequests: TaskRequest[] = apartment.task_requests.map(
+          (element) =>
+            element.task.id === taskRequest.task.id
+              ? { ...element, requests: updatedRequests }
+              : element,
+        );
+        setApartment({ ...apartment, task_requests: updatedTaskRequests });
+        return { previousApartment: apartment };
+      },
+
+      onError: (err, variables, context) => {
+        console.log(err);
+        if (context?.previousApartment) {
+          setApartment(context.previousApartment);
+        }
+        const errMessage =
+          (err as any).response?.data.erro || "Fail to reject task request";
+        toast.error(errMessage, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      },
+    },
   );
 
   function handleRedirectTaskPage() {
@@ -91,27 +158,11 @@ function TaskRequestCard({
   }
 
   async function handleAccept() {
-    try {
-      await taskService.accept(authState.token, taskRequestId);
-      queryClient.invalidateQueries("apartment");
-    } catch (err) {
-      console.log(err);
-      toast.error("Fail to accept task", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    }
+    acceptTaskMutation.mutate();
   }
 
   async function handleReject() {
-    try {
-      await taskService.reject(authState.token, taskRequestId);
-      queryClient.invalidateQueries("apartment");
-    } catch (err) {
-      console.log(err);
-      toast.error("Fail to reject task", {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    }
+    rejectTaskMutation.mutate();
   }
   return (
     <>
