@@ -37,10 +37,16 @@ function TaskRequestCard({
   const history = useHistory();
 
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment, setApartment } = useApartment() as {
+  const apartmentContext = useApartment();
+  const { apartment } = apartmentContext as {
     apartment: Apartment;
-    setApartment: (x: Apartment | "") => void;
   };
+  const {
+    setApartment,
+    invalidateApartment,
+    deleteTaskMutation,
+    cancelApartmentQueries,
+  } = apartmentContext;
 
   const { task } = taskRequest;
 
@@ -60,6 +66,7 @@ function TaskRequestCard({
     () => taskService.accept(authState.token, taskRequestId),
     {
       onMutate: async () => {
+        cancelApartmentQueries();
         const acceptedState: "accepted" = "accepted";
         const updatedRequests = taskRequest.requests.map((_request) =>
           _request.id === taskRequestId
@@ -87,6 +94,9 @@ function TaskRequestCard({
           position: toast.POSITION.TOP_CENTER,
         });
       },
+      onSettled: (data, error, variables, context) => {
+        invalidateApartment();
+      },
     },
   );
 
@@ -94,6 +104,7 @@ function TaskRequestCard({
     () => taskService.reject(authState.token, taskRequestId),
     {
       onMutate: async () => {
+        cancelApartmentQueries();
         const rejectedState: "rejected" = "rejected";
         const updatedRequests = taskRequest.requests.map((_request) =>
           _request.id === taskRequestId
@@ -121,6 +132,9 @@ function TaskRequestCard({
           position: toast.POSITION.TOP_CENTER,
         });
       },
+      onSettled: (data, error, variables, context) => {
+        invalidateApartment();
+      },
     },
   );
 
@@ -130,30 +144,8 @@ function TaskRequestCard({
 
   async function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);
-    if (!decision) {
-      return;
-    }
-    try {
-      await taskService.deleteOne(authState.token, task.id);
-      const updatedTaskRequests = apartment.task_requests.filter(
-        (taskRequest) => taskRequest.task.id !== task.id,
-      );
-      const updatedTaskAssignments = apartment.task_assignments.filter(
-        (taskAssignment) => taskAssignment.task.id !== task.id,
-      );
-      setApartment({
-        ...apartment,
-        task_requests: updatedTaskRequests,
-        task_assignments: updatedTaskAssignments,
-      });
-      toast.success(`Delete task ${task.name}`, {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    } catch (err) {
-      console.log(err);
-      toast.error("Fail to delete task", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+    if (decision) {
+      deleteTaskMutation.mutate(task.id);
     }
   }
 

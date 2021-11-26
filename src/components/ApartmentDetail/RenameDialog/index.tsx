@@ -23,10 +23,12 @@ function RenameDialog({
   setOpen: (x: boolean) => void;
 }) {
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment, setApartment } = useApartment() as {
+  const apartmentContext = useApartment();
+  const { apartment } = apartmentContext as {
     apartment: Apartment;
-    setApartment: (x: Apartment | "") => void;
   };
+  const { setApartment, invalidateApartment, cancelApartmentQueries } =
+    apartmentContext;
   const [newApartmentName, setNewApartmentName] = useState(apartment.name);
 
   const renameApartmentMutation = useMutation(
@@ -34,6 +36,7 @@ function RenameDialog({
       apartmentService.update(authState.token, apartment.id, newApartmentName),
     {
       onMutate: async () => {
+        cancelApartmentQueries();
         const updatedApartment = {
           ...apartment,
           name: newApartmentName,
@@ -57,6 +60,9 @@ function RenameDialog({
         toast.success("Rename apartment", {
           position: toast.POSITION.TOP_CENTER,
         });
+      },
+      onSettled: (data, error, variables, context) => {
+        invalidateApartment();
       },
     },
   );

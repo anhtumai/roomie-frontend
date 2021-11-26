@@ -28,7 +28,9 @@ function TaskDetail({
 }) {
   const history = useHistory();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment } = useApartment() as { apartment: Apartment };
+  const apartmentContext = useApartment();
+  const { apartment } = apartmentContext as { apartment: Apartment };
+  const { deleteTaskMutation } = apartmentContext;
 
   const [openTaskDialog, setOpenTaskDialog] = useState(false);
   const [openReAssignDialog, setOpenReAssignDialog] = useState(false);
@@ -47,7 +49,8 @@ function TaskDetail({
   }
 
   function handleDelete() {
-    console.log("Handle delete");
+    deleteTaskMutation.mutate(task.id);
+    history.push("/home");
   }
 
   return (

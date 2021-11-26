@@ -1,4 +1,3 @@
-import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 import {
@@ -15,7 +14,6 @@ import InfoIcon from "@mui/icons-material/Info";
 
 import useAuth from "../../contexts/auth";
 import useApartment from "../../contexts/apartment";
-import taskService from "../../services/task";
 import { getAbbreviation } from "../../utils/common";
 
 import "./style.css";
@@ -29,41 +27,20 @@ function TaskCard({
 }) {
   const history = useHistory();
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment, setApartment } = useApartment() as {
+  const apartmentContext = useApartment();
+  const { apartment } = apartmentContext as {
     apartment: Apartment;
-    setApartment: (x: Apartment | "") => void;
   };
+  const { deleteTaskMutation } = apartmentContext;
 
   const taskCreator = apartment.members.find(
     (member) => member.id === task.creator_id,
   );
 
-  async function handleDelete() {
+  function handleDelete() {
     const decision = window.confirm(`Delete task ${task.name} ?`);
-    if (!decision) {
-      return;
-    }
-    try {
-      await taskService.deleteOne(authState.token, task.id);
-      const updatedTaskRequests = apartment.task_requests.filter(
-        (taskRequest) => taskRequest.task.id !== task.id,
-      );
-      const updatedTaskAssignments = apartment.task_assignments.filter(
-        (taskAssignment) => taskAssignment.task.id !== task.id,
-      );
-      setApartment({
-        ...apartment,
-        task_requests: updatedTaskRequests,
-        task_assignments: updatedTaskAssignments,
-      });
-      toast.success(`Delete task ${task.name}`, {
-        position: toast.POSITION.TOP_CENTER,
-      });
-    } catch (err) {
-      console.log(err);
-      toast.error("Fail to delete task", {
-        position: toast.POSITION.TOP_CENTER,
-      });
+    if (decision) {
+      deleteTaskMutation.mutate(task.id);
     }
   }
 

@@ -1,8 +1,15 @@
 import { createContext, ReactNode, useContext } from "react";
-import { useQuery, useQueryClient } from "react-query";
+import {
+  useMutation,
+  UseMutationResult,
+  useQuery,
+  useQueryClient,
+} from "react-query";
+import { toast } from "react-toastify";
 
 import useAuth from "../contexts/auth";
 import meService from "../services/me";
+import taskService from "../services/task";
 
 interface ApartmentContextType {
   isLoading: boolean;
@@ -10,6 +17,15 @@ interface ApartmentContextType {
   apartment: Apartment | "" | undefined;
   setApartment: (x: Apartment | "") => void;
   invalidateApartment: () => void;
+  deleteTaskMutation: UseMutationResult<
+    never,
+    unknown,
+    number,
+    {
+      previousApartment: Apartment;
+    }
+  >;
+  cancelApartmentQueries: () => void;
 }
 
 const ApartmentContext = createContext<ApartmentContextType>(
@@ -35,6 +51,63 @@ export function ApartmentProvider({
     queryClient.invalidateQueries("apartment");
   }
 
+  function cancelApartmentQueries() {
+    queryClient.cancelQueries("apartment");
+  }
+
+  const deleteTaskMutation = useMutation(
+    (taskId: number) => taskService.deleteOne(authState.token, taskId),
+    {
+      onMutate: async (taskId: number) => {
+        cancelApartmentQueries();
+        const apartment = data as Apartment;
+        const updatedTaskRequests = apartment.task_requests.filter(
+          (taskRequest) => taskRequest.task.id !== taskId,
+        );
+        const updatedTaskAssignments = apartment.task_assignments.filter(
+          (taskAssignment) => taskAssignment.task.id !== taskId,
+        );
+        setApartment({
+          ...apartment,
+          task_requests: updatedTaskRequests,
+          task_assignments: updatedTaskAssignments,
+        });
+
+        return { previousApartment: apartment };
+      },
+      onError: (err, variables, context) => {
+        console.log(err);
+        if (context?.previousApartment) {
+          setApartment(context.previousApartment);
+        }
+        const errMessage =
+          (err as any).response?.data.erro || "Fail to delete task";
+        toast.error(errMessage, {
+          position: toast.POSITION.TOP_CENTER,
+        });
+      },
+      onSuccess: (data, variables, context) => {
+        if (context?.previousApartment) {
+          const { task_requests, task_assignments } = context.previousApartment;
+          const tasks = [
+            ...task_requests.map((taskRequest) => taskRequest.task),
+            ...task_assignments.map((taskAssignment) => taskAssignment.task),
+          ];
+          const deletedTask = tasks.find((task) => task.id === variables);
+          if (deletedTask) {
+            console.log("Delete task id", variables, deletedTask.id);
+            toast.success(`Delete task ${deletedTask?.name}`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+          }
+        }
+      },
+      onSettled: (data, error, variables, context) => {
+        invalidateApartment();
+      },
+    },
+  );
+
   return (
     <ApartmentContext.Provider
       value={{
@@ -43,6 +116,8 @@ export function ApartmentProvider({
         apartment: data,
         setApartment,
         invalidateApartment,
+        deleteTaskMutation,
+        cancelApartmentQueries,
       }}
     >
       {children}
