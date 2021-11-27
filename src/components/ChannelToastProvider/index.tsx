@@ -2,18 +2,22 @@ import { ReactNode, useEffect } from "react";
 
 import Pusher from "pusher-js";
 import { toast } from "react-toastify";
-import { useQueryClient } from "react-query";
 
 import useAuth from "../../contexts/auth";
-import { makeChannel, pusherConstant } from "./constant";
+import { makeChannel } from "./utils";
+
+import { pusherConstant } from "../../constants";
+import useApartment from "../../contexts/apartment";
+import useInvitations from "../../contexts/invitations";
 
 function ChannelToastProvider({
   children,
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const queryClient = useQueryClient();
   const { authState } = useAuth() as { authState: UserWithToken };
+  const { apartment, setApartment, invalidateApartment } = useApartment();
+  const { invalidateInvitationCollection } = useInvitations();
 
   useEffect(() => {
     const pusher = new Pusher(String(process.env.REACT_APP_PUSHER_KEY), {
@@ -29,13 +33,10 @@ function ChannelToastProvider({
           toast.info(
             `User ${invitor} invites you to join apartment ${apartment}`,
           );
-          queryClient.invalidateQueries("invitations");
         } else if (state === pusherConstant.CANCELED_STATE) {
           toast.info(`User ${invitor} cancelled the invitation`);
-          queryClient.invalidateQueries("invitations");
         } else if (state === pusherConstant.REJECTED_STATE) {
           toast.info(`User ${invitee} rejected the invitation`);
-          queryClient.invalidateQueries("invitations");
         } else if (state === pusherConstant.ACCEPTED_STATE) {
           if (invitor === authState.username) {
             toast.info(`User ${invitee} accepted the invitation`);
@@ -43,9 +44,9 @@ function ChannelToastProvider({
           } else {
             toast.info(`${invitor} added ${invitee} to the apartment`);
           }
-          queryClient.invalidateQueries("apartment");
-          queryClient.invalidateQueries("invitations");
+          invalidateApartment();
         }
+        invalidateInvitationCollection();
       },
     );
 
@@ -56,20 +57,17 @@ function ChannelToastProvider({
         if (state === pusherConstant.LEAVE_STATE) {
           const { leaver } = data as ChannelLeftApartmentMessage;
           toast.info(`User ${leaver} left the apartment`);
-          queryClient.invalidateQueries("apartment");
+          invalidateApartment();
         } else if (state === pusherConstant.EDITED_STATE) {
           const { apartmentName } = data as ChannelEditedApartmentMessage;
           toast.info(`Admin renamed the apartment to ${apartmentName}`);
-          const previousApartment = queryClient.getQueryData<
-            Apartment | "" | undefined
-          >("apartment");
-          if (previousApartment) {
-            queryClient.setQueryData("apartment", {
-              ...previousApartment,
+          if (apartment) {
+            setApartment({
+              ...apartment,
               name: apartmentName,
             });
           } else {
-            queryClient.invalidateQueries("apartment");
+            invalidateApartment();
           }
         } else if (state === pusherConstant.MEMBER_REMOVED_STATE) {
           const { removedMember } =
@@ -77,10 +75,10 @@ function ChannelToastProvider({
 
           if (authState.username === removedMember) {
             toast.info("Admin removed you from the apartment");
-            queryClient.setQueryData("apartment", "");
+            setApartment("");
           } else {
             toast.info(`Admin removed ${removedMember} from the apartment`);
-            queryClient.invalidateQueries("apartment");
+            invalidateApartment();
           }
         }
       },
@@ -89,34 +87,34 @@ function ChannelToastProvider({
     channel.bind(pusherConstant.TASK_EVENT, (data: ChannelTaskMessage) => {
       const { state } = data;
       if (state === pusherConstant.CREATED_STATE) {
-        toast.info(
-          `User ${(data as ChannelCreateTaskMessage).creator} assigned task ${
-            data.task
-          } to you`,
-        );
-        queryClient.invalidateQueries("apartment");
+        const { creator, assignees } = data as ChannelCreateTaskMessage;
+        if (assignees.includes(authState.username)) {
+          toast.info(`User ${creator} assigned task ${data.task} to you`);
+        }
+
+        invalidateApartment();
       } else if (state === pusherConstant.ASSIGNED_STATE) {
         const { assignees } = data as ChannelAssignTaskMessage;
         if (assignees.includes(authState.username)) {
           toast.info(`All assignee(s) accepted task ${data.task}`);
         }
-        queryClient.invalidateQueries("apartment");
+        invalidateApartment();
       } else if (state === pusherConstant.DELETED_STATE) {
         const { deleter } = data as ChannelDeleteTaskMessage;
         toast.info(`User ${deleter} deleted task ${data.task}`);
-        queryClient.invalidateQueries("apartment");
+        invalidateApartment();
       } else if (state === pusherConstant.EDITED_STATE) {
         const { updater } = data as ChannelEditedTaskMessage;
         toast.info(`User ${updater} updated task ${data.task}`);
-        queryClient.invalidateQueries("apartment");
+        invalidateApartment();
       } else if (state === pusherConstant.REASSIGNED_STATE) {
         const { assigner } = data as ChannelReAssignedTaskMessage;
         toast.info(`User ${assigner} re assigned task ${data.task}`);
-        queryClient.invalidateQueries("apartment");
+        invalidateApartment();
       } else if (state === pusherConstant.REORDERED_STATE) {
         const { assigner } = data as ChannelReorderedTaskMessage;
         toast.info(`User ${assigner} reordered task ${data.task}`);
-        queryClient.invalidateQueries("apartment");
+        invalidateApartment();
       }
     });
   }, []);

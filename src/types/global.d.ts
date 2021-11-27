@@ -1,3 +1,5 @@
+import { pusherConstant } from "../constants";
+
 declare global {
   type AccountCredential = {
     username: string;
@@ -135,6 +137,7 @@ declare global {
   interface ChannelCreateTaskMessage extends ChannelTaskMessage {
     state: "CREATED";
     creator: string;
+    assignees: string[];
   }
 
   interface ChannelAssignTaskMessage extends ChannelTaskMessage {
