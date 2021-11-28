@@ -1,0 +1,43 @@
+.invitation {
+  width: 30rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  margin-left: 1rem;
+  box-shadow: 0 8px 40px -12px rgba(0, 0, 0, 0.3);
+}
+
+.invitation:hover {
+  box-shadow: 0 16px 70px -12.125px rgba(0, 0, 0, 0.3);
+}
+
+.invitation p {
+  margin-left: 1rem;
+  padding-top: 1rem;
+  padding-bottom: 0;
+}
+
+.invitation__button-wrapper {
+  display: flex;
+}
+
+.invitation__cancel-button .MuiButton-root {
+  color: #424242;
+  margin-left: auto;
+  margin-right: 1.5rem;
+  border-color: #bdbdbd;
+
+  margin-bottom: 1rem;
+}
+
+.invitation__accept-button {
+  margin-left: auto !important;
+  margin-right: 0.5rem !important;
+
+  margin-bottom: 1rem !important;
+}
+
+.invitation__reject-button {
+  margin-right: 1.5rem !important;
+
+  margin-bottom: 1rem !important;
+}

@@ -4,6 +4,9 @@ import { useMutation } from "react-query";
 
 import { Box, Typography } from "@mui/material";
 
+import SentInvitation from "./SentInvitation";
+import ReceivedInvitation from "./ReceivedInvitation";
+
 import useAuth from "../../contexts/auth";
 import useInvitations from "../../contexts/invitations";
 import invitationService from "../../services/invitation";
@@ -128,21 +131,19 @@ function Invitations({
   return (
     <Box>
       {sent.map((invitation) => (
-        <div key={invitation.id}>
-          You have sent an invitation to {invitation.invitee.username} (
-          {invitation.invitee.name})
-          <button onClick={() => handleDelete(invitation.id)}>Cancel</button>
-        </div>
+        <SentInvitation
+          key={invitation.id}
+          invitation={invitation}
+          handleDelete={handleDelete}
+        />
       ))}
       {received.map((invitation) => (
-        <div key={invitation.id}>
-          {invitation.invitor.username} ({invitation.invitor.name}) invites you
-          to {invitation.apartment.name}
-          <button onClick={() => handleAccept(invitation.id)}>
-            Accept
-          </button>{" "}
-          <button onClick={() => handleReject(invitation.id)}>Reject</button>
-        </div>
+        <ReceivedInvitation
+          key={invitation.id}
+          invitation={invitation}
+          handleAccept={handleAccept}
+          handleReject={handleReject}
+        />
       ))}
     </Box>
   );
