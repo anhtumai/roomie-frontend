@@ -164,6 +164,11 @@ declare global {
     state: "REORDERED";
     assigner: string;
   }
+
+  type ChannelTaskRequestMessage = {
+    id: number;
+    state: string;
+  };
 }
 
 export {};

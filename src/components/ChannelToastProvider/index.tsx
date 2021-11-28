@@ -117,6 +117,13 @@ function ChannelToastProvider({
         invalidateApartment();
       }
     });
+
+    channel.bind(
+      pusherConstant.TASK_REQUEST_EVENT,
+      (data: ChannelTaskRequestMessage) => {
+        invalidateApartment();
+      },
+    );
   }, []);
 
   return <>{children}</>;

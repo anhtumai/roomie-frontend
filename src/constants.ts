@@ -2,6 +2,7 @@ export const pusherConstant = {
   APARTMENT_EVENT: "apartment",
   INVITATION_EVENT: "invitation",
   TASK_EVENT: "task",
+  TASK_REQUEST_EVENT: "task_request",
 
   CREATED_STATE: "CREATED",
   CANCELED_STATE: "CANCELED",
