@@ -4,6 +4,8 @@
 > App uses Pusher library to keep all apartment members informed with the latest changes
 > Written in React (Typescript)
 
+Link to demo video: [Vimeo demo video](https://vimeo.com/650856424)
+
 Link to demo app: [Netlify link](https://roomiee.netlify.app/)
 
 **Credentials**: You can log in with these usernames and passwords:
