@@ -167,7 +167,7 @@ declare global {
 
   type ChannelTaskRequestMessage = {
     id: number;
-    state: string;
+    state: RequestState;
   };
 }
 

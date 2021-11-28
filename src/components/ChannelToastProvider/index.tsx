@@ -121,7 +121,22 @@ function ChannelToastProvider({
     channel.bind(
       pusherConstant.TASK_REQUEST_EVENT,
       (data: ChannelTaskRequestMessage) => {
-        invalidateApartment();
+        if (apartment) {
+          const { id, state } = data;
+          const updatedApartment: Apartment = JSON.parse(
+            JSON.stringify(apartment),
+          );
+          for (const taskRequest of updatedApartment.task_requests) {
+            const updatedRequest = taskRequest.requests.find(
+              (_request) => _request.id === id,
+            );
+            if (updatedRequest) {
+              updatedRequest.state = state;
+              setApartment(updatedApartment);
+              break;
+            }
+          }
+        }
       },
     );
   }, []);
