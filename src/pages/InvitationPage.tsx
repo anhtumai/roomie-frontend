@@ -1,7 +1,7 @@
-import useInvitations from "../contexts/invitations";
+import useInvitations from "contexts/invitations";
 
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-import Invitations from "../components/Invitations";
+import Invitations from "components/Invitations";
 
 function MainContent() {
   const { isLoading, error, invitationCollection } = useInvitations();

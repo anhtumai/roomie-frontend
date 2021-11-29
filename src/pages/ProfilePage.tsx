@@ -1,5 +1,5 @@
 import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-import UpdateAccountForm from "../components/UpdateAccountForm";
+import UpdateAccountForm from "components/UpdateAccountForm";
 
 function ProfilePage() {
   return (

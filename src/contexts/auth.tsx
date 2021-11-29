@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useContext, useState } from "react";
-import storageUtils from "../utils/localStorage";
+import storageUtils from "utils/localStorage";
 
 interface AuthContextType {
   authState: UserWithToken | null;
