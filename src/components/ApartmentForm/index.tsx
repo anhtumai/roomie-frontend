@@ -6,9 +6,9 @@ import { Paper, Typography, TextField, Button } from "@mui/material";
 
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import apartmentService from "../../services/apartment";
-import useAuth from "../../contexts/auth";
-import useApartment from "../../contexts/apartment";
+import apartmentService from "services/apartment";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
 
 import { paperSx, headerSx, buttonSx, noteSx } from "./style";
 

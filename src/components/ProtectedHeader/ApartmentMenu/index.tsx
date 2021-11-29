@@ -10,14 +10,14 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import SettingsIcon from "@mui/icons-material/Settings";
 
-import useApartment from "../../../contexts/apartment";
-import useAuth from "../../../contexts/auth";
-import meService from "../../../services/me";
+import useApartment from "contexts/apartment";
+import useAuth from "contexts/auth";
+import meService from "services/me";
 
 import InviteDialog from "./InviteDialog";
 
-import { iconSx } from "../style";
-import { headerTextButtonSx } from "../../sharedStyles/headerStyles";
+import { iconSx } from "components/ProtectedHeader/style";
+import { headerTextButtonSx } from "components/sharedStyles/headerStyles";
 
 function ApartmentMenu() {
   const history = useHistory();

@@ -4,9 +4,9 @@ import { Badge, IconButton, Tooltip } from "@mui/material";
 import AssignmentOutlinedIcon from "@mui/icons-material/AssignmentOutlined";
 import PersonAddAltTwoToneIcon from "@mui/icons-material/PersonAddAltTwoTone";
 
-import useApartment from "../../contexts/apartment";
-import useInvitations from "../../contexts/invitations";
-import useAuth from "../../contexts/auth";
+import useApartment from "contexts/apartment";
+import useInvitations from "contexts/invitations";
+import useAuth from "contexts/auth";
 
 const badgeSx = {
   color: "white",

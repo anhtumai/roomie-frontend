@@ -4,11 +4,11 @@ import _ from "lodash";
 import { IconButton } from "@mui/material";
 import ReorderIcon from "@mui/icons-material/Reorder";
 
-import MemberDisplay from "../MemberDisplay";
+import MemberDisplay from "components/TaskDetail/MemberDisplay";
 import ReorderDialog from "./ReorderDialog";
 
-import useAuth from "../../../contexts/auth";
-import useApartment from "../../../contexts/apartment";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
 
 import "./style.css";
 

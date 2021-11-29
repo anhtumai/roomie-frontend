@@ -17,11 +17,11 @@ import {
   Grid,
 } from "@mui/material";
 
-import MemberDisplay from "../../MemberDisplay";
+import MemberDisplay from "components/TaskDetail/MemberDisplay";
 
-import taskService from "../../../../services/task";
-import useAuth from "../../../../contexts/auth";
-import useApartment from "../../../../contexts/apartment";
+import taskService from "services/task";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
 
 import { reorder, getTaskPreviews } from "./utils";
 

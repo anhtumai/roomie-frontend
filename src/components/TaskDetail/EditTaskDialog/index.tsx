@@ -9,11 +9,11 @@ import {
   Button,
 } from "@mui/material";
 
-import useAuth from "../../../contexts/auth";
-import useApartment from "../../../contexts/apartment";
-import taskService from "../../../services/task";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
+import taskService from "services/task";
 
-import "../../sharedStyles/taskFormStyle.css";
+import "components/sharedStyles/taskFormStyle.css";
 
 function toInputTypeDateFormat(dateString: string) {
   const dateObject = new Date(dateString);

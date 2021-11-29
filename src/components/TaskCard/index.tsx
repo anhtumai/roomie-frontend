@@ -12,9 +12,9 @@ import {
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 
-import useAuth from "../../contexts/auth";
-import useApartment from "../../contexts/apartment";
-import { getAbbreviation } from "../../utils/common";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
+import { getAbbreviation } from "utils/common";
 
 import "./style.css";
 

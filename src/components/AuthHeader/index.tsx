@@ -2,7 +2,10 @@ import { Link } from "react-router-dom";
 
 import { AppBar, Box, Toolbar, Typography, Button } from "@mui/material";
 
-import { appBarSx, headerTextButtonSx } from "../sharedStyles/headerStyles";
+import {
+  appBarSx,
+  headerTextButtonSx,
+} from "components/sharedStyles/headerStyles";
 
 function AuthHeader() {
   return (

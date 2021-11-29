@@ -1,5 +1,5 @@
-import MemberDisplay from "../MemberDisplay";
-import useApartment from "../../../contexts/apartment";
+import MemberDisplay from "components/TaskDetail/MemberDisplay";
+import useApartment from "contexts/apartment";
 
 import "./style.css";
 

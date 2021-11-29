@@ -7,15 +7,15 @@ import { toast } from "react-toastify";
 import { TextField, Button, Typography, Avatar, Box } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 
-import accountService from "../../services/account";
+import accountService from "services/account";
 
 import {
   boxSx,
   avatarSx,
   h2Sx,
   submitButtonSx,
-} from "../sharedStyles/authFormStyles";
-import "../sharedStyles/authFormStyles.css";
+} from "components/sharedStyles/authFormStyles";
+import "components/sharedStyles/authFormStyles.css";
 
 function RegisterForm() {
   const history = useHistory();

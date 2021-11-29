@@ -10,12 +10,11 @@ import {
   avatarSx,
   h2Sx,
   submitButtonSx,
-} from "../sharedStyles/authFormStyles";
-import "../sharedStyles/authFormStyles.css";
+} from "components/sharedStyles/authFormStyles";
+import "components/sharedStyles/authFormStyles.css";
 
-import useAuth from "../../contexts/auth";
-
-import authService from "../../services/auth";
+import useAuth from "contexts/auth";
+import authService from "services/auth";
 
 function LoginForm() {
   const history = useHistory();

@@ -14,10 +14,10 @@ import ReAssignDialog from "./ReAssignDialog";
 import TaskRequestProperty from "./TaskRequestProperty";
 import TaskAssignmentProperty from "./TaskAssignmentProperty";
 
-import useAuth from "../../contexts/auth";
-import useApartment from "../../contexts/apartment";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
 
-import { getAssigneeUsernames } from "../../utils/common";
+import { getAssigneeUsernames } from "utils/common";
 
 import "./style.css";
 

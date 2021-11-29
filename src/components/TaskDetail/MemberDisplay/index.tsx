@@ -1,6 +1,6 @@
 import { Avatar } from "@mui/material";
 
-import { getAbbreviation } from "../../../utils/common";
+import { getAbbreviation } from "utils/common";
 
 import "./style.css";
 

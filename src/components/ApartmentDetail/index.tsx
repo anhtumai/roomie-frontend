@@ -9,11 +9,11 @@ import EditIcon from "@mui/icons-material/Edit";
 import KeyboardReturnIcon from "@mui/icons-material/KeyboardReturn";
 
 import RenameDialog from "./RenameDialog";
-import MemberDisplay from "../TaskDetail/MemberDisplay";
+import MemberDisplay from "components/TaskDetail/MemberDisplay";
 
-import useAuth from "../../contexts/auth";
-import useApartment from "../../contexts/apartment";
-import meService from "../../services/me";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
+import meService from "services/me";
 
 import "./style.css";
 

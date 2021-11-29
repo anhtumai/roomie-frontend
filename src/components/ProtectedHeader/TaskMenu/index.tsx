@@ -6,7 +6,7 @@ import AddIcon from "@mui/icons-material/Add";
 
 import CreateTaskDialog from "./CreateTaskDialog";
 
-import { iconSx } from "../style";
+import { iconSx } from "components/ProtectedHeader/style";
 
 function TaskMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);

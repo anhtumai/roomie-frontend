@@ -6,9 +6,9 @@ import { useQueryClient } from "react-query";
 
 import { Button, TextField, Stack } from "@mui/material";
 
-import authService from "../../services/auth";
-import accountService from "../../services/account";
-import useAuth from "../../contexts/auth";
+import authService from "services/auth";
+import accountService from "services/account";
+import useAuth from "contexts/auth";
 
 import "./style.css";
 

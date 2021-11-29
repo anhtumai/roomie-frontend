@@ -11,9 +11,9 @@ import {
   Button,
 } from "@mui/material";
 
-import useAuth from "../../../../contexts/auth";
-import useInvitations from "../../../../contexts/invitations";
-import invitationService from "../../../../services/invitation";
+import useAuth from "contexts/auth";
+import useInvitations from "contexts/invitations";
+import invitationService from "services/invitation";
 
 function InviteDialog({
   open,

@@ -1,6 +1,6 @@
 import { Grid } from "@mui/material";
 
-import TaskCard from "../TaskCard";
+import TaskCard from "components/TaskCard";
 
 function TaskCardCollection({
   taskRequests,

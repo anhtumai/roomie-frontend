@@ -3,12 +3,12 @@ import { ReactNode, useEffect } from "react";
 import Pusher from "pusher-js";
 import { toast } from "react-toastify";
 
-import useAuth from "../../contexts/auth";
+import useAuth from "contexts/auth";
 import { makeChannel } from "./utils";
 
 import { pusherConstant } from "../../constants";
-import useApartment from "../../contexts/apartment";
-import useInvitations from "../../contexts/invitations";
+import useApartment from "contexts/apartment";
+import useInvitations from "contexts/invitations";
 
 function ChannelToastProvider({
   children,

@@ -17,9 +17,9 @@ import {
 import { SelectChangeEvent } from "@mui/material/Select";
 import { Theme, useTheme } from "@mui/material/styles";
 
-import useAuth from "../../../contexts/auth";
-import useApartment from "../../../contexts/apartment";
-import taskService from "../../../services/task";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
+import taskService from "services/task";
 
 function getStyles(
   text: string,

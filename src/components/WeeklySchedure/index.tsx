@@ -7,10 +7,10 @@ import { IconButton, Button } from "@mui/material";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 
-import TaskCard from "../TaskCard";
+import TaskCard from "components/TaskCard";
 
-import useAuth from "../../contexts/auth";
-import useApartment from "../../contexts/apartment";
+import useAuth from "contexts/auth";
+import useApartment from "contexts/apartment";
 import { getAssignmentMap, getAssignees } from "./utils";
 
 import "./style.css";

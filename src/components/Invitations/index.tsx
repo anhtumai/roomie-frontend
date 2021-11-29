@@ -7,9 +7,9 @@ import { Box, Typography } from "@mui/material";
 import SentInvitation from "./SentInvitation";
 import ReceivedInvitation from "./ReceivedInvitation";
 
-import useAuth from "../../contexts/auth";
-import useInvitations from "../../contexts/invitations";
-import invitationService from "../../services/invitation";
+import useAuth from "contexts/auth";
+import useInvitations from "contexts/invitations";
+import invitationService from "services/invitation";
 
 function Invitations({
   invitationCollection,

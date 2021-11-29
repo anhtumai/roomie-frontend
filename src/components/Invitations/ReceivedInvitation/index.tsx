@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 
-import "../style.css";
+import "components/Invitations/style.css";
 
 function ReceivedInvitation({
   invitation,

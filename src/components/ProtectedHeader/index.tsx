@@ -3,15 +3,15 @@ import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material/styles";
 
-import NotificationBadge from "../NotificationBadge";
+import NotificationBadge from "components/NotificationBadge";
 import AccountMenu from "./AccountMenu";
 import ApartmentMenu from "./ApartmentMenu";
 import TaskMenu from "./TaskMenu";
 
-import useApartment from "../../contexts/apartment";
+import useApartment from "contexts/apartment";
 
-import { drawerWidth } from "../sharedStyles/drawerConfig";
-import { appBarSx } from "../sharedStyles/headerStyles";
+import { drawerWidth } from "components/sharedStyles/drawerConfig";
+import { appBarSx } from "components/sharedStyles/headerStyles";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

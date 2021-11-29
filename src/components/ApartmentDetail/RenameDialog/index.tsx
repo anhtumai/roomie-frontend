@@ -11,9 +11,9 @@ import {
   Button,
 } from "@mui/material";
 
-import useAuth from "../../../contexts/auth";
-import apartmentService from "../../../services/apartment";
-import useApartment from "../../../contexts/apartment";
+import useAuth from "contexts/auth";
+import apartmentService from "services/apartment";
+import useApartment from "contexts/apartment";
 
 function RenameDialog({
   open,

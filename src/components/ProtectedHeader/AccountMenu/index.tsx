@@ -3,8 +3,8 @@ import { useHistory } from "react-router-dom";
 
 import { IconButton, Avatar, Menu, MenuItem } from "@mui/material";
 
-import useAuth from "../../../contexts/auth";
-import { getAbbreviation } from "../../../utils/common";
+import useAuth from "contexts/auth";
+import { getAbbreviation } from "utils/common";
 
 function AccountMenu() {
   const history = useHistory();
