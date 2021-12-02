@@ -33,7 +33,9 @@ function AccountMenu() {
   return (
     <div>
       <IconButton onClick={handleClick} color="inherit">
-        <Avatar sx={{ width: 32, height: 32 }}>{abbreviation}</Avatar>
+        <Avatar sx={{ width: "2.67rem", height: "2.67rem" }}>
+          {abbreviation}
+        </Avatar>
       </IconButton>
       <Menu
         anchorEl={anchorEl}

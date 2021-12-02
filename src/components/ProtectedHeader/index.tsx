@@ -13,6 +13,9 @@ import useApartment from "contexts/apartment";
 import { drawerWidth } from "components/sharedStyles/drawerConfig";
 import { appBarSx } from "components/sharedStyles/headerStyles";
 
+import "components/sharedStyles/header.css";
+import "./style.css";
+
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -48,7 +51,12 @@ function ProtectedHeader({
     setOpen(true);
   }
   return (
-    <AppBar position="fixed" open={open} sx={appBarSx}>
+    <AppBar
+      position="fixed"
+      open={open}
+      sx={appBarSx}
+      className="header protected-header"
+    >
       <Toolbar>
         <IconButton
           color="inherit"
@@ -56,7 +64,7 @@ function ProtectedHeader({
           onClick={handleDrawerOpen}
           edge="start"
           sx={{
-            marginRight: "1em",
+            marginRight: "1rem",
             ...(open && { display: "none" }),
           }}
         >

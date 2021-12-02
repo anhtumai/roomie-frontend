@@ -7,9 +7,11 @@ import {
   headerTextButtonSx,
 } from "components/sharedStyles/headerStyles";
 
+import "components/sharedStyles/header.css";
+
 function AuthHeader() {
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1 }} className="header">
       <AppBar position="static" sx={appBarSx}>
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
