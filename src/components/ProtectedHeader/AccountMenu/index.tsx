@@ -6,6 +6,8 @@ import { IconButton, Avatar, Menu, MenuItem } from "@mui/material";
 import useAuth from "contexts/auth";
 import { getAbbreviation } from "utils/common";
 
+import "components/ProtectedHeader/style.css";
+
 function AccountMenu() {
   const history = useHistory();
   const { logout, authState } = useAuth();
@@ -50,6 +52,7 @@ function AccountMenu() {
         }}
         open={open}
         onClose={handleClose}
+        className="drop-down-menu"
       >
         <MenuItem onClick={handleRedirectProfile}>Settings</MenuItem>
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>

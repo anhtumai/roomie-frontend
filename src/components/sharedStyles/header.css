@@ -1,7 +1,7 @@
 .header .MuiToolbar-root {
-  min-height: 4rem;
-  padding-left: 2rem;
-  padding-right: 1rem;
+  min-height: 4.5rem !important;
+  padding-left: 2rem !important;
+  padding-right: 1rem !important;
 }
 
 .header .MuiButton-root {

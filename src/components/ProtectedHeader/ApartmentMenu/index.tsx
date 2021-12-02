@@ -18,6 +18,7 @@ import InviteDialog from "./InviteDialog";
 
 import { iconSx } from "components/ProtectedHeader/style";
 import { headerTextButtonSx } from "components/sharedStyles/headerStyles";
+import "components/ProtectedHeader/style.css";
 
 function ApartmentMenu() {
   const history = useHistory();
@@ -80,6 +81,7 @@ function ApartmentMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        className="drop-down-menu"
       >
         <MenuItem onClick={() => setOpenInvitationDialog(true)} disableRipple>
           <PersonAddAlt1Icon sx={iconSx} /> Invite

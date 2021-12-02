@@ -7,6 +7,7 @@ import AddIcon from "@mui/icons-material/Add";
 import CreateTaskDialog from "./CreateTaskDialog";
 
 import { iconSx } from "components/ProtectedHeader/style";
+import "components/ProtectedHeader/style.css";
 
 function TaskMenu() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -49,6 +50,7 @@ function TaskMenu() {
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        className="drop-down-menu"
       >
         <MenuItem onClick={handleOpenTaskDialog}>
           <AddIcon sx={iconSx} /> Create
