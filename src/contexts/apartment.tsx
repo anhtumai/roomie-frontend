@@ -7,9 +7,9 @@ import {
 } from "react-query";
 import { toast } from "react-toastify";
 
-import useAuth from "contexts/auth";
-import meService from "services/me";
-import taskService from "services/task";
+import useAuth from "../contexts/auth";
+import meService from "../services/me";
+import taskService from "../services/task";
 
 interface ApartmentContextType {
   isLoading: boolean;

@@ -6,8 +6,6 @@ import { IconButton, Avatar, Menu, MenuItem } from "@mui/material";
 import useAuth from "contexts/auth";
 import { getAbbreviation } from "utils/common";
 
-import "components/ProtectedHeader/style.css";
-
 function AccountMenu() {
   const history = useHistory();
   const { logout, authState } = useAuth();
@@ -35,9 +33,7 @@ function AccountMenu() {
   return (
     <div>
       <IconButton onClick={handleClick} color="inherit">
-        <Avatar sx={{ width: "2.67rem", height: "2.67rem" }}>
-          {abbreviation}
-        </Avatar>
+        <Avatar sx={{ width: 32, height: 32 }}>{abbreviation}</Avatar>
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -52,7 +48,6 @@ function AccountMenu() {
         }}
         open={open}
         onClose={handleClose}
-        className="drop-down-menu"
       >
         <MenuItem onClick={handleRedirectProfile}>Settings</MenuItem>
         <MenuItem onClick={handleLogOut}>Logout</MenuItem>

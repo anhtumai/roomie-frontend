@@ -1,5 +1,5 @@
-import AuthHeader from "components/AuthHeader";
-import RegisterForm from "components/RegisterForm";
+import AuthHeader from "../components/AuthHeader";
+import RegisterForm from "../components/RegisterForm";
 
 function RegisterPage() {
   return (

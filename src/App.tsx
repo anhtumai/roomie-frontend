@@ -25,8 +25,7 @@ import ProfilePage from "./pages/ProfilePage";
 import ApartmentDetailPage from "./pages/ApartmentDetailPage";
 
 import "./App.css";
-import "react-toastify/dist/ReactToastify.minimal.css";
-import "./toast.css";
+import "react-toastify/dist/ReactToastify.css";
 
 function ProtectedRoute({ ...rest }: RouteProps) {
   return (

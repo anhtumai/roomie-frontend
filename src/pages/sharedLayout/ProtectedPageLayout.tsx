@@ -1,21 +1,9 @@
 import { useState, ReactNode } from "react";
 import { Box, CssBaseline } from "@mui/material";
 
-import ProtectedHeader from "components/ProtectedHeader";
-import NavigationBar from "components/NavigationBar";
-
-function HeaderGap() {
-  const headerHeight = "4.5rem";
-  return (
-    <div
-      style={{
-        minHeight: headerHeight,
-        margin: 0,
-        padding: 0,
-      }}
-    ></div>
-  );
-}
+import ProtectedHeader from "../../components/ProtectedHeader";
+import NavigationBar from "../../components/NavigationBar";
+import DrawerHeader from "../../components/Common/DrawerHeader";
 
 function ProtectedPageLayout({ children }: { children: ReactNode }) {
   const [open, setOpen] = useState(false);
@@ -25,7 +13,7 @@ function ProtectedPageLayout({ children }: { children: ReactNode }) {
       <ProtectedHeader open={open} setOpen={setOpen} />
       <NavigationBar open={open} setOpen={setOpen} />
       <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <HeaderGap />
+        <DrawerHeader />
         {children}
       </Box>
     </Box>

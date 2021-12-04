@@ -1,8 +1,8 @@
 import { createContext, ReactNode, useContext } from "react";
 import { useQuery, useQueryClient } from "react-query";
 
-import useAuth from "contexts/auth";
-import meService from "services/me";
+import useAuth from "../contexts/auth";
+import meService from "../services/me";
 
 interface InvitationsContextType {
   isLoading: boolean;

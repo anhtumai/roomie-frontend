@@ -15,7 +15,6 @@ import RouteItem from "components/Common/RouteItem";
 import useApartment from "contexts/apartment";
 
 import { drawerWidth } from "components/sharedStyles/drawerConfig";
-import "./style.css";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: `${drawerWidth}rem`,
@@ -32,9 +31,9 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: "hidden",
-  width: `calc(${theme.spacing(5)})`,
+  width: `calc(${theme.spacing(7)})`,
   [theme.breakpoints.up("sm")]: {
-    width: `calc(${theme.spacing(7)})`,
+    width: `calc(${theme.spacing(9)})`,
   },
 });
 
@@ -68,8 +67,8 @@ function NavigationBar({
     setOpen(false);
   }
   return (
-    <Drawer variant="permanent" open={open} className="navigation-bar">
-      <DrawerHeader className="navigation-bar__drawer-header">
+    <Drawer variant="permanent" open={open}>
+      <DrawerHeader>
         <IconButton onClick={handleDrawerClose}>
           <ChevronLeftIcon />
         </IconButton>
