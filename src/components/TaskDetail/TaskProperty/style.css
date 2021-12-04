@@ -1,5 +1,4 @@
 .task-property {
-
 }
 
 .task-property h1 {
@@ -20,6 +19,7 @@
 
 .task-property__description-block {
   min-height: 12rem;
+  padding-top: 0.4rem;
 }
 
 .task-property__description-block h2 {
