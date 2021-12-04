@@ -15,6 +15,7 @@ import RouteItem from "components/Common/RouteItem";
 import useApartment from "contexts/apartment";
 
 import { drawerWidth } from "components/sharedStyles/drawerConfig";
+import "./style.css";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: `${drawerWidth}rem`,
@@ -68,7 +69,7 @@ function NavigationBar({
   }
   return (
     <Drawer variant="permanent" open={open}>
-      <DrawerHeader>
+      <DrawerHeader className="navigation-bar__drawer-header">
         <IconButton onClick={handleDrawerClose}>
           <ChevronLeftIcon />
         </IconButton>
