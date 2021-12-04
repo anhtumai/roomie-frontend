@@ -1,1 +1,1 @@
-export const drawerWidth = 11;
+export const drawerWidth = 11; // in rem
