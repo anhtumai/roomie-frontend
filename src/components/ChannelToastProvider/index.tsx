@@ -15,16 +15,17 @@ function ChannelToastProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
+  const pusher = new Pusher(String(process.env.REACT_APP_PUSHER_KEY), {
+    cluster: "eu",
+  });
+
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment, setApartment, invalidateApartment } = useApartment();
   const { invalidateInvitationCollection } = useInvitations();
 
   useEffect(() => {
-    const pusher = new Pusher(String(process.env.REACT_APP_PUSHER_KEY), {
-      cluster: "eu",
-    });
-    const channel = pusher.subscribe(makeChannel(authState.id));
-
+    const channelName = makeChannel(authState.id);
+    const channel = pusher.subscribe(channelName);
     channel.bind(
       pusherConstant.INVITATION_EVENT,
       (data: ChannelInvitationMessage) => {
@@ -121,6 +122,7 @@ function ChannelToastProvider({
     channel.bind(
       pusherConstant.TASK_REQUEST_EVENT,
       (data: ChannelTaskRequestMessage) => {
+        console.log(apartment);
         if (apartment) {
           const taskRequestId = data.id;
           const updatedRequestState = data.state;
@@ -142,7 +144,11 @@ function ChannelToastProvider({
         }
       },
     );
-  }, []);
+
+    return () => {
+      pusher.unsubscribe(channelName);
+    };
+  }, [apartment]);
 
   return <>{children}</>;
 }
