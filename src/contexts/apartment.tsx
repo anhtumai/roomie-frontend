@@ -26,6 +26,7 @@ interface ApartmentContextType {
     }
   >;
   cancelApartmentQueries: () => void;
+  getCurrentApartment: () => Apartment | "" | undefined;
 }
 
 const ApartmentContext = createContext<ApartmentContextType>(
@@ -53,6 +54,19 @@ export function ApartmentProvider({
 
   function cancelApartmentQueries() {
     queryClient.cancelQueries("apartment");
+  }
+
+  /**
+   * Reason: in ChannelToastProvider component, callback of useEffect hook
+   * is executed only one, after the first render lifecycle
+   * (useEffect behaves as componentDidMount).
+   * In the scope of that callback, `apartment` is always undefined
+   *
+   * The purpose is to make the callback in the ChannelToastProvider component
+   * gets the current `apartment` value
+   */
+  function getCurrentApartment(): Apartment | "" | undefined {
+    return queryClient.getQueryData<Apartment | "" | undefined>("apartment");
   }
 
   const deleteTaskMutation = useMutation(
@@ -107,6 +121,7 @@ export function ApartmentProvider({
         invalidateApartment,
         deleteTaskMutation,
         cancelApartmentQueries,
+        getCurrentApartment,
       }}
     >
       {children}

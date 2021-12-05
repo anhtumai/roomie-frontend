@@ -94,9 +94,7 @@ function TaskRequestCard({
           position: toast.POSITION.TOP_CENTER,
         });
       },
-      onSettled: (data, error, variables, context) => {
-        invalidateApartment();
-      },
+      onSettled: (data, error, variables, context) => {},
     },
   );
 
@@ -149,11 +147,11 @@ function TaskRequestCard({
     }
   }
 
-  async function handleAccept() {
+  function handleAccept() {
     acceptTaskMutation.mutate();
   }
 
-  async function handleReject() {
+  function handleReject() {
     rejectTaskMutation.mutate();
   }
   return (

@@ -2,6 +2,7 @@ import { ReactNode, useEffect } from "react";
 
 import Pusher from "pusher-js";
 import { toast } from "react-toastify";
+import _ from "lodash";
 
 import useAuth from "contexts/auth";
 import { makeChannel } from "./utils";
@@ -15,15 +16,17 @@ function ChannelToastProvider({
 }: {
   children: ReactNode;
 }): JSX.Element {
-  const pusher = new Pusher(String(process.env.REACT_APP_PUSHER_KEY), {
-    cluster: "eu",
-  });
-
   const { authState } = useAuth() as { authState: UserWithToken };
-  const { apartment, setApartment, invalidateApartment } = useApartment();
+  const { getCurrentApartment, setApartment, invalidateApartment } =
+    useApartment();
   const { invalidateInvitationCollection } = useInvitations();
 
   useEffect(() => {
+    console.log("Make new channel");
+    const pusher = new Pusher(String(process.env.REACT_APP_PUSHER_KEY), {
+      cluster: "eu",
+    });
+
     const channelName = makeChannel(authState.id);
     const channel = pusher.subscribe(channelName);
     channel.bind(
@@ -62,6 +65,7 @@ function ChannelToastProvider({
         } else if (state === pusherConstant.EDITED_STATE) {
           const { apartmentName } = data as ChannelEditedApartmentMessage;
           toast.info(`Admin renamed the apartment to ${apartmentName}`);
+          const apartment = getCurrentApartment();
           if (apartment) {
             setApartment({
               ...apartment,
@@ -122,13 +126,13 @@ function ChannelToastProvider({
     channel.bind(
       pusherConstant.TASK_REQUEST_EVENT,
       (data: ChannelTaskRequestMessage) => {
-        console.log(apartment);
+        const apartment = getCurrentApartment();
+        console.log("Debug", apartment);
         if (apartment) {
+          console.log("This is activated");
           const taskRequestId = data.id;
           const updatedRequestState = data.state;
-          const updatedApartment: Apartment = JSON.parse(
-            JSON.stringify(apartment),
-          );
+          const updatedApartment = _.cloneDeep(apartment);
           for (const taskRequest of updatedApartment.task_requests) {
             const updatedRequest = taskRequest.requests.find(
               (_request) => _request.id === taskRequestId,
@@ -148,7 +152,7 @@ function ChannelToastProvider({
     return () => {
       pusher.unsubscribe(channelName);
     };
-  }, [apartment]);
+  }, []);
 
   return <>{children}</>;
 }
