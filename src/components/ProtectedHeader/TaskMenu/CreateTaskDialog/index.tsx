@@ -82,7 +82,6 @@ function CreateTaskDialog({
 
   async function onSubmit(data: IFormInput) {
     try {
-      console.log(data);
       const taskRequest = await taskService.create(
         authState.token,
         {

@@ -22,7 +22,6 @@ function ChannelToastProvider({
   const { invalidateInvitationCollection } = useInvitations();
 
   useEffect(() => {
-    console.log("Make new channel");
     const pusher = new Pusher(String(process.env.REACT_APP_PUSHER_KEY), {
       cluster: "eu",
     });
@@ -127,9 +126,7 @@ function ChannelToastProvider({
       pusherConstant.TASK_REQUEST_EVENT,
       (data: ChannelTaskRequestMessage) => {
         const apartment = getCurrentApartment();
-        console.log("Debug", apartment);
         if (apartment) {
-          console.log("This is activated");
           const taskRequestId = data.id;
           const updatedRequestState = data.state;
           const updatedApartment = _.cloneDeep(apartment);
