@@ -2,6 +2,7 @@ import { Toolbar, Typography, IconButton } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 import NotificationBadge from "components/NotificationBadge";
 import AccountMenu from "./AccountMenu";
@@ -42,11 +43,13 @@ function ProtectedHeader({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
+  const isMinWidth450 = useMediaQuery("(min-width:450px)");
   const { apartment } = useApartment();
   const hasApartment = apartment !== "" && apartment !== undefined;
   function handleDrawerOpen() {
     setOpen(true);
   }
+
   return (
     <AppBar position="fixed" open={open} sx={appBarSx}>
       <Toolbar>
@@ -63,7 +66,7 @@ function ProtectedHeader({
           <MenuIcon />
         </IconButton>
         <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          Roomie
+          {isMinWidth450 ? "Roomie" : ""}
         </Typography>
         {hasApartment && (
           <>
