@@ -1,5 +1,4 @@
 .task-form {
-  max-width: 700px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -50,6 +49,11 @@
 
 .task-form__date_input {
   display: block;
+  flex: 1;
+}
+
+.task-form__data_input input {
+  width: 100%;
 }
 
 .task-form__select {
