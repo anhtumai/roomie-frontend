@@ -1,6 +1,8 @@
-import { Grid } from "@mui/material";
+import { Grid, useMediaQuery } from "@mui/material";
 
 import TaskCard from "components/TaskCard";
+
+import MobileTaskCardCollection from "./MobileTaskCardCollection";
 
 function TaskCardCollection({
   taskRequests,
@@ -9,6 +11,17 @@ function TaskCardCollection({
   taskRequests: TaskRequest[];
   taskAssignments: TaskAssignment[];
 }) {
+  const isScreenWidthSmallerThan720 = useMediaQuery("(max-width:720px)");
+
+  if (isScreenWidthSmallerThan720) {
+    return (
+      <MobileTaskCardCollection
+        taskRequests={taskRequests}
+        taskAssignments={taskAssignments}
+      />
+    );
+  }
+
   return (
     <Grid
       container
