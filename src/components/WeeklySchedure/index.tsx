@@ -78,8 +78,8 @@ function SingleUserAssignment({
   isAuthUser?: boolean;
 }) {
   if (tasks === undefined || tasks.length === 0) {
-    if (isAuthUser) return <p>You don't have any assignments this week</p>;
-    return <p>{username} doesn't have any assignments this week</p>;
+    if (isAuthUser) return <p>You have no assignments</p>;
+    return <p>{username} has no assignments</p>;
   }
   return (
     <>

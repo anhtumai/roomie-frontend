@@ -56,11 +56,13 @@
   margin-top: auto;
   margin-bottom: auto;
 
-  height: 2rem
+  height: 2rem;
 }
 
 .weekly-schedule__scrollable-list {
-  display: flex;
+  width: 77vw;
+  overflow-x: auto;
+  white-space: nowrap;
 }
 
 .weekly-schedule__reset_button {
