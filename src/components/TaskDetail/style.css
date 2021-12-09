@@ -1,9 +1,12 @@
 .task-detail {
   display: block;
+  min-width: 770px;
   max-width: 900px;
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-right: 1px solid;
+    border-color: #ccc;
+
 
   background-color: "#f2f2f7";
 }
