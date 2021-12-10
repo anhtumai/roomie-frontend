@@ -1,6 +1,7 @@
 export const paperSx = {
-  width: "25rem",
+  maxWidth: "30rem",
   marginLeft: "0.2rem",
+  padding: "1rem",
 };
 
 export const headerSx = {
