@@ -33,6 +33,7 @@
 .task-request-property__member-display {
   min-width: 60%;
   display: inline-flex;
+  margin-right: 20px;
 }
 
 .task-request-property__assignee-display {
