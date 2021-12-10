@@ -190,7 +190,7 @@ function WeeklySchedure() {
         onClick={handleResetCurrentDate}
         className="weekly-schedule__reset_button"
       >
-        Reset to current date
+        Reset to today
       </Button>
     </div>
   );
