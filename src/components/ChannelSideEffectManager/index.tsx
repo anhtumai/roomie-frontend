@@ -11,7 +11,7 @@ import { pusherConstant } from "../../constants";
 import useApartment from "contexts/apartment";
 import useInvitations from "contexts/invitations";
 
-function ChannelToastProvider({
+function ChannelSideEffectManager({
   children,
 }: {
   children: ReactNode;
@@ -154,4 +154,4 @@ function ChannelToastProvider({
   return <>{children}</>;
 }
 
-export default ChannelToastProvider;
+export default ChannelSideEffectManager;

@@ -12,7 +12,7 @@ import useAuth, { AuthProvider } from "./contexts/auth";
 import { ApartmentProvider } from "./contexts/apartment";
 import { InvitationsProvider } from "./contexts/invitations";
 
-import ChannelToastProvider from "./components/ChannelToastProvider";
+import ChannelSideEffectManager from "./components/ChannelSideEffectManager";
 
 import LoginPage from "./pages/LoginPage";
 import HomePage from "./pages/HomePage";
@@ -31,9 +31,9 @@ function ProtectedRoute({ ...rest }: RouteProps) {
   return (
     <ApartmentProvider>
       <InvitationsProvider>
-        <ChannelToastProvider>
+        <ChannelSideEffectManager>
           <Route {...rest} />
-        </ChannelToastProvider>
+        </ChannelSideEffectManager>
       </InvitationsProvider>
     </ApartmentProvider>
   );

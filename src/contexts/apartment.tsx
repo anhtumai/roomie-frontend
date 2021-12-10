@@ -57,12 +57,12 @@ export function ApartmentProvider({
   }
 
   /**
-   * Reason: in ChannelToastProvider component, callback of useEffect hook
+   * Reason: in ChannelSideEffectManager component, callback of useEffect hook
    * is executed only one, after the first render lifecycle
    * (useEffect behaves as componentDidMount).
    * In the scope of that callback, `apartment` is always undefined
    *
-   * The purpose is to make the callback in the ChannelToastProvider component
+   * The purpose is to make the callback in the ChannelSideEffectManager component
    * gets the current `apartment` value
    */
   function getCurrentApartment(): Apartment | "" | undefined {
