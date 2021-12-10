@@ -4,20 +4,20 @@
   border-top: 1px solid;
   border-bottom: 1px solid;
   border-right: 1px solid;
+  border-color: #ccc;
 
   background-color: "#f2f2f7";
 }
 
 .apartment-detail__header {
-  margin-top: 1.5rem;
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   margin-right: 1rem;
 }
 
-.apartment-detail__header h2 {
+.apartment-detail h2 {
   font-size: 1.5rem;
-  flex-grow: 1;
 }
 
 .apartment-detail__header .MuiIconButton-root {
@@ -33,5 +33,5 @@
 }
 
 .apartment-detail__member-display {
-  min-width: 17rem;
+  min-width: 12.5rem;
 }
