@@ -74,7 +74,7 @@ function ProtectedHeader({
             <ApartmentMenu />
           </>
         )}
-        <NotificationBadge />
+        {isMinWidth450 && <NotificationBadge />}
         <AccountMenu />
       </Toolbar>
     </AppBar>
