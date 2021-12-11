@@ -1,13 +1,6 @@
 import { useHistory } from "react-router-dom";
 
-import {
-  Avatar,
-  AvatarGroup,
-  Card,
-  CardHeader,
-  CardActions,
-  IconButton,
-} from "@mui/material";
+import { Avatar, AvatarGroup, IconButton } from "@mui/material";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
@@ -46,37 +39,37 @@ function TaskCard({
 
   return (
     <>
-      <Card className="task-card">
-        <CardHeader
-          title={task.name}
-          subheader={`By ${taskCreator?.username}`}
-          action={
-            <>
-              {(taskCreator?.id === authState.id ||
-                apartment.admin.id === authState.id) && (
-                <IconButton onClick={handleDelete}>
-                  <DeleteIcon />
-                </IconButton>
-              )}
-              <IconButton onClick={() => history.push(`/tasks/${task.id}`)}>
-                <InfoIcon />
+      <div className="task-card">
+        <div className="task-card__header ">
+          <div className="task-card__titles">
+            <div className="task-card__title">{task.name}</div>
+            <div className="task-card__sub-title">{`By ${taskCreator?.username}`}</div>
+          </div>
+          <div className="task-card__action">
+            {(taskCreator?.id === authState.id ||
+              apartment.admin.id === authState.id) && (
+              <IconButton onClick={handleDelete}>
+                <DeleteIcon />
               </IconButton>
-            </>
-          }
-        />
-        <CardActions className="task-card-action">
-          <AvatarGroup sx={{ flexGrow: 1 }}>
+            )}
+            <IconButton onClick={() => history.push(`/tasks/${task.id}`)}>
+              <InfoIcon />
+            </IconButton>
+          </div>
+        </div>
+        <div className="task-card__avatar-group">
+          <AvatarGroup>
             {assigneeNames.map((name) => (
               <Avatar
                 key={name}
-                sx={{ width: "2.25rem", height: "2.25rem", fontSize: "1rem" }}
+                sx={{ width: "2rem", height: "2rem", fontSize: "1rem" }}
               >
                 {getAbbreviation(name)}
               </Avatar>
             ))}
           </AvatarGroup>
-        </CardActions>
-      </Card>
+        </div>
+      </div>
     </>
   );
 }
