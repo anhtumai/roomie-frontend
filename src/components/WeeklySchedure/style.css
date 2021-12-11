@@ -60,7 +60,7 @@
 }
 
 .weekly-schedule__scrollable-list {
-  width: 99vw;
+  width: calc(100% -10px);
   overflow-x: auto;
   white-space: nowrap;
 }
