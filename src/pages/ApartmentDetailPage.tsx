@@ -1,4 +1,4 @@
-import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
+import ProtectedPageLayout from "./ProtectedPageLayout";
 import ApartmentDetail from "../components/ApartmentDetail";
 
 import useApartment from "../contexts/apartment";

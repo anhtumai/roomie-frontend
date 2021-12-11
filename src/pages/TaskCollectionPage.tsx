@@ -1,7 +1,7 @@
-import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-import useApartment from "../contexts/apartment";
+import ProtectedPageLayout from "./ProtectedPageLayout";
+import useApartment from "contexts/apartment";
 
-import TaskCardCollection from "../components/TaskCardCollection";
+import TaskCardCollection from "components/TaskCardCollection";
 
 function MainContent() {
   const { isLoading, error, apartment } = useApartment();

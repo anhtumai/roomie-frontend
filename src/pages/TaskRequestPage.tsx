@@ -1,6 +1,6 @@
-import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-import useApartment from "../contexts/apartment";
-import useAuth from "../contexts/auth";
+import ProtectedPageLayout from "./ProtectedPageLayout";
+import useApartment from "contexts/apartment";
+import useAuth from "contexts/auth";
 
 import TaskRequestCardList from "../components/TaskRequestCardList";
 

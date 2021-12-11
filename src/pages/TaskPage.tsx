@@ -1,8 +1,9 @@
-import ProtectedPageLayout from "./sharedLayout/ProtectedPageLayout";
-
-import useApartment from "../contexts/apartment";
 import { useParams } from "react-router-dom";
-import TaskDetail from "../components/TaskDetail";
+
+import ProtectedPageLayout from "./ProtectedPageLayout";
+
+import useApartment from "contexts/apartment";
+import TaskDetail from "components/TaskDetail";
 
 function MainContent() {
   const taskIdStr = (useParams() as any).id;
