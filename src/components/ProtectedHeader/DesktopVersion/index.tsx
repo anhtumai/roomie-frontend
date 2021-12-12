@@ -1,17 +1,11 @@
-import { Toolbar, Typography, IconButton } from "@mui/material";
+import { Toolbar, IconButton } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import MenuIcon from "@mui/icons-material/Menu";
 import { styled } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
-
-import NotificationBadge from "components/NotificationBadge";
-import AccountMenu from "./AccountMenu";
-import ApartmentMenu from "./ApartmentMenu";
-import TaskMenu from "./TaskMenu";
-
-import useApartment from "contexts/apartment";
 
 import { drawerWidth } from "components/sharedStyles/drawerConfig";
+import SharedHeaderComponents from "../SharedHeaderComponents";
+
 import { appBarSx } from "components/sharedStyles/headerStyles";
 
 interface AppBarProps extends MuiAppBarProps {
@@ -36,16 +30,13 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-function ProtectedHeader({
+function DesktopProtectedHeader({
   open,
   setOpen,
 }: {
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
-  const isMinWidth450 = useMediaQuery("(min-width:450px)");
-  const { apartment } = useApartment();
-  const hasApartment = apartment !== "" && apartment !== undefined;
   function handleDrawerOpen() {
     setOpen(true);
   }
@@ -65,20 +56,9 @@ function ProtectedHeader({
         >
           <MenuIcon />
         </IconButton>
-        <Typography variant="h6" noWrap component="div" sx={{ flexGrow: 1 }}>
-          {isMinWidth450 ? "Roomie" : ""}
-        </Typography>
-        {hasApartment && (
-          <>
-            <TaskMenu />
-            <ApartmentMenu />
-          </>
-        )}
-        {isMinWidth450 && <NotificationBadge />}
-        <AccountMenu />
+        <SharedHeaderComponents />
       </Toolbar>
     </AppBar>
   );
 }
-
-export default ProtectedHeader;
+export default DesktopProtectedHeader;
