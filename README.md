@@ -18,6 +18,10 @@ Link to demo app: [Netlify link](https://roomiee.netlify.app/)
 
 Link to backend repo: [Backend app](https://github.com/anhtumai/roomie-backend)
 
+## App is responsive
+
+![Gif demo video](demo/responsive-demo.gif)
+
 ## Overview
 
 App workflow:
