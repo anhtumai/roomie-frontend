@@ -11,9 +11,9 @@ function TaskCardCollection({
   taskRequests: TaskRequest[];
   taskAssignments: TaskAssignment[];
 }) {
-  const isScreenWidthSmallerThan720 = useMediaQuery("(max-width:720px)");
+  const isScreenWidthSmallerThan500 = useMediaQuery("(max-width:500px)");
 
-  if (isScreenWidthSmallerThan720) {
+  if (isScreenWidthSmallerThan500) {
     return (
       <MobileTaskCardCollection
         taskRequests={taskRequests}
