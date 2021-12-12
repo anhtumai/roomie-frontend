@@ -1,8 +1,10 @@
-import { Box, CssBaseline } from "@mui/material";
+import { CssBaseline } from "@mui/material";
 
 import ProtectedHeader from "components/ProtectedHeader/MobileVersion";
+import MobileProtectedFooter from "components/MobileProtectedFooter";
 
 import { headerHeight } from "components/sharedStyles/headerStyles";
+import { footerHeight } from "components/sharedStyles/footerStyles";
 
 import "./style.css";
 
@@ -22,7 +24,13 @@ function MobileProtectedPageLayout({
           }}
         ></div>
         {children}
+        <div
+          style={{
+            height: footerHeight,
+          }}
+        ></div>
       </div>
+      <MobileProtectedFooter />
     </div>
   );
 }
