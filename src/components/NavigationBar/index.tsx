@@ -10,8 +10,8 @@ import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import TaskIcon from "@mui/icons-material/Task";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
-import DrawerHeader from "components/Common/DrawerHeader";
-import RouteItem from "components/Common/RouteItem";
+import DrawerHeader from "./DrawerHeader";
+import RouteItem from "./RouteItem";
 import useApartment from "contexts/apartment";
 
 import { drawerWidth } from "components/sharedStyles/drawerConfig";
