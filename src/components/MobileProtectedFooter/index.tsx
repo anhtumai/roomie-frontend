@@ -42,20 +42,17 @@ function MobileProtectedFooter() {
         }}
       >
         <BottomNavigationAction
-          LinkComponent={Link}
           label="Home"
           icon={<HomeIcon />}
           value="/home"
         />
         <BottomNavigationAction
-          LinkComponent={Link}
           label="Invitations"
           icon={<PersonAddAlt1Icon />}
           value="/invitations"
         />
         {apartment !== "" && (
           <BottomNavigationAction
-            LinkComponent={Link}
             label="Tasks"
             icon={<TaskIcon />}
             value="/tasks"
@@ -63,7 +60,6 @@ function MobileProtectedFooter() {
         )}
         {apartment !== "" && (
           <BottomNavigationAction
-            LinkComponent={Link}
             label="Requests"
             icon={<AssignmentIcon />}
             value="/task_requests"
