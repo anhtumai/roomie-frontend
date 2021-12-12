@@ -20,7 +20,7 @@ Link to backend repo: [Backend app](https://github.com/anhtumai/roomie-backend)
 
 ## App is responsive
 
-![Gif demo video](demo/responsive-demo.gif)
+<img src="demo/responsive-demo.gif" width="360"/>
 
 ## Overview
 
