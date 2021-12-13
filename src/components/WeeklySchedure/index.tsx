@@ -168,6 +168,13 @@ function WeeklySchedure() {
           </div>
         ))}
       </div>
+      <Button
+        variant="outlined"
+        onClick={handleResetCurrentDate}
+        className="weekly-schedule__reset-button"
+      >
+        Reset to today
+      </Button>
       <SingleUserAssignment
         username={authState.username}
         tasks={assignmentMap.get(authState.username)}
@@ -185,13 +192,6 @@ function WeeklySchedure() {
             taskAssignments={apartment.task_assignments}
           />
         ))}
-      <Button
-        variant="outlined"
-        onClick={handleResetCurrentDate}
-        className="weekly-schedule__reset_button"
-      >
-        Reset to today
-      </Button>
     </div>
   );
 }
