@@ -8,7 +8,7 @@ function MainContent() {
 
   if (isLoading) return <div>Loading...</div>;
   if (error || apartment === undefined) return <div>An error has occurred</div>;
-  if (apartment === "") return <div>You don't have an apartment yet</div>;
+  if (apartment === "") return <div>You do not have an apartment</div>;
   return <ApartmentDetail apartment={apartment} />;
 }
 
