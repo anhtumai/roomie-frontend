@@ -1,0 +1,9 @@
+.mobile-task-card-collection__flex-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mobile-task-card-collection {
+  width: 240px;
+}

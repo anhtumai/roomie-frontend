@@ -4,6 +4,8 @@ import { ToggleButtonGroup, ToggleButton } from "@mui/material";
 
 import TaskCard from "components/TaskCard";
 
+import "./style.css";
+
 function MobileTaskCardCollection({
   taskRequests,
   taskAssignments,
@@ -24,18 +26,8 @@ function MobileTaskCardCollection({
   }
 
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div
-        style={{
-          width: "225px",
-        }}
-      >
+    <div className="mobile-task-card-collection__flex-wrapper">
+      <div className="mobile-task-card-collection">
         <ToggleButtonGroup
           color={alignment === requestingState ? "warning" : "success"}
           value={alignment}
