@@ -79,7 +79,7 @@ function InviteDialog({
       <form onSubmit={handleInvite}>
         <DialogTitle>Invite</DialogTitle>
         <DialogContent>
-          <DialogContentText>Insert invitee's username</DialogContentText>
+          <DialogContentText>Insert invitee&apos;s username</DialogContentText>
           <TextField
             autoFocus
             label="Initee Username"
