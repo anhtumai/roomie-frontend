@@ -1,5 +1,3 @@
-import { pusherConstant } from "../constants";
-
 declare global {
   type AccountCredential = {
     username: string;

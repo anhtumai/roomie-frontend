@@ -1,7 +1,7 @@
 import ProtectedPageLayout from "./ProtectedPageLayout";
-import ApartmentDetail from "../components/ApartmentDetail";
+import ApartmentDetail from "components/ApartmentDetail";
 
-import useApartment from "../contexts/apartment";
+import useApartment from "contexts/apartment";
 
 function MainContent() {
   const { isLoading, error, apartment } = useApartment();
