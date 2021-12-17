@@ -67,7 +67,7 @@ function TaskRequestCard({
     {
       onMutate: async () => {
         cancelApartmentQueries();
-        const acceptedState: "accepted" = "accepted";
+        const acceptedState = "accepted" as const;
         const updatedRequests = taskRequest.requests.map((_request) =>
           _request.id === taskRequestId
             ? { ..._request, state: acceptedState }
@@ -94,7 +94,6 @@ function TaskRequestCard({
           position: toast.POSITION.TOP_CENTER,
         });
       },
-      onSettled: (data, error, variables, context) => {},
     },
   );
 
@@ -103,7 +102,7 @@ function TaskRequestCard({
     {
       onMutate: async () => {
         cancelApartmentQueries();
-        const rejectedState: "rejected" = "rejected";
+        const rejectedState = "rejected" as const;
         const updatedRequests = taskRequest.requests.map((_request) =>
           _request.id === taskRequestId
             ? { ..._request, state: rejectedState }

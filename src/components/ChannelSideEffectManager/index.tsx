@@ -43,8 +43,7 @@ function ChannelSideEffectManager({
         } else if (state === pusherConstant.ACCEPTED_STATE) {
           if (invitor === authState.username) {
             toast.info(`User ${invitee} accepted the invitation`);
-          } else if (invitee === authState.username) {
-          } else {
+          } else if (invitee !== authState.username) {
             toast.info(`${invitor} added ${invitee} to the apartment`);
           }
           invalidateApartment();

@@ -1,4 +1,3 @@
-// @ts-ignore
 import { styled } from "@mui/material/styles";
 
 const DrawerHeader = styled("div")((data: any) => ({
