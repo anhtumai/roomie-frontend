@@ -18,7 +18,7 @@ interface ApartmentContextType {
   setApartment: (x: Apartment | "") => void;
   invalidateApartment: () => void;
   deleteTaskMutation: UseMutationResult<
-    never,
+    any,
     unknown,
     Task,
     {

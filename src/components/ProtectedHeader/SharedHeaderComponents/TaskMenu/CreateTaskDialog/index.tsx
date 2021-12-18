@@ -2,6 +2,7 @@ import { useState } from "react";
 
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
+import { ErrorMessage } from "@hookform/error-message";
 
 import {
   Dialog,
@@ -53,7 +54,12 @@ function CreateTaskDialog({
   setOpen: (x: boolean) => void;
 }) {
   const theme = useTheme();
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
   const { authState } = useAuth() as { authState: UserWithToken };
   const { apartment, setApartment } = useApartment() as {
     apartment: Apartment;
@@ -126,6 +132,8 @@ function CreateTaskDialog({
     );
   }
 
+  console.log(errors);
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="task-form">
@@ -134,10 +142,20 @@ function CreateTaskDialog({
           <label>Name</label>
           <input
             {...register("name", {
-              required: true,
-              maxLength: 50,
+              required: "Task name is required",
+              maxLength: {
+                value: 35,
+                message: "Task name has max length of 35 characters",
+              },
             })}
           />
+          <ErrorMessage
+            className="form-error-message"
+            errors={errors}
+            name="name"
+            as="p"
+          />
+
           <label>Description</label>
           <textarea
             rows={10}
