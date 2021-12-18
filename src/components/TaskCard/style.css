@@ -52,29 +52,6 @@
   white-space: normal;
 }
 
-.task-card .MuiCardHeader-root {
-  padding-top: 0.625rem;
-  padding-left: 0.5rem;
-  padding-right: 0rem;
-}
-
-.task-card .MuiCardContent-root {
-  padding-left: 0.5rem;
-}
-
-.task-card .MuiCardHeader-title {
-  max-width: 11rem;
-  font-size: 1rem;
-}
-
-.task-card .MuiCardHeader-subheader {
-  font-size: 0.56rem;
-}
-
-.task-card .MuiCardHeader-action {
-  padding-right: 0.44rem;
-}
-
 .task-card .MuiIconButton-root {
   padding: 0 0 0 0;
   margin-left: 7px;
