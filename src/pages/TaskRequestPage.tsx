@@ -14,34 +14,17 @@ function MainContent() {
 
   const taskRequests = apartment.task_requests;
 
-  const pendingTaskRequests: TaskRequest[] = [];
-  const acceptedTaskRequests: TaskRequest[] = [];
-  const rejectedTaskRequests: TaskRequest[] = [];
+  const userTaskRequests: TaskRequest[] = [];
 
   for (const taskRequest of taskRequests) {
     const requestState = taskRequest.requests.find(
       (request) => request.assignee.id === authState.id,
     )?.state;
-    if (requestState === "pending") pendingTaskRequests.push(taskRequest);
-    if (requestState === "accepted") acceptedTaskRequests.push(taskRequest);
-    if (requestState === "rejected") rejectedTaskRequests.push(taskRequest);
+    if (requestState) {
+      userTaskRequests.push(taskRequest);
+    }
   }
-  return (
-    <>
-      <TaskRequestCardList
-        taskRequests={pendingTaskRequests}
-        requestState={"pending"}
-      />
-      <TaskRequestCardList
-        taskRequests={acceptedTaskRequests}
-        requestState={"accepted"}
-      />
-      <TaskRequestCardList
-        taskRequests={rejectedTaskRequests}
-        requestState={"rejected"}
-      />
-    </>
-  );
+  return <TaskRequestCardList taskRequests={userTaskRequests} />;
 }
 
 function TaskRequestPage() {

@@ -1,12 +1,12 @@
 .task-request-card {
   min-width: 320px;
-  width: 30rem;
+  max-width: 30rem;
   margin-top: 15px;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
   margin-left: 1rem;
   box-shadow: 0 8px 40px -12px rgba(0, 0, 0, 0.3);
 
-  display: inline-block;
+  display: block;
 }
 
 .task-request-card:hover {

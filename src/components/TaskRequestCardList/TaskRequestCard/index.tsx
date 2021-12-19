@@ -5,6 +5,7 @@ import { useMutation } from "react-query";
 import Button from "@mui/material/Button";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
+import IconButton from "@mui/material/IconButton";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
@@ -15,7 +16,6 @@ import taskService from "services/task";
 import { getAbbreviation } from "utils/common";
 
 import "./style.css";
-import { IconButton } from "@mui/material";
 
 const stateDisplay = {
   accepted: <span className="task-request-card__accepted-span">Accepted</span>,
@@ -23,13 +23,7 @@ const stateDisplay = {
   pending: <span className="task-request-card__pending-span">Pending</span>,
 };
 
-function TaskRequestCard({
-  taskRequest,
-  requestState,
-}: {
-  taskRequest: TaskRequest;
-  requestState: RequestState;
-}) {
+function TaskRequestCard({ taskRequest }: { taskRequest: TaskRequest }) {
   const history = useHistory();
 
   const { authState } = useAuth() as { authState: UserWithToken };
@@ -37,6 +31,7 @@ function TaskRequestCard({
   const { apartment } = apartmentContext as {
     apartment: Apartment;
   };
+
   const {
     setApartment,
     invalidateApartment,
@@ -55,6 +50,9 @@ function TaskRequestCard({
     taskRequest.requests.find((request) => request.assignee.id === authState.id)
       ?.id,
   );
+  const requestState = requests.find(
+    (_request) => _request.assignee.username === authState.username,
+  )?.state as RequestState;
 
   const acceptTaskMutation = useMutation(
     () => taskService.accept(authState.token, taskRequestId),
@@ -188,6 +186,7 @@ function TaskRequestCard({
             variant="outlined"
             className="invitation__accept-button"
             onClick={handleAccept}
+            disabled={requestState === "accepted"}
           >
             Accept
           </Button>
@@ -197,6 +196,7 @@ function TaskRequestCard({
             variant="outlined"
             className="invitation__reject-button"
             onClick={handleReject}
+            disabled={requestState === "rejected"}
           >
             Reject
           </Button>
