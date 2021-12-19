@@ -1,20 +1,10 @@
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { useMutation } from "react-query";
-import { format } from "date-fns";
 
-import {
-  Avatar,
-  AvatarGroup,
-  Card,
-  CardHeader,
-  CardContent,
-  CardActions,
-  Typography,
-  Box,
-  IconButton,
-  Button,
-} from "@mui/material";
+import Button from "@mui/material/Button";
+import Avatar from "@mui/material/Avatar";
+import AvatarGroup from "@mui/material/AvatarGroup";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
@@ -24,15 +14,21 @@ import useApartment from "contexts/apartment";
 import taskService from "services/task";
 import { getAbbreviation } from "utils/common";
 
-import { cardSx, avatarSx } from "./style";
 import "./style.css";
+import { IconButton } from "@mui/material";
+
+const stateDisplay = {
+  accepted: <span className="task-request-card__accepted-span">Accepted</span>,
+  rejected: <span className="task-request-card__rejected-span">Rejected</span>,
+  pending: <span className="task-request-card__pending-span">Pending</span>,
+};
 
 function TaskRequestCard({
   taskRequest,
   requestState,
 }: {
   taskRequest: TaskRequest;
-  requestState: string;
+  requestState: RequestState;
 }) {
   const history = useHistory();
 
@@ -48,14 +44,12 @@ function TaskRequestCard({
     cancelApartmentQueries,
   } = apartmentContext;
 
-  const { task } = taskRequest;
+  const { task, requests } = taskRequest;
+  const assigneeNames = requests.map((_request) => _request.assignee.name);
 
   const taskCreator = apartment.members.find(
     (member) => member.id === taskRequest.task.creator_id,
   );
-
-  const startDate = format(new Date(task.start), "dd/MM/yyyy");
-  const endDate = format(new Date(task.end), "dd/MM/yyyy");
 
   const taskRequestId = Number(
     taskRequest.requests.find((request) => request.assignee.id === authState.id)
@@ -154,69 +148,61 @@ function TaskRequestCard({
     rejectTaskMutation.mutate();
   }
   return (
-    <>
-      <Card sx={cardSx} className="task-request-card">
-        <CardHeader
-          title={task.name}
-          subheader={`By ${taskCreator?.username}`}
-          action={
-            <>
-              {(taskCreator?.id === authState.id ||
-                apartment.admin.id === authState.id) && (
-                <IconButton onClick={handleDelete}>
-                  <DeleteIcon />
-                </IconButton>
-              )}
-              <IconButton onClick={handleRedirectTaskPage}>
-                <InfoIcon />
-              </IconButton>
-            </>
-          }
-        />
-        <CardContent className="task-request-card__card-content">
-          <Typography variant="body2" color="text.secodary">
-            Difficulty: {task.difficulty} out of 10
-          </Typography>
-          <Typography variant="body2" color="text.secodary">
-            Frequency: Every {task.frequency} week(s)
-          </Typography>
-          <Typography variant="body2" color="text.secodary">
-            Duration: {startDate} - {endDate}
-          </Typography>
-        </CardContent>
-        <CardActions className="task-request-card__action">
-          <AvatarGroup>
-            {taskRequest.requests.map((request) => {
-              return (
-                <Avatar key={request.id} sx={avatarSx}>
-                  {getAbbreviation(request.assignee.name)}
-                </Avatar>
-              );
-            })}
-          </AvatarGroup>
-          <Box className="button-group">
-            <Button
-              size="small"
-              variant="contained"
-              color="success"
-              disabled={requestState === "accepted" ? true : false}
-              onClick={handleAccept}
+    <div className="task-request-card">
+      <div className="task-request-card__header">
+        <div className="task-request-card__titles">
+          <div className="task-request-card__title">
+            {stateDisplay[requestState]}: {task.name}
+          </div>
+          <div className="task-request-card__sub-title">
+            By {taskCreator?.name}
+          </div>
+        </div>
+        <div className="task-request-card__icon-buttons">
+          {(taskCreator?.id === authState.id ||
+            apartment.admin.id === authState.id) && (
+            <IconButton onClick={handleDelete}>
+              <DeleteIcon />
+            </IconButton>
+          )}
+          <IconButton onClick={handleRedirectTaskPage}>
+            <InfoIcon />
+          </IconButton>
+        </div>
+      </div>
+      <div className="task-request-card__content">
+        <AvatarGroup>
+          {assigneeNames.map((name) => (
+            <Avatar
+              key={name}
+              sx={{ width: "2rem", height: "2rem", fontSize: "1rem" }}
             >
-              Accept
-            </Button>
-            <Button
-              size="small"
-              variant="contained"
-              color="error"
-              disabled={requestState === "rejected" ? true : false}
-              onClick={handleReject}
-            >
-              Reject
-            </Button>
-          </Box>
-        </CardActions>
-      </Card>
-    </>
+              {getAbbreviation(name)}
+            </Avatar>
+          ))}
+        </AvatarGroup>
+        <div className="task-request-card__action">
+          <Button
+            size="small"
+            color="success"
+            variant="outlined"
+            className="invitation__accept-button"
+            onClick={handleAccept}
+          >
+            Accept
+          </Button>
+          <Button
+            size="small"
+            color="error"
+            variant="outlined"
+            className="invitation__reject-button"
+            onClick={handleReject}
+          >
+            Reject
+          </Button>
+        </div>
+      </div>
+    </div>
   );
 }
 

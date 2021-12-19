@@ -132,8 +132,6 @@ function CreateTaskDialog({
     );
   }
 
-  console.log(errors);
-
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="task-form">
