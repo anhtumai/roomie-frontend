@@ -50,23 +50,14 @@ function ApartmentDetail({ apartment }: { apartment: Apartment }) {
   return (
     <div className="apartment-detail">
       <div className="apartment-detail__header">
-        <div
-          style={{
-            flexGrow: 1,
-          }}
-        ></div>
+        <h2>{apartment.name}</h2>
         {isAdmin && (
           <IconButton onClick={handleRename}>
             <EditIcon htmlColor="#505f78" />
             <span>Rename</span>
           </IconButton>
         )}
-        <IconButton onClick={() => history.goBack()}>
-          <KeyboardReturnIcon htmlColor="#505f78" />
-          <span>Go back</span>
-        </IconButton>
       </div>
-      <h2>{apartment.name}</h2>
       <div>
         <h4>Admin</h4>
         <MemberDisplay member={apartment.admin} />

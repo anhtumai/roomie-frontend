@@ -34,11 +34,8 @@ const months = [
 const buttonBackgroundColor = "#288cfc";
 const selectedStyle = {
   border: `1px solid ${buttonBackgroundColor}`,
-  borderRadius: "50%",
-  width: "2rem",
-  height: "2rem",
   background: buttonBackgroundColor,
-  color: "white",
+  color: "#fff",
 };
 
 function DateButton({

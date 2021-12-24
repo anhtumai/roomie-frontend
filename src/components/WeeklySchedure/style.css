@@ -20,8 +20,10 @@
 .weekly-schedule__date-button {
   margin-left: auto;
   margin-right: auto;
-  border: 0;
-  width: 100%;
+  border: 10px solid #fff;
+  border-radius: 50%;
+  width: 2rem;
+  height: 2rem;
   padding: 0;
   cursor: pointer;
   background-color: #fff;
