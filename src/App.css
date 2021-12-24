@@ -12,6 +12,10 @@ input {
   font-size: 1rem;
 }
 
+textarea {
+  font-size: 1rem;
+}
+
 .form-error-message {
   font-size: 1rem;
   color: #d50000;
