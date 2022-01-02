@@ -25,8 +25,8 @@ interface IFormInput {
   description: string;
   difficulty: string;
   frequency: string;
-  startDate: string;
-  endDate: string;
+  start: string;
+  end: string;
 }
 
 function EditTaskDialog({
@@ -43,8 +43,8 @@ function EditTaskDialog({
     description: task.description,
     difficulty: String(task.difficulty),
     frequency: String(task.frequency),
-    startDate: toInputTypeDateFormat(task.start),
-    endDate: toInputTypeDateFormat(task.end),
+    start: toInputTypeDateFormat(task.start),
+    end: toInputTypeDateFormat(task.end),
   };
   const { register, handleSubmit, reset } = useForm({
     defaultValues: defaultTaskValues,
@@ -71,8 +71,8 @@ function EditTaskDialog({
         description: data.description,
         difficulty: Number(data.difficulty),
         frequency: Number(data.frequency),
-        start: data.startDate,
-        end: data.endDate,
+        start: data.start,
+        end: data.end,
       });
       toast.success(`Update task ${updatedTask.name}`, {
         position: toast.POSITION.TOP_CENTER,
@@ -149,7 +149,7 @@ function EditTaskDialog({
               <label>Start Date</label>
               <input
                 type="date"
-                {...register("startDate", {
+                {...register("start", {
                   required: true,
                 })}
               />
@@ -158,7 +158,7 @@ function EditTaskDialog({
               <label>End Date</label>
               <input
                 type="date"
-                {...register("endDate", {
+                {...register("end", {
                   required: true,
                 })}
               />

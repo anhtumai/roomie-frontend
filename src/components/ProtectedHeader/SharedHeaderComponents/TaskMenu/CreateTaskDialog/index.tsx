@@ -29,8 +29,8 @@ interface IFormInput {
   description: string;
   difficulty: string;
   frequency: string;
-  startDate: string;
-  endDate: string;
+  start: string;
+  end: string;
 }
 
 function getStyles(
@@ -75,8 +75,8 @@ function CreateTaskDialog({
       describe: "",
       frequency: "",
       difficulty: "",
-      startDate: "",
-      endDate: "",
+      start: "",
+      end: "",
     });
     setSelectedUsernames([]);
   }
@@ -94,8 +94,6 @@ function CreateTaskDialog({
           ...data,
           difficulty: Number(data.difficulty),
           frequency: Number(data.frequency),
-          start: data.startDate,
-          end: data.endDate,
         },
         selectedUsernames,
       );
@@ -186,7 +184,7 @@ function CreateTaskDialog({
               <label>Start Date</label>
               <input
                 type="date"
-                {...register("startDate", {
+                {...register("start", {
                   required: true,
                 })}
               />
@@ -195,7 +193,7 @@ function CreateTaskDialog({
               <label>End Date</label>
               <input
                 type="date"
-                {...register("endDate", {
+                {...register("end", {
                   required: true,
                 })}
               />
