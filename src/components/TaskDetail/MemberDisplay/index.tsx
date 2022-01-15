@@ -8,7 +8,7 @@ function MemberDisplay({ member }: { member: Member }) {
   const abbreviation = getAbbreviation(member.name);
   return (
     <div className="member-display">
-      <Avatar sx={{ width: 28, height: 28 }} className="member-display__avatar">
+      <Avatar sx={{ width: 32, height: 32 }} className="member-display__avatar">
         {abbreviation}
       </Avatar>
       <p>{member.name}</p>
