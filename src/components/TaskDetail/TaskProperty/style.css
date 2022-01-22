@@ -20,6 +20,7 @@
   min-height: 12rem;
   color: #141823;
   padding-top: 0.4rem;
+  width: 75%;
 }
 
 .task-property__description-block h2 {

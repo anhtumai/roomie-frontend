@@ -75,8 +75,8 @@ function SingleUserAssignment({
   isAuthUser?: boolean;
 }) {
   if (tasks === undefined || tasks.length === 0) {
-    if (isAuthUser) return <p>You have no assignments</p>;
-    return <p>{username} has no assignments</p>;
+    if (isAuthUser) return <p>You have no tasks</p>;
+    return <p>{username} has no tasks</p>;
   }
   return (
     <>
