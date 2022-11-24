@@ -5,13 +5,12 @@
 > with the latest actions by other members.
 > Written in React (Typescript)
 
-Short demo:
-<video src='./demo/project_short_demo.mp4'/>
+Demo video: [Demo video](https://drive.google.com/file/d/1Vw0uaJPh6eYNesKbRCC85BbvwaJwClCR/view?usp=sharing)
 
-Link to demo video: [Youtube demo video](https://youtu.be/hB8UYaypeuM)
-and [Vimeo demo video](https://vimeo.com/650856424)
+Full, long video about all functionalities: [Youtube video](https://youtu.be/hB8UYaypeuM)
+and [Vimeo video](https://vimeo.com/650856424)
 
-Link to demo app: [Netlify link](https://roomiee.netlify.app/)
+Link to live app: [Netlify link](https://roomiee.netlify.app/)
 
 **Credentials**: You can log in with these usernames and passwords:
 
