@@ -5,6 +5,9 @@
 > with the latest actions by other members.
 > Written in React (Typescript)
 
+Short demo:
+<video src='./demo/project_short_demo.mp4'/>
+
 Link to demo video: [Youtube demo video](https://youtu.be/hB8UYaypeuM)
 and [Vimeo demo video](https://vimeo.com/650856424)
 
