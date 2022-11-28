@@ -72,7 +72,7 @@ export function ApartmentProvider({
   const deleteTaskMutation = useMutation(
     (task: Task) => taskService.deleteOne(authState.token, task.id),
     {
-      onMutate: async (task: Task) => {
+      onMutate: (task: Task) => {
         cancelApartmentQueries();
         const apartment = data as Apartment;
         const updatedTaskRequests = apartment.task_requests.filter(
