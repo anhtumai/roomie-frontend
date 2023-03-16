@@ -74,9 +74,6 @@ function EditTaskDialog({
         start: data.start,
         end: data.end,
       });
-      toast.success(`Update task ${updatedTask.name}`, {
-        position: toast.POSITION.TOP_CENTER,
-      });
 
       const updatedTaskRequests = apartment.task_requests.map((taskRequest) =>
         taskRequest.task.id === updatedTask.id

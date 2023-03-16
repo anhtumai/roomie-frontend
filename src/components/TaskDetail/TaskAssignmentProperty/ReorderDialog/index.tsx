@@ -70,12 +70,6 @@ function ReorderDialog({
         task.id,
         proposedOrderUsernames,
       );
-      toast.success(
-        `Reorder task ${
-          taskAssignment.task.name
-        } to ${proposedOrderUsernames.join(", ")}`,
-        { position: toast.POSITION.TOP_CENTER },
-      );
 
       const updatedTaskAssignments = apartment.task_assignments.map((element) =>
         element.task.id === taskAssignment.task.id ? taskAssignment : element,

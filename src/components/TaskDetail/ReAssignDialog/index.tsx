@@ -80,12 +80,6 @@ function ReAssignDialog({
         taskId,
         selectedUsernames,
       );
-      toast.success(
-        `Re-assign task ${taskRequest.task.name} to ${selectedUsernames.join(
-          ", ",
-        )}`,
-        { position: toast.POSITION.TOP_CENTER },
-      );
       const updatedTaskAssignments = apartment.task_assignments.filter(
         (element) => element.task.id !== taskRequest.task.id,
       );
