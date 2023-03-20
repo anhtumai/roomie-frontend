@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { ErrorMessage } from "@hookform/error-message";
+import { useHistory } from "react-router-dom";
 
 import {
   Dialog,
@@ -54,6 +55,7 @@ function CreateTaskDialog({
   setOpen: (x: boolean) => void;
 }) {
   const theme = useTheme();
+  const history = useHistory();
   const {
     register,
     handleSubmit,
@@ -104,6 +106,7 @@ function CreateTaskDialog({
         ...apartment,
         task_requests: updatedTaskRequests,
       });
+      history.push(`/tasks/${taskRequest.task.id}`);
     } catch (err) {
       console.log(err);
       toast.error("Fail to create new task", {
