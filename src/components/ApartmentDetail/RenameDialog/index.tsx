@@ -56,11 +56,6 @@ function RenameDialog({
           position: toast.POSITION.TOP_CENTER,
         });
       },
-      onSuccess: (data, variables, context) => {
-        toast.success("Rename apartment", {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      },
       onSettled: (data, error, variables, context) => {
         invalidateApartment();
       },

@@ -34,9 +34,6 @@ function ApartmentDetail({ apartment }: { apartment: Apartment }) {
     if (!decision) return;
     try {
       await meService.removeMember(authState.token, member.id);
-      toast.success(`Remove member ${member.username}`, {
-        position: toast.POSITION.TOP_CENTER,
-      });
       invalidateApartment();
     } catch (err) {
       console.log(err);

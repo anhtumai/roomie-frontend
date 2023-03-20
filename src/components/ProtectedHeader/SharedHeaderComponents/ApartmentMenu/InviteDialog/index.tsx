@@ -61,9 +61,6 @@ function InviteDialog({
       } else {
         invalidateInvitationCollection();
       }
-      toast.success(`Send invitation to ${inviteeUsername}`, {
-        position: toast.POSITION.TOP_CENTER,
-      });
     } catch (err) {
       console.log(err);
       const errMessage =

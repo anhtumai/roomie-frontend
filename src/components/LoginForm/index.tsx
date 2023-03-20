@@ -27,9 +27,6 @@ function LoginForm() {
 
       setTimeout(() => {
         history.push("/home");
-        toast.success("Login successfully", {
-          position: toast.POSITION.TOP_CENTER,
-        });
       }, 0);
     } catch (err) {
       console.log(err);

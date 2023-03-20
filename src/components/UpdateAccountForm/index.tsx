@@ -109,9 +109,6 @@ function UpdateAccountForm() {
 
       const updatedAuthState = { ...authState, ...updatedAccountResponseData };
       setAuthState(updatedAuthState);
-      toast.success("Update account profile", {
-        position: toast.POSITION.TOP_CENTER,
-      });
       reset({
         username: username,
         name: name,

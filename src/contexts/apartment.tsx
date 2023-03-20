@@ -100,11 +100,6 @@ export function ApartmentProvider({
           position: toast.POSITION.TOP_CENTER,
         });
       },
-      onSuccess: (data, variables, context) => {
-        toast.success(`Delete task ${variables.name}`, {
-          position: toast.POSITION.TOP_CENTER,
-        });
-      },
       onSettled: (data, error, variables, context) => {
         invalidateApartment();
       },

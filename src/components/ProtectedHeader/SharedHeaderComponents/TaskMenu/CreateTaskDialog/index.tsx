@@ -97,9 +97,6 @@ function CreateTaskDialog({
         },
         selectedUsernames,
       );
-      toast.success(`Create new task ${data.name}`, {
-        position: toast.POSITION.TOP_CENTER,
-      });
 
       const taskRequests = apartment.task_requests;
       const updatedTaskRequests = [...taskRequests, taskRequest];
