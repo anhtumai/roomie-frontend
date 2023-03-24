@@ -25,6 +25,7 @@ import taskService from "services/task";
 import { MOBILE_MAX_WIDTH } from "../../../../../constants";
 
 import "components/sharedStyles/taskFormStyle.css";
+import { useWindowDimensions } from "utils/windows";
 
 interface IFormInput {
   name: string;
@@ -48,14 +49,6 @@ function getStyles(
   };
 }
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
 function CreateTaskDialog({
   open,
   setOpen,
@@ -64,19 +57,7 @@ function CreateTaskDialog({
   setOpen: (x: boolean) => void;
 }) {
   // get window dimension, if window width is big, start date and end date inputs stay in one row.
-  // otherwise, they stay in 2 different rows.
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions(),
-  );
-
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const windowDimensions = useWindowDimensions();
 
   const theme = useTheme();
   const history = useHistory();

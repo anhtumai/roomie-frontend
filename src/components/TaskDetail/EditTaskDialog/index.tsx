@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -13,6 +12,7 @@ import {
 import useAuth from "contexts/auth";
 import useApartment from "contexts/apartment";
 import taskService from "services/task";
+import { useWindowDimensions } from "utils/windows";
 import { MOBILE_MAX_WIDTH } from "../../../constants";
 
 import "components/sharedStyles/taskFormStyle.css";
@@ -31,14 +31,6 @@ function toInputTypeDateFormat(dateString: string) {
   return dateObject.toLocaleDateString("en-CA");
 }
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height,
-  };
-}
-
 function EditTaskDialog({
   open,
   setOpen,
@@ -50,18 +42,8 @@ function EditTaskDialog({
 }) {
   // get window dimension, if window width is big, start date and end date inputs stay in one row.
   // otherwise, they stay in 2 different rows.
-  const [windowDimensions, setWindowDimensions] = useState(
-    getWindowDimensions(),
-  );
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  const windowDimensions = useWindowDimensions();
 
   const defaultTaskValues = {
     name: task.name,
