@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -22,6 +22,7 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import useAuth from "contexts/auth";
 import useApartment from "contexts/apartment";
 import taskService from "services/task";
+import { MOBILE_MAX_WIDTH } from "../../../../../constants";
 
 import "components/sharedStyles/taskFormStyle.css";
 
@@ -47,6 +48,14 @@ function getStyles(
   };
 }
 
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
+}
+
 function CreateTaskDialog({
   open,
   setOpen,
@@ -54,6 +63,21 @@ function CreateTaskDialog({
   open: boolean;
   setOpen: (x: boolean) => void;
 }) {
+  // get window dimension, if window width is big, start date and end date inputs stay in one row.
+  // otherwise, they stay in 2 different rows.
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions(),
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const theme = useTheme();
   const history = useHistory();
   const {
@@ -74,7 +98,7 @@ function CreateTaskDialog({
   function resetAllFields() {
     reset({
       name: "",
-      describe: "",
+      description: "",
       frequency: "",
       difficulty: "",
       start: "",
@@ -130,6 +154,49 @@ function CreateTaskDialog({
     );
   }
 
+  const startEndDateInputGroup =
+    windowDimensions.width <= MOBILE_MAX_WIDTH ? (
+      <>
+        <label>Start Date</label>
+        <input
+          type="date"
+          {...register("start", {
+            required: true,
+          })}
+        />
+        <label>End Date</label>
+        <input
+          type="date"
+          {...register("end", {
+            required: true,
+          })}
+        />
+      </>
+    ) : (
+      <>
+        <div className="task-form__date_inputs">
+          <div className="task-form__date_input">
+            <label>Start Date</label>
+            <input
+              type="date"
+              {...register("start", {
+                required: true,
+              })}
+            />
+          </div>
+          <div className="task-form__date_input">
+            <label>End Date</label>
+            <input
+              type="date"
+              {...register("end", {
+                required: true,
+              })}
+            />
+          </div>
+        </div>
+      </>
+    );
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="task-form">
@@ -179,26 +246,7 @@ function CreateTaskDialog({
               required: true,
             })}
           />
-          <div className="task-form__date_inputs">
-            <div className="task-form__date_input">
-              <label>Start Date</label>
-              <input
-                type="date"
-                {...register("start", {
-                  required: true,
-                })}
-              />
-            </div>
-            <div className="task-form__date_input">
-              <label>End Date</label>
-              <input
-                type="date"
-                {...register("end", {
-                  required: true,
-                })}
-              />
-            </div>
-          </div>
+          {startEndDateInputGroup}
           <FormControl sx={{ width: "100%" }}>
             <label>Assignees</label>
             <Select

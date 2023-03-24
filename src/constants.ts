@@ -16,3 +16,5 @@ export const pusherConstant = {
   REORDERED_STATE: "REORDERED",
   MEMBER_REMOVED_STATE: "MEMBER_REMOVED",
 };
+
+export const MOBILE_MAX_WIDTH = 500;

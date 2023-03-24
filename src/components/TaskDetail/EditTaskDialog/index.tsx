@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
@@ -12,13 +13,9 @@ import {
 import useAuth from "contexts/auth";
 import useApartment from "contexts/apartment";
 import taskService from "services/task";
+import { MOBILE_MAX_WIDTH } from "../../../constants";
 
 import "components/sharedStyles/taskFormStyle.css";
-
-function toInputTypeDateFormat(dateString: string) {
-  const dateObject = new Date(dateString);
-  return dateObject.toLocaleDateString("en-CA");
-}
 
 interface IFormInput {
   name: string;
@@ -27,6 +24,19 @@ interface IFormInput {
   frequency: string;
   start: string;
   end: string;
+}
+
+function toInputTypeDateFormat(dateString: string) {
+  const dateObject = new Date(dateString);
+  return dateObject.toLocaleDateString("en-CA");
+}
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height,
+  };
 }
 
 function EditTaskDialog({
@@ -38,6 +48,21 @@ function EditTaskDialog({
   setOpen: (x: boolean) => void;
   task: Task;
 }) {
+  // get window dimension, if window width is big, start date and end date inputs stay in one row.
+  // otherwise, they stay in 2 different rows.
+  const [windowDimensions, setWindowDimensions] = useState(
+    getWindowDimensions(),
+  );
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const defaultTaskValues = {
     name: task.name,
     description: task.description,
@@ -102,6 +127,49 @@ function EditTaskDialog({
     }
   }
 
+  const startEndDateInputGroup =
+    windowDimensions.width <= MOBILE_MAX_WIDTH ? (
+      <>
+        <label>Start Date</label>
+        <input
+          type="date"
+          {...register("start", {
+            required: true,
+          })}
+        />
+        <label>End Date</label>
+        <input
+          type="date"
+          {...register("end", {
+            required: true,
+          })}
+        />
+      </>
+    ) : (
+      <>
+        <div className="task-form__date_inputs">
+          <div className="task-form__date_input">
+            <label>Start Date</label>
+            <input
+              type="date"
+              {...register("start", {
+                required: true,
+              })}
+            />
+          </div>
+          <div className="task-form__date_input">
+            <label>End Date</label>
+            <input
+              type="date"
+              {...register("end", {
+                required: true,
+              })}
+            />
+          </div>
+        </div>
+      </>
+    );
+
   return (
     <Dialog open={open} onClose={handleClose}>
       <form onSubmit={handleSubmit(onSubmit)} className="task-form">
@@ -141,26 +209,7 @@ function EditTaskDialog({
               required: true,
             })}
           />
-          <div className="task-form__date_inputs">
-            <div className="task-form__date_input">
-              <label>Start Date</label>
-              <input
-                type="date"
-                {...register("start", {
-                  required: true,
-                })}
-              />
-            </div>
-            <div className="task-form__date_input">
-              <label>End Date</label>
-              <input
-                type="date"
-                {...register("end", {
-                  required: true,
-                })}
-              />
-            </div>
-          </div>
+          {startEndDateInputGroup}
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
